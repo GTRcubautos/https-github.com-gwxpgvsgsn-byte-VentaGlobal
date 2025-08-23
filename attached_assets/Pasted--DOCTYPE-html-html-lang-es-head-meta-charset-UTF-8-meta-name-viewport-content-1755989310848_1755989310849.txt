@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda Online - Mayoristas y Minoristas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #00a650; /* Verde principal */
+            --secondary-color: #000000; /* Negro */
+            --accent-color: #f5f5f5; /* Fondo gris claro */
+            --text-color: #333;
+            --white: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--accent-color);
+            color: var(--text-color);
+        }
+        
+        /* Header y Navegación */
+        header {
+            background-color: var(--secondary-color);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            color: var(--primary-color);
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+        }
+        
+        nav ul li a {
+            color: var(--white);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+        
+        .search-bar {
+            display: flex;
+            margin-left: 20px;
+        }
+        
+        .search-bar input {
+            padding: 8px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+        }
+        
+        .search-bar button {
+            background-color: var(--primary-color);
+            border: none;
+            padding: 8px 12px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            color: white;
+        }
+        
+        .cart-icon {
+            color: var(--white);
+            font-size: 20px;
+            margin-left: 20px;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+        }
+        
+        /* Botón WhatsApp flotante */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Sección Hero */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1607082350899-7e105aa886ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn:hover {
+            background-color: #008a43;
+        }
+        
+        /* Sección de Productos */
+        .products-section {
+            padding: 60px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--secondary-color);
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background-color: var(--primary-color);
+            margin: 10px auto;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .product-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .product-image {
+            height: 200px;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .product-info {
+            padding: 15px;
+        }
+        
+        .product-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        
+        .product-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .retail-price {
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+        
+        .wholesale-price {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .add-to-cart {
+            width: 100%;
+            padding: 8px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .add-to-cart:hover {
+            background-color: var(--primary-color);
+        }
+        
+        /* Sección de Juegos */
+        .games-section {
+            padding: 60px 0;
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .games-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .game-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 600px;
+        }
+        
+        .bible-verse {
+            text-align: center;
+            font-style: italic;
+            margin: 30px 0;
+            padding: 20px;
+            background-color: rgba(0, 166, 80, 0.2);
+            border-radius: 8px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 40px 0;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-section ul li a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .footer-section ul li a:hover {
+            color: var(--primary-color);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 20px;
+        }
+        
+        /* Modal para Mayoristas */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 400px;
+        }
+        
+        .modal h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .modal input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .close-modal {
+            float: right;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin-top: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 5px 10px;
+            }
+            
+            .search-bar {
+                margin: 15px 0;
+                width: 100%;
+            }
+            
+            .search-bar input {
+                width: 100%;
+            }
+            
+            .hero h1 {
+                font-size: 32px;
+            }
+            
+            .hero p {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header con Navegación -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">TiendaOnline</div>
+                <nav>
+                    <ul>
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#productos">Productos</a></li>
+                        <li><a href="#autos">Autos</a></li>
+                        <li><a href="#motos">Motos</a></li>
+                        <li><a href="#juegos">Juegos</a></li>
+                        <li><a href="#mayoristas">Mayoristas</a></li>
+                    </ul>
+                </nav>
+                <div class="search-bar">
+                    <input type="text" placeholder="Buscar productos...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                <div class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sección Hero -->
+    <section class="hero" id="inicio">
+        <div class="container">
+            <h1>Bienvenido a Nuestra Tienda Online</h1>
+            <p>Encuentra los mejores productos al mejor precio</p>
+            <a href="#productos" class="btn">Ver Productos</a>
+        </div>
+    </section>
+
+    <!-- Sección de Productos -->
+    <section class="products-section" id="productos">
+        <div class="container">
+            <h2 class="section-title">Productos Destacados</h2>
+            <div class="products-grid">
+                <!-- Producto 1 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://via.placeholder.com/300" alt="Producto 1">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Producto Ejemplo 1</h3>
+                        <div class="product-price">
+                            <span class="retail-price">$50.00</span>
+                            <span class="wholesale-price">$35.00</span>
+                        </div>
+                        <button class="add-to-cart">Añadir al Carrito</button>
+                    </div>
+                </div>
+                
+                <!-- Producto 2 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://via.placeholder.com/300" alt="Producto 2">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Producto Ejemplo 2</h3>
+                        <div class="product-price">
+                            <span class="retail-price">$75.00</span>
+                            <span class="wholesale-price">$55.00</span>
+                        </div>
+                        <button class="add-to-cart">Añadir al Carrito</button>
+                    </div>
+                </div>
+                
+                <!-- Producto 3 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://via.placeholder.com/300" alt="Producto 3">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Producto Ejemplo 3</h3>
+                        <div class="product-price">
+                            <span class="retail-price">$120.00</span>
+                            <span class="wholesale-price">$85.00</span>
+                        </div>
+                        <button class="add-to-cart">Añadir al Carrito</button>
+                    </div>
+                </div>
+                
+                <!-- Producto 4 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://via.placeholder.com/300" alt="Producto 4">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Producto Ejemplo 4</h3>
+                        <div class="product-price">
+                            <span class="retail-price">$90.00</span>
+                            <span class="wholesale-price">$65.00</span>
+                        </div>
+                        <button class="add-to-cart">Añadir al Carrito</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Juegos -->
+    <section class="games-section" id="juegos">
+        <div class="container">
+            <h2 class="section-title">Juegos y Recompensas</h2>
+            
+            <div class="bible-verse">
+                <p>"Porque de tal manera amó Dios al mundo, que ha dado a su Hijo unigénito, para que todo aquel que en él cree no se pierda, mas tenga vida eterna." - Juan 3:16</p>
+            </div>
+            
+            <div class="games-container">
+                <div class="game-card">
+                    <h3>Juego de Descuentos</h3>
+                    <p>Participa en nuestro juego y gana descuentos para tus compras. ¡Cada punto equivale a $0.01 de descuento!</p>
+                    <button class="btn">Jugar Ahora</button>
+                </div>
+                
+                <div class="game-card">
+                    <h3>Recompensas por Compartir</h3>
+                    <p>Comparte tus compras en redes sociales y gana puntos canjeables por descuentos.</p>
+                    <button class="btn">Ver Recompensas</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Botón de WhatsApp flotante -->
+    <a href="https://wa.me/1234567890?text=Hola,%20necesito%20información" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul>
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#productos">Productos</a></li>
+                        <li><a href="#autos">Autos</a></li>
+                        <li><a href="#motos">Motos</a></li>
+                        <li><a href="#juegos">Juegos</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Ayuda</h3>
+                    <ul>
+                        <li><a href="#">Preguntas Frecuentes</a></li>
+                        <li><a href="#">Envíos y Entregas</a></li>
+                        <li><a href="#">Políticas de Devolución</a></li>
+                        <li><a href="#">Contacto</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Métodos de Pago</h3>
+                    <ul>
+                        <li>Tarjetas de Crédito/Débito</li>
+                        <li>Zelle</li>
+                        <li>Transferencias Bancarias</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 TiendaOnline. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal para Acceso Mayoristas -->
+    <div class="modal" id="wholesale-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Acceso Mayoristas</h2>
+            <p>Ingresa tu código de mayorista para ver precios especiales:</p>
+            <input type="text" placeholder="Código de mayorista">
+            <button class="btn">Acceder</button>
+        </div>
+    </div>
+
+    <script>
+        // Funcionalidad básica del carrito
+        document.addEventListener('DOMContentLoaded', function() {
+            const addToCartButtons = document.querySelectorAll('.add-to-cart');
+            const cartCount = document.querySelector('.cart-count');
+            let count = 0;
+            
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    count++;
+                    cartCount.textContent = count;
+                    
+                    // Aquí se agregaría la lógica para añadir el producto al carrito
+                    alert('Producto añadido al carrito');
+                });
+            });
+            
+            // Modal para mayoristas
+            const wholesaleLink = document.querySelector('a[href="#mayoristas"]');
+            const modal = document.getElementById('wholesale-modal');
+            const closeModal = document.querySelector('.close-modal');
+            
+            wholesaleLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                modal.style.display = 'flex';
+            });
+            
+            closeModal.addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+            
+            window.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+            
+            // Versículo bíblico aleatorio (ejemplo simplificado)
+            const bibleVerses = [
+                '"Porque de tal manera amó Dios al mundo, que ha dado a su Hijo unigénito, para que todo aquel que en él cree no se pierda, mas tenga vida eterna." - Juan 3:16',
+                '"El Señor es mi pastor, nada me faltará." - Salmos 23:1',
+                '"Todo lo puedo en Cristo que me fortalece." - Filipenses 4:13',
+                '"Confía en el Señor de todo corazón, y no en tu propia inteligencia." - Proverbios 3:5'
+            ];
+            
+            const randomVerse = bibleVerses[Math.floor(Math.random() * bibleVerses.length)];
+            document.querySelector('.bible-verse p').textContent = randomVerse;
+        });
+    </script>
+</body>
+</html>
