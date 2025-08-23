@@ -19,6 +19,8 @@ import Admin from "@/pages/admin";
 import NotFound from "@/pages/not-found";
 import { Terms } from "@/pages/terms";
 import { Privacy } from "@/pages/privacy";
+import Checkout from "@/pages/checkout";
+import CheckoutSuccess from "@/pages/checkout-success";
 
 function Router() {
   return (
@@ -32,6 +34,8 @@ function Router() {
       <Route path="/juegos" component={Games} />
       <Route path="/mayoristas" component={Wholesale} />
       <Route path="/admin" component={Admin} />
+      <Route path="/checkout" component={Checkout} />
+      <Route path="/checkout/success" component={CheckoutSuccess} />
       <Route path="/terms" component={Terms} />
       <Route path="/privacy" component={Privacy} />
       <Route component={NotFound} />
