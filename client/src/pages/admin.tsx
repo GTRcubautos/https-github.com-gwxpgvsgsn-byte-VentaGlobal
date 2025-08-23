@@ -544,10 +544,10 @@ export default function Admin() {
                             <p className="text-sm text-gray-600" data-testid={`campaign-budget-${campaign.id}`}>
                               Presupuesto diario: ${campaign.dailyBudget}
                             </p>
-                            {campaign.metrics && typeof campaign.metrics === 'object' && (
+                            {campaign.metrics && typeof campaign.metrics === 'object' && campaign.metrics !== null && (
                               <div className="text-sm text-gray-600 mt-2" data-testid={`campaign-metrics-${campaign.id}`}>
-                                <span>Reproducciones: {(campaign.metrics as any).views || 0}</span>
-                                <span className="ml-4">CTR: {(campaign.metrics as any).ctr || 0}%</span>
+                                <span>Reproducciones: {(campaign.metrics as Record<string, any>).views || 0}</span>
+                                <span className="ml-4">CTR: {(campaign.metrics as Record<string, any>).ctr || 0}%</span>
                               </div>
                             )}
                           </div>

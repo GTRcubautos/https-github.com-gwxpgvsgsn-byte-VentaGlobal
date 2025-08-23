@@ -49,7 +49,7 @@ export default function CartModal() {
       });
       addPoints(data.pointsEarned);
       clearCart();
-      setSelectedPayment(null);
+      setSelectedPayment('');
       setIsOpen(false);
     },
     onError: () => {

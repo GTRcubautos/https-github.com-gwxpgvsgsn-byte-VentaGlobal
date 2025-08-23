@@ -106,9 +106,9 @@ export default function Cars() {
                   </h3>
                   {car.specs && (
                     <p className="text-gray-600 mb-4" data-testid={`car-specs-${car.id}`}>
-                      {typeof car.specs === 'object' ? 
-                        Object.values(car.specs).join(', ') : 
-                        car.specs}
+                      {typeof car.specs === 'object' && car.specs !== null ? 
+                        Object.values(car.specs as Record<string, any>).join(', ') : 
+                        String(car.specs)}
                     </p>
                   )}
                   <ProductCard product={car} />

@@ -114,7 +114,14 @@ export class MemStorage implements IStorage {
 
     sampleProducts.forEach(product => {
       const id = randomUUID();
-      this.products.set(id, { ...product, id, createdAt: new Date() });
+      this.products.set(id, { 
+        ...product, 
+        id, 
+        createdAt: new Date(),
+        description: product.description || null,
+        imageUrl: product.imageUrl || null,
+        isActive: product.isActive ?? true
+      });
     });
 
     // Initialize sample campaign
@@ -128,7 +135,13 @@ export class MemStorage implements IStorage {
     };
 
     const campaignId = randomUUID();
-    this.campaigns.set(campaignId, { ...sampleCampaign, id: campaignId, createdAt: new Date() });
+    this.campaigns.set(campaignId, { 
+      ...sampleCampaign, 
+      id: campaignId, 
+      createdAt: new Date(),
+      status: sampleCampaign.status || 'active',
+      platform: sampleCampaign.platform || 'youtube'
+    });
   }
 
   // User methods
@@ -146,7 +159,14 @@ export class MemStorage implements IStorage {
 
   async createUser(insertUser: InsertUser): Promise<User> {
     const id = randomUUID();
-    const user: User = { ...insertUser, id, createdAt: new Date() };
+    const user: User = { 
+      ...insertUser, 
+      id, 
+      createdAt: new Date(),
+      points: insertUser.points ?? 0,
+      isActive: insertUser.isActive ?? true,
+      userType: insertUser.userType || 'retail'
+    };
     this.users.set(id, user);
     return user;
   }
@@ -181,7 +201,14 @@ export class MemStorage implements IStorage {
 
   async createProduct(insertProduct: InsertProduct): Promise<Product> {
     const id = randomUUID();
-    const product: Product = { ...insertProduct, id, createdAt: new Date() };
+    const product: Product = { 
+      ...insertProduct, 
+      id, 
+      createdAt: new Date(),
+      description: insertProduct.description || null,
+      imageUrl: insertProduct.imageUrl || null,
+      isActive: insertProduct.isActive ?? true
+    };
     this.products.set(id, product);
     return product;
   }
@@ -218,7 +245,14 @@ export class MemStorage implements IStorage {
 
   async createOrder(insertOrder: InsertOrder): Promise<Order> {
     const id = randomUUID();
-    const order: Order = { ...insertOrder, id, createdAt: new Date() };
+    const order: Order = { 
+      ...insertOrder, 
+      id, 
+      createdAt: new Date(),
+      status: insertOrder.status || 'pending',
+      userId: insertOrder.userId || null,
+      pointsEarned: insertOrder.pointsEarned ?? 0
+    };
     this.orders.set(id, order);
     return order;
   }
@@ -243,13 +277,26 @@ export class MemStorage implements IStorage {
 
   async updateRewardsConfig(config: InsertRewardsConfig): Promise<RewardsConfig> {
     const id = this.rewardsConfig?.id || randomUUID();
-    this.rewardsConfig = { ...config, id };
+    this.rewardsConfig = { 
+      ...config, 
+      id,
+      isActive: config.isActive ?? true,
+      pointsPerVisit: config.pointsPerVisit ?? 10,
+      pointsPerPurchase: config.pointsPerPurchase ?? 50,
+      pointsPerShare: config.pointsPerShare ?? 25,
+      pointValue: config.pointValue || '0.01'
+    };
     return this.rewardsConfig;
   }
 
   async createGameResult(insertResult: InsertGameResult): Promise<GameResult> {
     const id = randomUUID();
-    const result: GameResult = { ...insertResult, id, createdAt: new Date() };
+    const result: GameResult = { 
+      ...insertResult, 
+      id, 
+      createdAt: new Date(),
+      userId: insertResult.userId || null
+    };
     this.gameResults.set(id, result);
     return result;
   }
@@ -269,7 +316,13 @@ export class MemStorage implements IStorage {
 
   async createCampaign(insertCampaign: InsertCampaignConfig): Promise<CampaignConfig> {
     const id = randomUUID();
-    const campaign: CampaignConfig = { ...insertCampaign, id, createdAt: new Date() };
+    const campaign: CampaignConfig = { 
+      ...insertCampaign, 
+      id, 
+      createdAt: new Date(),
+      status: insertCampaign.status || 'active',
+      platform: insertCampaign.platform || 'youtube'
+    };
     this.campaigns.set(id, campaign);
     return campaign;
   }

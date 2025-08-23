@@ -17,17 +17,23 @@ import Games from "@/pages/games";
 import Wholesale from "@/pages/wholesale";
 import Admin from "@/pages/admin";
 import NotFound from "@/pages/not-found";
+import { Terms } from "@/pages/terms";
+import { Privacy } from "@/pages/privacy";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/productos" component={Products} />
+      <Route path="/cars" component={Cars} />
       <Route path="/autos" component={Cars} />
+      <Route path="/motorcycles" component={Motorcycles} />
       <Route path="/motos" component={Motorcycles} />
       <Route path="/juegos" component={Games} />
       <Route path="/mayoristas" component={Wholesale} />
       <Route path="/admin" component={Admin} />
+      <Route path="/terms" component={Terms} />
+      <Route path="/privacy" component={Privacy} />
       <Route component={NotFound} />
     </Switch>
   );

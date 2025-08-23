@@ -63,7 +63,111 @@ export const campaignConfig = pgTable("campaign_config", {
   targetAudience: text("target_audience").notNull(),
   status: text("status").notNull().default("active"), // active, paused, completed
   metrics: jsonb("metrics"),
+  isAutomated: boolean("is_automated").notNull().default(false),
+  scheduleTime: text("schedule_time"), // cron format
   createdAt: timestamp("created_at").notNull().default(sql`now()`),
+});
+
+// Social Media Posts
+export const socialPosts = pgTable("social_posts", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  platform: text("platform").notNull(), // facebook, instagram, twitter, whatsapp
+  content: text("content").notNull(),
+  mediaUrls: jsonb("media_urls"),
+  scheduledAt: timestamp("scheduled_at"),
+  publishedAt: timestamp("published_at"),
+  status: text("status").notNull().default("draft"), // draft, scheduled, published, failed
+  engagement: jsonb("engagement"), // likes, shares, comments
+  campaignId: varchar("campaign_id").references(() => campaignConfig.id),
+  createdAt: timestamp("created_at").notNull().default(sql`now()`),
+});
+
+// Customer Relationship Management
+export const customers = pgTable("customers", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").references(() => users.id),
+  firstName: text("first_name"),
+  lastName: text("last_name"),
+  email: text("email").notNull().unique(),
+  phone: text("phone"),
+  dateOfBirth: timestamp("date_of_birth"),
+  address: jsonb("address"),
+  preferences: jsonb("preferences"),
+  segment: text("segment").default("regular"), // vip, regular, wholesale
+  lifetimeValue: decimal("lifetime_value", { precision: 10, scale: 2 }).default("0.00"),
+  lastContactDate: timestamp("last_contact_date"),
+  source: text("source"), // website, social, referral
+  notes: text("notes"),
+  tags: jsonb("tags"),
+  createdAt: timestamp("created_at").notNull().default(sql`now()`),
+});
+
+// Security Logs
+export const securityLogs = pgTable("security_logs", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").references(() => users.id),
+  action: text("action").notNull(), // login, logout, failed_login, data_access
+  ipAddress: text("ip_address"),
+  userAgent: text("user_agent"),
+  location: text("location"),
+  risk_level: text("risk_level").default("low"), // low, medium, high
+  details: jsonb("details"),
+  createdAt: timestamp("created_at").notNull().default(sql`now()`),
+});
+
+// Payment Processing
+export const payments = pgTable("payments", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  orderId: varchar("order_id").references(() => orders.id),
+  customerId: varchar("customer_id").references(() => customers.id),
+  amount: decimal("amount", { precision: 10, scale: 2 }).notNull(),
+  currency: text("currency").default("USD"),
+  method: text("method").notNull(), // card, zelle, paypal, stripe
+  status: text("status").notNull().default("pending"), // pending, completed, failed, refunded
+  transactionId: text("transaction_id"),
+  gatewayResponse: jsonb("gateway_response"),
+  fees: decimal("fees", { precision: 8, scale: 2 }).default("0.00"),
+  processedAt: timestamp("processed_at"),
+  createdAt: timestamp("created_at").notNull().default(sql`now()`),
+});
+
+// Inventory Management
+export const inventory = pgTable("inventory", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  productId: varchar("product_id").references(() => products.id),
+  sku: text("sku").notNull().unique(),
+  quantity: integer("quantity").notNull().default(0),
+  reservedQuantity: integer("reserved_quantity").notNull().default(0),
+  minStockLevel: integer("min_stock_level").default(10),
+  maxStockLevel: integer("max_stock_level").default(1000),
+  location: text("location"),
+  lastRestocked: timestamp("last_restocked"),
+  supplier: text("supplier"),
+  cost: decimal("cost", { precision: 10, scale: 2 }),
+  updatedAt: timestamp("updated_at").notNull().default(sql`now()`),
+});
+
+// Analytics & Metrics
+export const analytics = pgTable("analytics", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  metric: text("metric").notNull(), // page_views, conversions, revenue, cart_abandonment
+  value: decimal("value", { precision: 15, scale: 2 }).notNull(),
+  date: timestamp("date").notNull(),
+  dimensions: jsonb("dimensions"), // additional context data
+  source: text("source"), // web, mobile, api
+  userId: varchar("user_id").references(() => users.id),
+  createdAt: timestamp("created_at").notNull().default(sql`now()`),
+});
+
+// Website Configuration
+export const siteConfig = pgTable("site_config", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  key: text("key").notNull().unique(),
+  value: jsonb("value").notNull(),
+  category: text("category").default("general"), // general, security, payments, social
+  isPublic: boolean("is_public").default(false),
+  description: text("description"),
+  updatedAt: timestamp("updated_at").notNull().default(sql`now()`),
 });
 
 // Insert schemas
@@ -96,6 +200,41 @@ export const insertCampaignConfigSchema = createInsertSchema(campaignConfig).omi
   createdAt: true,
 });
 
+export const insertSocialPostSchema = createInsertSchema(socialPosts).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertCustomerSchema = createInsertSchema(customers).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertSecurityLogSchema = createInsertSchema(securityLogs).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertPaymentSchema = createInsertSchema(payments).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertInventorySchema = createInsertSchema(inventory).omit({
+  id: true,
+  updatedAt: true,
+});
+
+export const insertAnalyticsSchema = createInsertSchema(analytics).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertSiteConfigSchema = createInsertSchema(siteConfig).omit({
+  id: true,
+  updatedAt: true,
+});
+
 // Types
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
@@ -114,3 +253,24 @@ export type InsertGameResult = z.infer<typeof insertGameResultSchema>;
 
 export type CampaignConfig = typeof campaignConfig.$inferSelect;
 export type InsertCampaignConfig = z.infer<typeof insertCampaignConfigSchema>;
+
+export type SocialPost = typeof socialPosts.$inferSelect;
+export type InsertSocialPost = z.infer<typeof insertSocialPostSchema>;
+
+export type Customer = typeof customers.$inferSelect;
+export type InsertCustomer = z.infer<typeof insertCustomerSchema>;
+
+export type SecurityLog = typeof securityLogs.$inferSelect;
+export type InsertSecurityLog = z.infer<typeof insertSecurityLogSchema>;
+
+export type Payment = typeof payments.$inferSelect;
+export type InsertPayment = z.infer<typeof insertPaymentSchema>;
+
+export type Inventory = typeof inventory.$inferSelect;
+export type InsertInventory = z.infer<typeof insertInventorySchema>;
+
+export type Analytics = typeof analytics.$inferSelect;
+export type InsertAnalytics = z.infer<typeof insertAnalyticsSchema>;
+
+export type SiteConfig = typeof siteConfig.$inferSelect;
+export type InsertSiteConfig = z.infer<typeof insertSiteConfigSchema>;

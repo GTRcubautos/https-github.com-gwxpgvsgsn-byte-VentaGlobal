@@ -106,9 +106,9 @@ export default function Motorcycles() {
                   </h3>
                   {motorcycle.specs && (
                     <p className="text-gray-600 mb-4" data-testid={`motorcycle-specs-${motorcycle.id}`}>
-                      {typeof motorcycle.specs === 'object' ? 
-                        Object.values(motorcycle.specs).join(', ') : 
-                        motorcycle.specs}
+                      {typeof motorcycle.specs === 'object' && motorcycle.specs !== null ? 
+                        Object.values(motorcycle.specs as Record<string, any>).join(', ') : 
+                        String(motorcycle.specs)}
                     </p>
                   )}
                   <ProductCard product={motorcycle} />
