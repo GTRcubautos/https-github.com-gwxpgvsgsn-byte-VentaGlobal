@@ -2,53 +2,53 @@ import { Link } from 'wouter';
 
 export default function Footer() {
   return (
-    <footer className="bg-secondary text-white py-12" data-testid="footer">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+    <footer className="bg-black border-t border-green-500/30 text-white py-16 cyber-grid" data-testid="footer">
+      <div className="container mx-auto px-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           <div>
-            <h3 className="text-primary text-xl font-bold mb-4">TiendaOnline</h3>
-            <p className="text-gray-300">
-              Tu tienda de confianza para productos de calidad a precios increíbles.
+            <h3 className="neon-text text-2xl font-bold mb-6 font-display">🏎️ GTR CUBAUTOS</h3>
+            <p className="text-gray-300 leading-relaxed">
+              El futuro del automovilismo premium. Tecnología de vanguardia para conductores élite.
             </p>
           </div>
           
           <div>
-            <h4 className="text-lg font-semibold mb-4">Enlaces Rápidos</h4>
-            <ul className="space-y-2">
+            <h4 className="text-green-400 text-lg font-semibold mb-6 uppercase tracking-wider">Enlaces Rápidos</h4>
+            <ul className="space-y-3">
               <li>
                 <Link 
                   href="/productos" 
-                  className="text-gray-300 hover:text-primary transition-colors"
+                  className="cyber-link text-gray-300"
                   data-testid="footer-link-productos"
                 >
-                  Productos
+                  🛒 Productos
                 </Link>
               </li>
               <li>
                 <Link 
                   href="/autos" 
-                  className="text-gray-300 hover:text-primary transition-colors"
+                  className="cyber-link text-gray-300"
                   data-testid="footer-link-autos"
                 >
-                  Autos
+                  🏎️ Autos GTR
                 </Link>
               </li>
               <li>
                 <Link 
                   href="/motos" 
-                  className="text-gray-300 hover:text-primary transition-colors"
+                  className="cyber-link text-gray-300"
                   data-testid="footer-link-motos"
                 >
-                  Motos
+                  🏍️ Motocicletas
                 </Link>
               </li>
               <li>
                 <Link 
                   href="/juegos" 
-                  className="text-gray-300 hover:text-primary transition-colors"
+                  className="cyber-link text-gray-300"
                   data-testid="footer-link-juegos"
                 >
-                  Juegos
+                  🎮 Juegos
                 </Link>
               </li>
             </ul>

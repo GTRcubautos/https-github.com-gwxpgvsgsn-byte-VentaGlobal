@@ -41,17 +41,17 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-secondary sticky top-0 z-50 shadow-lg" data-testid="header">
+    <header className="bg-black/80 backdrop-blur-lg border-b border-green-500/30 sticky top-0 z-50 shadow-lg cyber-grid" data-testid="header">
       <div className="container mx-auto px-4 py-4">
         <div className="flex flex-col lg:flex-row items-center justify-between">
           <div className="flex items-center justify-between w-full lg:w-auto mb-4 lg:mb-0">
-            <Link href="/" className="text-primary text-2xl font-bold" data-testid="logo">
-              TiendaOnline
+            <Link href="/" className="text-white text-3xl font-bold neon-text neon-pulse font-display" data-testid="logo">
+              🏎️ GTR CUBAUTOS
             </Link>
             <Button
               variant="ghost"
               size="sm"
-              className="lg:hidden text-white"
+              className="lg:hidden text-green-400 hover:text-green-300 hover:bg-green-500/20"
               onClick={toggleMobileMenu}
               data-testid="mobile-menu-toggle"
             >
@@ -60,13 +60,13 @@ export default function Header() {
           </div>
           
           <nav className={`${isMobileMenuOpen ? 'block' : 'hidden'} lg:flex w-full lg:w-auto`} data-testid="navigation">
-            <ul className="flex flex-col lg:flex-row space-y-3 lg:space-y-0 lg:space-x-6">
+            <ul className="flex flex-col lg:flex-row space-y-3 lg:space-y-0 lg:space-x-8">
               {navigation.map((item) => (
                 <li key={item.id}>
                   <Link
                     href={item.href}
-                    className={`text-white hover:text-primary transition-colors block ${
-                      location === item.href ? 'text-primary' : ''
+                    className={`cyber-link font-semibold block ${
+                      location === item.href ? 'text-green-400' : 'text-white'
                     }`}
                     data-testid={`nav-${item.id}`}
                   >
@@ -81,15 +81,15 @@ export default function Header() {
             <form onSubmit={handleSearch} className="flex flex-1 lg:flex-none">
               <Input
                 type="text"
-                placeholder="Buscar productos..."
+                placeholder="🔍 Buscar productos futuristas..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="rounded-r-none flex-1 lg:w-64"
+                className="cyber-input rounded-r-none flex-1 lg:w-64 text-white placeholder:text-gray-400"
                 data-testid="search-input"
               />
               <Button
                 type="submit"
-                className="bg-primary hover:bg-primary/90 rounded-l-none"
+                className="btn-neon rounded-l-none px-6"
                 data-testid="search-button"
               >
                 <Search className="h-4 w-4" />
@@ -99,14 +99,14 @@ export default function Header() {
             <Button
               variant="ghost"
               size="sm"
-              className="relative text-white hover:text-primary"
+              className="relative text-green-400 hover:text-green-300 hover:bg-green-500/20 neon-glow"
               onClick={openCartModal}
               data-testid="cart-button"
             >
               <ShoppingCart className="h-5 w-5" />
               {cartItemCount > 0 && (
                 <span 
-                  className="absolute -top-2 -right-2 bg-primary text-white rounded-full w-5 h-5 flex items-center justify-center text-xs"
+                  className="absolute -top-2 -right-2 bg-green-500 text-black rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shadow-neon"
                   data-testid="cart-count"
                 >
                   {cartItemCount}

@@ -98,23 +98,24 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground" data-testid="home-page">
+    <div className="min-h-screen bg-black text-white scanline-effect" data-testid="home-page">
       {/* Hero Section */}
-      <section className="relative py-24 overflow-hidden" data-testid="hero-section">
-        <div className="absolute inset-0 bg-gradient-to-br from-background via-muted/10 to-background"></div>
+      <section className="relative py-32 overflow-hidden cyber-grid" data-testid="hero-section">
+        <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900/50 to-black"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-green-500/5 via-transparent to-blue-500/5"></div>
         <div className="relative container mx-auto px-6">
-          <div className="max-w-4xl mx-auto text-center">
-            <Badge className="mb-6 text-sm px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white border-0 rounded-full" data-testid="hero-badge">
-              🚗 ENVÍO GRATIS en compras +$500
+          <div className="max-w-5xl mx-auto text-center">
+            <Badge className="mb-8 text-lg px-8 py-4 bg-green-500/20 text-green-400 border border-green-500/30 rounded-full neon-glow backdrop-blur-sm" data-testid="hero-badge">
+              🚗 ENVÍO GRATIS en compras +$500 • TECNOLOGÍA DEL FUTURO
             </Badge>
-            <h1 className="text-6xl md:text-8xl font-bold mb-6 tracking-tight" data-testid="hero-title">
-              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-500 bg-clip-text text-transparent">GTR</span>
-              <span className="text-foreground"> CUBAUTOS</span>
+            <h1 className="text-7xl md:text-9xl font-bold mb-8 tracking-tight font-display" data-testid="hero-title">
+              <span className="neon-text neon-pulse">GTR</span>
+              <span className="text-white"> CUBAUTOS</span>
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground mb-8 leading-relaxed max-w-3xl mx-auto" data-testid="hero-subtitle">
-              Vehículos premium y tecnología de vanguardia. 
+            <p className="text-xl md:text-3xl text-gray-300 mb-12 leading-relaxed max-w-4xl mx-auto" data-testid="hero-subtitle">
+              🏎️ Vehículos premium y tecnología de vanguardia. 
               <br className="hidden md:block" />
-              El futuro del automovilismo está aquí.
+              <span className="text-green-400">El futuro del automovilismo está aquí.</span>
             </p>
             <div className="max-w-lg mx-auto mb-12">
               <SearchBar onSearch={setSearchTerm} />
@@ -124,33 +125,33 @@ export default function Home() {
       </section>
 
       {/* Promociones Banner */}
-      <section className="py-4 bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-500 text-white" data-testid="promo-banner">
+      <section className="py-6 bg-gradient-to-r from-green-600 via-cyan-500 to-blue-600 text-black border-y border-green-500/30 shadow-neon" data-testid="promo-banner">
         <div className="container mx-auto px-6">
-          <div className="flex items-center justify-center space-x-8 text-sm font-medium animate-pulse">
+          <div className="flex items-center justify-center space-x-8 text-sm font-bold uppercase tracking-wider neon-pulse">
             <span>🚚 ENVÍO GRATIS +$500</span>
-            <span>•</span>
+            <span className="text-green-900">•</span>
             <span>⚡ FINANCIAMIENTO 0%</span>
-            <span>•</span>
+            <span className="text-green-900">•</span>
             <span>🎯 OFERTAS LIMITADAS</span>
-            <span>•</span>
+            <span className="text-green-900">•</span>
             <span>🔧 GARANTÍA EXTENDIDA</span>
           </div>
         </div>
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 bg-gradient-to-b from-background to-muted/20" data-testid="stats-section">
+      <section className="py-20 bg-gradient-to-b from-black to-gray-900/50 cyber-grid" data-testid="stats-section">
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => {
               const StatIcon = stat.icon;
               return (
                 <div key={index} className="text-center group" data-testid={`stat-${index}`}>
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-r from-blue-500/20 to-purple-500/20 mb-4 group-hover:from-blue-500 group-hover:to-purple-500 group-hover:text-white transition-all duration-300 backdrop-blur-sm border border-blue-200/20">
-                    <StatIcon className="h-7 w-7" />
+                  <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-r from-green-500/20 to-cyan-500/20 mb-6 group-hover:from-green-500 group-hover:to-cyan-500 group-hover:text-black transition-all duration-500 backdrop-blur-sm border border-green-500/30 neon-glow">
+                    <StatIcon className="h-8 w-8 text-green-400 group-hover:text-black" />
                   </div>
-                  <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-1">{stat.value}</div>
-                  <div className="text-sm text-muted-foreground uppercase tracking-wider">{stat.label}</div>
+                  <div className="text-4xl md:text-5xl font-bold neon-text font-display mb-2">{stat.value}</div>
+                  <div className="text-sm text-gray-400 uppercase tracking-wider font-semibold">{stat.label}</div>
                 </div>
               );
             })}
@@ -159,48 +160,50 @@ export default function Home() {
       </section>
 
       {/* Categories Section */}
-      <section className="py-20 relative overflow-hidden" data-testid="categories-section">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-purple-50/30 to-cyan-50/50"></div>
+      <section className="py-24 relative overflow-hidden bg-gradient-to-br from-black via-gray-900 to-black" data-testid="categories-section">
+        <div className="absolute inset-0 cyber-grid opacity-30"></div>
         <div className="relative container mx-auto px-6">
-          <div className="text-center mb-16">
-            <Badge className="mb-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0">
-              CATEGORÍAS PREMIUM
+          <div className="text-center mb-20">
+            <Badge className="mb-6 bg-green-500/20 text-green-400 border border-green-500/30 neon-glow px-8 py-3 text-lg">
+              CATEGORÍAS PREMIUM GTR
             </Badge>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
-              Vehículos de Élite
+            <h2 className="text-5xl md:text-7xl font-bold mb-6 font-display">
+              <span className="neon-text">Vehículos</span>
+              <span className="text-white"> de Élite</span>
             </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Desde deportivos de alta gama hasta tecnología automotriz de vanguardia
+            <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+              🏎️ Desde deportivos de alta gama hasta <span className="text-green-400">tecnología automotriz de vanguardia</span>
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-7xl mx-auto">
             {categories.map((category) => {
               const IconComponent = category.icon;
               return (
                 <Link key={category.id} href={category.path}>
-                  <Card className="group cursor-pointer transition-all duration-700 hover:scale-105 border-0 overflow-hidden shadow-2xl hover:shadow-3xl bg-white/80 backdrop-blur-sm" data-testid={`category-${category.id}`}>
-                    <div className={`h-40 bg-gradient-to-br ${category.gradient} relative overflow-hidden`}>
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                      <div className="absolute top-4 right-4">
-                        <Badge className="bg-white/20 text-white border-white/30 backdrop-blur-sm">
+                  <Card className="cyber-card group cursor-pointer transition-all duration-700 hover:scale-105 hover:shadow-neon overflow-hidden bg-gradient-to-br from-black/80 to-gray-900/80 backdrop-blur-lg" data-testid={`category-${category.id}`}>
+                    <div className={`h-48 bg-gradient-to-br ${category.gradient} relative overflow-hidden`}>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                      <div className="absolute inset-0 cyber-grid opacity-20"></div>
+                      <div className="absolute top-6 right-6">
+                        <Badge className="bg-green-500/80 text-black border-green-400 backdrop-blur-sm font-bold px-4 py-2 neon-glow">
                           {category.offer}
                         </Badge>
                       </div>
-                      <div className="absolute bottom-4 left-6">
-                        <IconComponent className="h-10 w-10 text-white drop-shadow-lg" />
+                      <div className="absolute bottom-6 left-6">
+                        <IconComponent className="h-12 w-12 text-green-400 drop-shadow-2xl neon-glow" />
                       </div>
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent group-hover:via-white/10 transition-all duration-700"></div>
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-green-500/10 to-transparent group-hover:via-green-500/20 transition-all duration-700"></div>
                     </div>
-                    <CardContent className="p-6 bg-gradient-to-b from-white to-gray-50/50">
-                      <h3 className="text-xl font-bold mb-2 text-gray-900 group-hover:text-blue-600 transition-colors">{category.name}</h3>
-                      <p className="text-gray-600 mb-4 text-sm leading-relaxed">{category.description}</p>
+                    <CardContent className="p-8 bg-gradient-to-b from-black/90 to-gray-900/90">
+                      <h3 className="text-2xl font-bold mb-3 text-white group-hover:text-green-400 transition-colors font-display">{category.name}</h3>
+                      <p className="text-gray-300 mb-6 leading-relaxed">{category.description}</p>
                       <div className="flex items-center justify-between">
-                        <Badge className="bg-gradient-to-r from-blue-500 to-purple-500 text-white border-0 text-xs px-3 py-1">
+                        <Badge className="bg-green-500/20 text-green-400 border border-green-500/30 px-4 py-2 font-semibold">
                           {category.count} modelos
                         </Badge>
-                        <div className="flex items-center text-blue-600 group-hover:text-purple-600 transition-colors">
-                          <span className="text-sm font-medium mr-1">Explorar</span>
-                          <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-all duration-300" />
+                        <div className="flex items-center text-green-400 group-hover:text-green-300 transition-colors">
+                          <span className="font-semibold mr-2 uppercase tracking-wider">Explorar</span>
+                          <ArrowRight className="h-5 w-5 group-hover:translate-x-2 transition-all duration-300" />
                         </div>
                       </div>
                     </CardContent>
