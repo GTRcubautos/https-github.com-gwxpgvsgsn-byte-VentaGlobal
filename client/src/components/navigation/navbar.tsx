@@ -36,8 +36,8 @@ export function NavBar() {
               <div className="w-8 h-8 bg-foreground rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
                 <Zap className="h-5 w-5 text-background" />
               </div>
-              <span className="text-xl font-bold text-foreground tracking-tight">
-                TiendaOnline
+              <span className="text-xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-500 bg-clip-text text-transparent tracking-tight">
+                GTR CUBAUTOS
               </span>
             </div>
           </Link>
