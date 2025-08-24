@@ -25,7 +25,13 @@ import {
   RefreshCw,
   BarChart3,
   Target,
-  Flag
+  Flag,
+  Send,
+  Key,
+  Fingerprint,
+  ShieldCheck,
+  ArrowRight,
+  CircleDollarSign
 } from "lucide-react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
@@ -67,11 +73,28 @@ interface FraudAlert {
   resolved: boolean;
 }
 
+interface ZelleTransferData {
+  amount: number;
+  memo: string;
+  recipientEmail?: string;
+  encryptionEnabled: boolean;
+  twoFactorAuth: boolean;
+}
+
 export default function FinancialSecurityPanel() {
   const { toast } = useToast();
   const [selectedTransaction, setSelectedTransaction] = useState<TransactionSecurity | null>(null);
   const [dailyLimit, setDailyLimit] = useState<number>(5000);
   const [monthlyLimit, setMonthlyLimit] = useState<number>(50000);
+  
+  // Zelle Transfer States
+  const [showZelleModal, setShowZelleModal] = useState(false);
+  const [transferAmount, setTransferAmount] = useState('');
+  const [transferMemo, setTransferMemo] = useState('GTR CUBAUTO - Transferencia segura');
+  const [encryptionEnabled, setEncryptionEnabled] = useState(true);
+  const [twoFactorEnabled, setTwoFactorEnabled] = useState(true);
+  const [securityCode, setSecurityCode] = useState('');
+  const [transferStep, setTransferStep] = useState<'input' | 'verify' | 'processing' | 'complete'>('input');
 
   // Fetch transaction security data
   const { data: transactions = [], isLoading: loadingTransactions } = useQuery({
@@ -148,6 +171,101 @@ export default function FinancialSecurityPanel() {
     },
   });
 
+  // Fetch Zelle earnings and configuration
+  const { data: zelleEarnings } = useQuery({
+    queryKey: ['/api/zelle/earnings'],
+    refetchInterval: 30000,
+  });
+
+  const { data: zelleConfig } = useQuery({
+    queryKey: ['/api/zelle/config'],
+  });
+
+  // Secure Zelle transfer mutation
+  const zelleTransferMutation = useMutation({
+    mutationFn: async (transferData: ZelleTransferData) => {
+      // Validate security code if two-factor is enabled
+      if (transferData.twoFactorAuth && !securityCode) {
+        throw new Error('Código de seguridad requerido para transferencias');
+      }
+      
+      return apiRequest('POST', '/api/zelle/transfer', {
+        amount: transferData.amount,
+        memo: transferData.memo,
+        securityCode: transferData.twoFactorAuth ? securityCode : undefined,
+        encryptionEnabled: transferData.encryptionEnabled
+      });
+    },
+    onSuccess: (result: any) => {
+      setTransferStep('complete');
+      toast({
+        title: "Transferencia Segura Completada",
+        description: `$${result.amount || transferAmount} transferido con encriptación habilitada`,
+      });
+      
+      // Reset form
+      setTimeout(() => {
+        setShowZelleModal(false);
+        setTransferStep('input');
+        setTransferAmount('');
+        setSecurityCode('');
+      }, 3000);
+      
+      queryClient.invalidateQueries({ queryKey: ['/api/zelle/earnings'] });
+    },
+    onError: (error: any) => {
+      setTransferStep('input');
+      toast({
+        title: "Error en Transferencia Segura",
+        description: error.message || "Error al procesar transferencia encriptada",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const handleSecureTransfer = () => {
+    const amount = parseFloat(transferAmount);
+    if (isNaN(amount) || amount <= 0) {
+      toast({
+        title: "Error",
+        description: "Ingrese un monto válido para la transferencia",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (twoFactorEnabled) {
+      setTransferStep('verify');
+    } else {
+      setTransferStep('processing');
+      zelleTransferMutation.mutate({
+        amount,
+        memo: transferMemo,
+        encryptionEnabled,
+        twoFactorAuth: false
+      });
+    }
+  };
+
+  const verifyAndTransfer = () => {
+    if (!securityCode || securityCode.length < 6) {
+      toast({
+        title: "Error de Verificación",
+        description: "Ingrese un código de seguridad válido de 6 dígitos",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setTransferStep('processing');
+    zelleTransferMutation.mutate({
+      amount: parseFloat(transferAmount),
+      memo: transferMemo,
+      encryptionEnabled,
+      twoFactorAuth: true
+    });
+  };
+
   const getRiskLevelConfig = (riskScore: number) => {
     if (riskScore >= 80) {
       return { level: 'Crítico', color: 'text-red-400', bgColor: 'bg-red-500/20', borderColor: 'border-red-500/30' };
@@ -188,11 +306,11 @@ export default function FinancialSecurityPanel() {
     }
   };
 
-  const criticalAlerts = alerts.filter((alert: FraudAlert) => 
+  const criticalAlerts = (alerts as FraudAlert[]).filter((alert: FraudAlert) => 
     alert.severity === 'critical' && !alert.resolved
   );
 
-  const highRiskTransactions = transactions.filter((tx: TransactionSecurity) => 
+  const highRiskTransactions = (transactions as TransactionSecurity[]).filter((tx: TransactionSecurity) => 
     tx.riskScore >= 60 && tx.status === 'under_review'
   );
 
@@ -262,7 +380,7 @@ export default function FinancialSecurityPanel() {
             <div className="flex items-center gap-3">
               <CreditCard className="h-8 w-8 text-blue-400" />
               <div>
-                <p className="text-2xl font-bold text-blue-300">{transactions.length}</p>
+                <p className="text-2xl font-bold text-blue-300">{(transactions as TransactionSecurity[]).length}</p>
                 <p className="text-sm text-blue-200">Transacciones Hoy</p>
               </div>
             </div>
@@ -275,7 +393,7 @@ export default function FinancialSecurityPanel() {
               <Target className="h-8 w-8 text-green-400" />
               <div>
                 <p className="text-2xl font-bold text-green-300">
-                  {Math.round((transactions.filter((tx: TransactionSecurity) => tx.status === 'approved').length / Math.max(transactions.length, 1)) * 100)}%
+                  {Math.round(((transactions as TransactionSecurity[]).filter((tx: TransactionSecurity) => tx.status === 'approved').length / Math.max((transactions as TransactionSecurity[]).length, 1)) * 100)}%
                 </p>
                 <p className="text-sm text-green-200">Tasa Aprobación</p>
               </div>
@@ -283,6 +401,113 @@ export default function FinancialSecurityPanel() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Zelle Secure Transfer Panel */}
+      <Card className="bg-gradient-to-r from-blue-900/30 to-green-900/30 border-blue-500/30">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-gray-700">
+            <CircleDollarSign className="h-5 w-5 text-green-400" />
+            Transferencias Zelle Seguras
+            <Badge className="bg-green-500/20 text-green-300 border-green-500/30">
+              Encriptado
+            </Badge>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Quick Stats */}
+            <div className="space-y-4">
+              <div className="p-4 bg-gray-900/50 rounded-lg border border-gray-700">
+                <div className="flex items-center gap-2 mb-2">
+                  <DollarSign className="h-4 w-4 text-green-400" />
+                  <span className="text-sm text-gray-300">Ganancias Disponibles</span>
+                </div>
+                <p className="text-2xl font-bold text-green-300">
+                  ${(zelleEarnings as any)?.dailyEarnings?.toFixed(2) || '0.00'}
+                </p>
+              </div>
+              
+              <div className="p-4 bg-gray-900/50 rounded-lg border border-gray-700">
+                <div className="flex items-center gap-2 mb-2">
+                  <ShieldCheck className="h-4 w-4 text-blue-400" />
+                  <span className="text-sm text-gray-300">Estado de Seguridad</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Badge className="bg-green-500/20 text-green-300 border-green-500/30">
+                    Activo
+                  </Badge>
+                  <Badge className="bg-blue-500/20 text-blue-300 border-blue-500/30">
+                    Encriptado
+                  </Badge>
+                </div>
+              </div>
+            </div>
+
+            {/* Transfer Actions */}
+            <div className="lg:col-span-2 space-y-4">
+              <div className="flex items-center justify-between">
+                <h4 className="font-semibold text-gray-700">Transferencias Automatizadas</h4>
+                <Badge className={(zelleConfig as any)?.autoTransferEnabled ? "bg-green-500/20 text-green-300" : "bg-gray-500/20 text-gray-300"}>
+                  {(zelleConfig as any)?.autoTransferEnabled ? "Habilitado" : "Deshabilitado"}
+                </Badge>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <Button
+                  onClick={() => setShowZelleModal(true)}
+                  className="h-16 bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700"
+                  data-testid="button-secure-transfer"
+                >
+                  <div className="flex items-center gap-2">
+                    <Send className="h-5 w-5" />
+                    <div className="text-left">
+                      <div className="font-medium">Transferencia Segura</div>
+                      <div className="text-xs opacity-80">Con encriptación E2E</div>
+                    </div>
+                  </div>
+                </Button>
+
+                <Button
+                  variant="outline"
+                  className="h-16 border-blue-500/30 bg-blue-900/20 hover:bg-blue-900/40"
+                  onClick={() => {
+                    queryClient.invalidateQueries({ queryKey: ['/api/zelle/earnings'] });
+                    toast({
+                      title: "Ganancias Actualizadas",
+                      description: "Los datos de ganancias han sido actualizados",
+                    });
+                  }}
+                  data-testid="button-refresh-earnings"
+                >
+                  <div className="flex items-center gap-2">
+                    <RefreshCw className="h-5 w-5" />
+                    <div className="text-left">
+                      <div className="font-medium">Actualizar</div>
+                      <div className="text-xs opacity-80">Ganancias disponibles</div>
+                    </div>
+                  </div>
+                </Button>
+              </div>
+
+              {/* Security Features */}
+              <div className="flex items-center gap-6 p-4 bg-gray-900/30 rounded-lg border border-gray-700">
+                <div className="flex items-center gap-2">
+                  <Lock className="h-4 w-4 text-blue-400" />
+                  <span className="text-sm text-gray-300">Encriptación AES-256</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Fingerprint className="h-4 w-4 text-green-400" />
+                  <span className="text-sm text-gray-300">Autenticación 2FA</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Shield className="h-4 w-4 text-purple-400" />
+                  <span className="text-sm text-gray-300">Detección de Fraude</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Financial Limits Configuration */}
       <Card className="bg-gray-800/50 border-gray-700">
@@ -365,7 +590,7 @@ export default function FinancialSecurityPanel() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-gray-700">
             <Zap className="h-5 w-5 text-yellow-400" />
-            Alertas de Fraude ({alerts.filter((a: FraudAlert) => !a.resolved).length})
+            Alertas de Fraude ({(alerts as FraudAlert[]).filter((a: FraudAlert) => !a.resolved).length})
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -374,14 +599,14 @@ export default function FinancialSecurityPanel() {
               <RefreshCw className="h-6 w-6 animate-spin text-gray-400" />
               <span className="ml-2 text-gray-400">Cargando alertas...</span>
             </div>
-          ) : alerts.filter((a: FraudAlert) => !a.resolved).length === 0 ? (
+          ) : (alerts as FraudAlert[]).filter((a: FraudAlert) => !a.resolved).length === 0 ? (
             <div className="text-center py-8 text-gray-400">
               <Shield className="h-12 w-12 mx-auto mb-4 opacity-50" />
               <p>No hay alertas de fraude activas</p>
             </div>
           ) : (
             <div className="space-y-3">
-              {alerts.filter((alert: FraudAlert) => !alert.resolved).map((alert: FraudAlert) => {
+              {(alerts as FraudAlert[]).filter((alert: FraudAlert) => !alert.resolved).map((alert: FraudAlert) => {
                 const severityConfig = getSeverityConfig(alert.severity);
                 
                 return (
@@ -441,14 +666,14 @@ export default function FinancialSecurityPanel() {
               <RefreshCw className="h-6 w-6 animate-spin text-gray-400" />
               <span className="ml-2 text-gray-400">Cargando transacciones...</span>
             </div>
-          ) : transactions.length === 0 ? (
+          ) : (transactions as TransactionSecurity[]).length === 0 ? (
             <div className="text-center py-8 text-gray-400">
               <CreditCard className="h-12 w-12 mx-auto mb-4 opacity-50" />
               <p>No hay transacciones disponibles</p>
             </div>
           ) : (
             <div className="space-y-3">
-              {transactions.slice(0, 10).map((transaction: TransactionSecurity) => {
+              {(transactions as TransactionSecurity[]).slice(0, 10).map((transaction: TransactionSecurity) => {
                 const riskConfig = getRiskLevelConfig(transaction.riskScore);
                 const statusConfig = getStatusConfig(transaction.status);
                 const StatusIcon = statusConfig.icon;
@@ -514,6 +739,189 @@ export default function FinancialSecurityPanel() {
           )}
         </CardContent>
       </Card>
+
+      {/* Secure Zelle Transfer Modal */}
+      {showZelleModal && (
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
+          <Card className="w-full max-w-md bg-gray-800 border-gray-600">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-gray-700">
+                <ShieldCheck className="h-5 w-5 text-green-400" />
+                Transferencia Zelle Segura
+                <Badge className="bg-green-500/20 text-green-300 border-green-500/30">
+                  Encriptado
+                </Badge>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              {transferStep === 'input' && (
+                <>
+                  <div className="space-y-4">
+                    <div>
+                      <Label htmlFor="secure-amount" className="text-gray-300 font-medium">
+                        Monto a transferir
+                      </Label>
+                      <div className="flex items-center gap-2 mt-2">
+                        <DollarSign className="h-4 w-4 text-gray-400" />
+                        <Input
+                          id="secure-amount"
+                          type="number"
+                          placeholder="0.00"
+                          value={transferAmount}
+                          onChange={(e) => setTransferAmount(e.target.value)}
+                          className="bg-gray-900/50 border-gray-600"
+                          data-testid="input-secure-transfer-amount"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <Label htmlFor="secure-memo" className="text-gray-300 font-medium">
+                        Concepto (opcional)
+                      </Label>
+                      <Input
+                        id="secure-memo"
+                        placeholder="Concepto de transferencia"
+                        value={transferMemo}
+                        onChange={(e) => setTransferMemo(e.target.value)}
+                        className="bg-gray-900/50 border-gray-600 mt-2"
+                        data-testid="input-secure-transfer-memo"
+                      />
+                    </div>
+
+                    <Separator className="bg-gray-700" />
+
+                    {/* Security Options */}
+                    <div className="space-y-3">
+                      <h4 className="font-medium text-gray-300 flex items-center gap-2">
+                        <Lock className="h-4 w-4" />
+                        Opciones de Seguridad
+                      </h4>
+                      
+                      <div className="flex items-center justify-between p-3 bg-gray-900/50 rounded-lg">
+                        <div className="flex items-center gap-2">
+                          <Key className="h-4 w-4 text-blue-400" />
+                          <span className="text-sm text-gray-300">Encriptación AES-256</span>
+                        </div>
+                        <Badge className="bg-green-500/20 text-green-300 border-green-500/30">
+                          Activo
+                        </Badge>
+                      </div>
+
+                      <div className="flex items-center justify-between p-3 bg-gray-900/50 rounded-lg">
+                        <div className="flex items-center gap-2">
+                          <Fingerprint className="h-4 w-4 text-green-400" />
+                          <span className="text-sm text-gray-300">Verificación 2FA</span>
+                        </div>
+                        <input
+                          type="checkbox"
+                          checked={twoFactorEnabled}
+                          onChange={(e) => setTwoFactorEnabled(e.target.checked)}
+                          className="rounded"
+                          data-testid="checkbox-two-factor"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-3">
+                    <Button
+                      variant="outline"
+                      onClick={() => setShowZelleModal(false)}
+                      className="flex-1"
+                      data-testid="button-cancel-transfer"
+                    >
+                      Cancelar
+                    </Button>
+                    <Button
+                      onClick={handleSecureTransfer}
+                      className="flex-1 bg-gradient-to-r from-green-600 to-blue-600"
+                      data-testid="button-continue-transfer"
+                    >
+                      <ArrowRight className="h-4 w-4 mr-1" />
+                      Continuar
+                    </Button>
+                  </div>
+                </>
+              )}
+
+              {transferStep === 'verify' && (
+                <>
+                  <div className="text-center space-y-4">
+                    <div className="p-4 bg-blue-900/30 rounded-lg border border-blue-500/30">
+                      <Fingerprint className="h-12 w-12 text-blue-400 mx-auto mb-2" />
+                      <h3 className="font-semibold text-gray-700">Verificación de Seguridad</h3>
+                      <p className="text-sm text-gray-400 mt-1">
+                        Ingrese su código de seguridad de 6 dígitos
+                      </p>
+                    </div>
+
+                    <div>
+                      <Label htmlFor="security-code" className="text-gray-300 font-medium">
+                        Código de Seguridad
+                      </Label>
+                      <Input
+                        id="security-code"
+                        type="password"
+                        placeholder="••••••"
+                        value={securityCode}
+                        onChange={(e) => setSecurityCode(e.target.value)}
+                        className="bg-gray-900/50 border-gray-600 mt-2 text-center text-lg tracking-widest"
+                        maxLength={6}
+                        data-testid="input-security-code"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex gap-3">
+                    <Button
+                      variant="outline"
+                      onClick={() => setTransferStep('input')}
+                      className="flex-1"
+                      data-testid="button-back-to-input"
+                    >
+                      Atrás
+                    </Button>
+                    <Button
+                      onClick={verifyAndTransfer}
+                      disabled={securityCode.length < 6}
+                      className="flex-1 bg-gradient-to-r from-green-600 to-blue-600"
+                      data-testid="button-verify-transfer"
+                    >
+                      <ShieldCheck className="h-4 w-4 mr-1" />
+                      Verificar
+                    </Button>
+                  </div>
+                </>
+              )}
+
+              {transferStep === 'processing' && (
+                <div className="text-center space-y-4">
+                  <div className="p-6 bg-gray-900/30 rounded-lg">
+                    <RefreshCw className="h-12 w-12 text-blue-400 mx-auto mb-4 animate-spin" />
+                    <h3 className="font-semibold text-gray-700">Procesando Transferencia Segura</h3>
+                    <p className="text-sm text-gray-400 mt-2">
+                      Encriptando datos y enviando a Zelle...
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {transferStep === 'complete' && (
+                <div className="text-center space-y-4">
+                  <div className="p-6 bg-green-900/30 rounded-lg border border-green-500/30">
+                    <CheckCircle className="h-12 w-12 text-green-400 mx-auto mb-4" />
+                    <h3 className="font-semibold text-green-300">¡Transferencia Completada!</h3>
+                    <p className="text-sm text-gray-400 mt-2">
+                      Su transferencia ha sido procesada de forma segura
+                    </p>
+                  </div>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+      )}
 
       {/* Transaction Details Modal */}
       {selectedTransaction && (

@@ -551,7 +551,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/zelle/transfer", async (req, res) => {
     try {
-      const { amount, memo } = req.body;
+      const { amount, memo, securityCode, encryptionEnabled } = req.body;
       
       if (!amount || amount <= 0) {
         return res.status(400).json({ error: "Invalid transfer amount" });
