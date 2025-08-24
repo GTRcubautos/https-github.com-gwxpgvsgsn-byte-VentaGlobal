@@ -5,7 +5,7 @@ import SearchBar from "@/components/products/search-bar";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useStore } from "@/lib/store";
-import { Car, Bike, Smartphone, Award, Zap, Shield, Star, ArrowRight, TrendingUp, Users, ShoppingBag } from "lucide-react";
+import { Car, Bike, Smartphone, Award, Zap, Shield, Star, ArrowRight, TrendingUp, Users, ShoppingBag, Crown } from "lucide-react";
 import { Link } from "wouter";
 import type { Product } from "@shared/schema";
 import heroImage from "@assets/generated_images/Luxury_car_mountain_landscape_42bbaabd.png";
@@ -120,9 +120,17 @@ export default function Home() {
               <p className="text-lg md:text-xl text-gray-100 mb-12 leading-relaxed max-w-4xl mx-auto" data-testid="hero-description">
                 Todo para tu vehículo en un solo lugar. Encuentra los mejores repuestos y accesorios con garantía de calidad y los precios más competitivos del mercado.
               </p>
-              <Button size="lg" className="text-lg px-10 py-4 shadow-red" data-testid="hero-cta">
-                Ver Ofertas de la Semana
-              </Button>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button size="lg" className="text-lg px-10 py-4 bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 shadow-red" data-testid="hero-cta">
+                  Ver Ofertas de la Semana
+                </Button>
+                <Button size="lg" variant="outline" className="text-lg px-10 py-4 border-yellow-500 text-yellow-400 hover:bg-yellow-500 hover:text-black" asChild data-testid="vip-cta">
+                  <Link href="/vip">
+                    <Crown className="h-5 w-5 mr-2" />
+                    Hacerse VIP
+                  </Link>
+                </Button>
+              </div>
             </div>
           </div>
         </div>
@@ -171,7 +179,7 @@ export default function Home() {
               CATEGORÍAS DE REPUESTOS
             </Badge>
             <div className="flex justify-center mb-6">
-              <Button size="lg" className="text-3xl md:text-5xl font-bold px-12 py-6 h-auto">
+              <Button size="lg" className="text-3xl md:text-5xl font-bold px-12 py-6 h-auto bg-gradient-to-r from-green-600 to-green-800 hover:from-green-700 hover:to-green-900 shadow-green">
                 Repuestos de Calidad
               </Button>
             </div>
@@ -222,7 +230,7 @@ export default function Home() {
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <div className="flex flex-col items-center gap-4">
-              <Button size="lg" className="text-2xl font-bold px-8 py-4">
+              <Button size="lg" className="text-2xl font-bold px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 shadow-blue">
                 Productos Destacados
               </Button>
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto">

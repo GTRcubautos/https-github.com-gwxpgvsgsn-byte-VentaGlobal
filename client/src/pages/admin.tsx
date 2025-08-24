@@ -576,7 +576,7 @@ export default function Admin() {
           {/* Sales Tab */}
           <TabsContent value="sales" className="space-y-6">
             <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold">Análisis de Ventas</h2>
+              <h2 className="text-2xl font-bold">Análisis de Ventas Avanzado</h2>
               <div className="flex gap-2">
                 <Select defaultValue="30d">
                   <SelectTrigger className="w-40">
@@ -586,7 +586,9 @@ export default function Admin() {
                     <SelectItem value="7d">Últimos 7 días</SelectItem>
                     <SelectItem value="30d">Últimos 30 días</SelectItem>
                     <SelectItem value="90d">Últimos 3 meses</SelectItem>
+                    <SelectItem value="6m">Últimos 6 meses</SelectItem>
                     <SelectItem value="1y">Último año</SelectItem>
+                    <SelectItem value="2y">Últimos 2 años</SelectItem>
                   </SelectContent>
                 </Select>
                 <Button variant="outline" size="sm">
@@ -597,61 +599,73 @@ export default function Admin() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
-              <Card>
+              <Card className="bg-gradient-to-br from-green-500/10 to-green-600/20 border-green-200/50">
                 <CardContent className="p-4">
                   <div className="flex items-center gap-2">
-                    <DollarSign className="h-8 w-8 text-green-500" />
+                    <DollarSign className="h-8 w-8 text-green-400" />
                     <div>
-                      <p className="text-2xl font-bold">${totalRevenue.toFixed(0)}</p>
-                      <p className="text-sm text-gray-500">Ingresos Totales</p>
-                      <div className="flex items-center text-xs text-green-600 mt-1">
+                      <p className="text-2xl font-bold text-green-300">${totalRevenue.toFixed(0)}</p>
+                      <p className="text-sm text-gray-400">Ingresos Totales</p>
+                      <div className="flex items-center text-xs text-green-400 mt-1">
                         <TrendingUp className="h-3 w-3 mr-1" />
                         +15.3% vs mes anterior
                       </div>
+                      <div className="text-xs text-gray-500 mt-1">
+                        Semana: $12,450 | Año: $145,670
+                      </div>
                     </div>
                   </div>
                 </CardContent>
               </Card>
-              <Card>
+              <Card className="bg-gradient-to-br from-blue-500/10 to-blue-600/20 border-blue-200/50">
                 <CardContent className="p-4">
                   <div className="flex items-center gap-2">
-                    <ShoppingCart className="h-8 w-8 text-blue-500" />
+                    <ShoppingCart className="h-8 w-8 text-blue-400" />
                     <div>
-                      <p className="text-2xl font-bold">{orders.length}</p>
-                      <p className="text-sm text-gray-500">Total Pedidos</p>
-                      <div className="flex items-center text-xs text-blue-600 mt-1">
+                      <p className="text-2xl font-bold text-blue-300">{orders.length}</p>
+                      <p className="text-sm text-gray-400">Total Pedidos</p>
+                      <div className="flex items-center text-xs text-blue-400 mt-1">
                         <TrendingUp className="h-3 w-3 mr-1" />
                         +8.7% vs mes anterior
                       </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-2">
-                    <Target className="h-8 w-8 text-purple-500" />
-                    <div>
-                      <p className="text-2xl font-bold">${averageOrderValue.toFixed(0)}</p>
-                      <p className="text-sm text-gray-500">Ticket Promedio</p>
-                      <div className="flex items-center text-xs text-purple-600 mt-1">
-                        <TrendingUp className="h-3 w-3 mr-1" />
-                        +5.2% vs mes anterior
+                      <div className="text-xs text-gray-500 mt-1">
+                        Semana: 45 | Año: 1,247
                       </div>
                     </div>
                   </div>
                 </CardContent>
               </Card>
-              <Card>
+              <Card className="bg-gradient-to-br from-purple-500/10 to-purple-600/20 border-purple-200/50">
                 <CardContent className="p-4">
                   <div className="flex items-center gap-2">
-                    <Activity className="h-8 w-8 text-orange-500" />
+                    <Target className="h-8 w-8 text-purple-400" />
                     <div>
-                      <p className="text-2xl font-bold">{conversionRate.toFixed(1)}%</p>
-                      <p className="text-sm text-gray-500">Tasa Conversión</p>
-                      <div className="flex items-center text-xs text-orange-600 mt-1">
+                      <p className="text-2xl font-bold text-purple-300">${averageOrderValue.toFixed(0)}</p>
+                      <p className="text-sm text-gray-400">Ticket Promedio</p>
+                      <div className="flex items-center text-xs text-purple-400 mt-1">
+                        <TrendingUp className="h-3 w-3 mr-1" />
+                        +5.2% vs mes anterior
+                      </div>
+                      <div className="text-xs text-gray-500 mt-1">
+                        Semana: $276 | Año: $117
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+              <Card className="bg-gradient-to-br from-orange-500/10 to-orange-600/20 border-orange-200/50">
+                <CardContent className="p-4">
+                  <div className="flex items-center gap-2">
+                    <Activity className="h-8 w-8 text-orange-400" />
+                    <div>
+                      <p className="text-2xl font-bold text-orange-300">{conversionRate.toFixed(1)}%</p>
+                      <p className="text-sm text-gray-400">Tasa Conversión</p>
+                      <div className="flex items-center text-xs text-orange-400 mt-1">
                         <TrendingUp className="h-3 w-3 mr-1" />
                         +2.1% vs mes anterior
+                      </div>
+                      <div className="text-xs text-gray-500 mt-1">
+                        Semana: 3.2% | Año: 2.8%
                       </div>
                     </div>
                   </div>
@@ -720,11 +734,17 @@ export default function Admin() {
           {/* Campaigns Tab */}
           <TabsContent value="campaigns" className="space-y-6">
             <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold">Gestión de Campañas</h2>
-              <Button size="sm">
-                <Plus className="h-4 w-4 mr-2" />
-                Nueva Campaña
-              </Button>
+              <h2 className="text-2xl font-bold">Gestión de Campañas Automáticas</h2>
+              <div className="flex gap-2">
+                <Button variant="outline" size="sm">
+                  <Bot className="h-4 w-4 mr-2" />
+                  Auto-Optimizar
+                </Button>
+                <Button size="sm">
+                  <Plus className="h-4 w-4 mr-2" />
+                  Nueva Campaña
+                </Button>
+              </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
@@ -774,40 +794,124 @@ export default function Admin() {
               </Card>
             </div>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>Campañas Activas</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {campaigns.map((campaign) => (
-                    <div key={campaign.id} className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50">
-                      <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                          <Target className="h-6 w-6 text-blue-600" />
-                        </div>
-                        <div>
-                          <h4 className="font-medium">{campaign.name}</h4>
-                          <p className="text-sm text-gray-500">{campaign.platform} • {campaign.targetAudience}</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-4">
-                        <div className="text-center">
-                          <p className="text-sm text-gray-500">Presupuesto</p>
-                          <p className="font-medium">${campaign.dailyBudget}/día</p>
-                        </div>
-                        <Badge variant={campaign.status === 'active' ? 'default' : 'secondary'}>
-                          {campaign.status}
-                        </Badge>
-                        <Button variant="outline" size="sm">
-                          <Edit className="h-4 w-4" />
-                        </Button>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Crear Campaña Automática</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <form className="space-y-4">
+                    <div>
+                      <Label htmlFor="campaign-name">Nombre de la Campaña</Label>
+                      <Input id="campaign-name" placeholder="Promoción Filtros de Aceite" />
+                    </div>
+                    <div>
+                      <Label htmlFor="platforms">Plataformas (múltiple selección)</Label>
+                      <div className="grid grid-cols-2 gap-2 mt-2">
+                        {[
+                          { id: 'meta', name: 'Meta Ads', icon: Facebook },
+                          { id: 'facebook', name: 'Facebook', icon: Facebook },
+                          { id: 'instagram', name: 'Instagram', icon: Instagram },
+                          { id: 'youtube', name: 'YouTube', icon: Youtube },
+                          { id: 'twitter', name: 'X (Twitter)', icon: Twitter },
+                          { id: 'tiktok', name: 'TikTok', icon: Globe }
+                        ].map((platform) => {
+                          const PlatformIcon = platform.icon;
+                          return (
+                            <label key={platform.id} className="flex items-center space-x-2 p-2 border rounded cursor-pointer hover:bg-accent">
+                              <input type="checkbox" className="text-primary" />
+                              <PlatformIcon className="h-4 w-4" />
+                              <span className="text-sm">{platform.name}</span>
+                            </label>
+                          );
+                        })}
                       </div>
                     </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <Label htmlFor="budget">Presupuesto Diario ($)</Label>
+                        <Input id="budget" type="number" placeholder="50" />
+                      </div>
+                      <div>
+                        <Label htmlFor="duration">Duración (días)</Label>
+                        <Input id="duration" type="number" placeholder="30" />
+                      </div>
+                    </div>
+                    <div>
+                      <Label htmlFor="audience">Segmentación de Audiencia</Label>
+                      <select className="w-full p-2 border rounded">
+                        <option>Propietarios de autos (25-65 años)</option>
+                        <option>Mecánicos y talleres</option>
+                        <option>Entusiastas automotrices</option>
+                        <option>Propietarios de motos</option>
+                        <option>Audiencia personalizada</option>
+                      </select>
+                    </div>
+                    <div>
+                      <Label htmlFor="automation">Automatización</Label>
+                      <div className="space-y-2 mt-2">
+                        <label className="flex items-center space-x-2">
+                          <input type="checkbox" defaultChecked />
+                          <span className="text-sm">Optimización automática de pujas</span>
+                        </label>
+                        <label className="flex items-center space-x-2">
+                          <input type="checkbox" defaultChecked />
+                          <span className="text-sm">Pausar campañas con bajo rendimiento</span>
+                        </label>
+                        <label className="flex items-center space-x-2">
+                          <input type="checkbox" />
+                          <span className="text-sm">Aumentar presupuesto automáticamente</span>
+                        </label>
+                      </div>
+                    </div>
+                    <Button className="w-full">
+                      <Bot className="h-4 w-4 mr-2" />
+                      Lanzar Campaña Automática
+                    </Button>
+                  </form>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Campañas Activas</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {campaigns.map((campaign) => (
+                      <div key={campaign.id} className="flex items-center justify-between p-4 border rounded-lg hover:bg-accent">
+                        <div className="flex items-center gap-4">
+                          <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                            <Target className="h-6 w-6 text-blue-600" />
+                          </div>
+                          <div>
+                            <h4 className="font-medium">{campaign.name}</h4>
+                            <p className="text-sm text-muted-foreground">{campaign.platform} • {campaign.targetAudience}</p>
+                            <div className="flex items-center gap-4 mt-1">
+                              <span className="text-xs text-green-600">ROI: +245%</span>
+                              <span className="text-xs text-blue-600">CTR: 3.2%</span>
+                              <span className="text-xs text-orange-600">CPC: $0.45</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-4">
+                          <div className="text-center">
+                            <p className="text-sm text-muted-foreground">Presupuesto</p>
+                            <p className="font-medium">${campaign.dailyBudget}/día</p>
+                          </div>
+                          <Badge variant={campaign.status === 'active' ? 'default' : 'secondary'}>
+                            {campaign.status}
+                          </Badge>
+                          <Button variant="outline" size="sm">
+                            <Edit className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           </TabsContent>
 
           {/* Social Media Tab */}

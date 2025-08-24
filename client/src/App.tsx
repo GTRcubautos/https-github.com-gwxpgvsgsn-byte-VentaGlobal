@@ -16,6 +16,7 @@ import Motorcycles from "@/pages/motorcycles";
 import Games from "@/pages/games";
 import Wholesale from "@/pages/wholesale";
 import Admin from "@/pages/admin";
+import Subscription from "@/pages/subscription";
 import NotFound from "@/pages/not-found";
 import { Terms } from "@/pages/terms";
 import { Privacy } from "@/pages/privacy";
@@ -34,6 +35,8 @@ function Router() {
       <Route path="/juegos" component={Games} />
       <Route path="/mayoristas" component={Wholesale} />
       <Route path="/admin" component={Admin} />
+      <Route path="/suscripcion" component={Subscription} />
+      <Route path="/vip" component={Subscription} />
       <Route path="/checkout" component={Checkout} />
       <Route path="/checkout/success" component={CheckoutSuccess} />
       <Route path="/terms" component={Terms} />
