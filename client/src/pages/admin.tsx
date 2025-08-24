@@ -226,7 +226,7 @@ export default function Admin() {
               className="group relative flex flex-col items-center gap-1 px-3 py-2 rounded-md hover:bg-gray-50 data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-all duration-200 border-0 min-w-0 flex-shrink-0" 
               data-testid="tab-dashboard"
             >
-              <Home className="h-5 w-5 text-gray-600 group-hover:text-gray-800 transition-colors duration-200" />
+              <Home className="h-5 w-5 text-black group-hover:text-gray-800 transition-colors duration-200" />
               <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute top-10 bg-black/90 text-white px-2 py-1 rounded text-center whitespace-nowrap z-10">
                 Panel Principal
               </span>
@@ -237,7 +237,7 @@ export default function Admin() {
               className="group relative flex flex-col items-center gap-1 px-3 py-2 rounded-md hover:bg-gray-50 data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-all duration-200 border-0 min-w-0 flex-shrink-0" 
               data-testid="tab-crm"
             >
-              <Users className="h-5 w-5 text-gray-600 group-hover:text-gray-800 transition-colors duration-200" />
+              <Users className="h-5 w-5 text-black group-hover:text-gray-800 transition-colors duration-200" />
               <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute top-10 bg-black/90 text-white px-2 py-1 rounded text-center whitespace-nowrap z-10">
                 Gestión Clientes
               </span>
@@ -248,7 +248,7 @@ export default function Admin() {
               className="group relative flex flex-col items-center gap-1 px-3 py-2 rounded-md hover:bg-gray-50 data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-all duration-200 border-0 min-w-0 flex-shrink-0" 
               data-testid="tab-inventory"
             >
-              <Package className="h-5 w-5 text-gray-600 group-hover:text-gray-800 transition-colors duration-200" />
+              <Package className="h-5 w-5 text-black group-hover:text-gray-800 transition-colors duration-200" />
               <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute top-10 bg-black/90 text-white px-2 py-1 rounded text-center whitespace-nowrap z-10">
                 Control Inventario
               </span>
@@ -259,7 +259,7 @@ export default function Admin() {
               className="group relative flex flex-col items-center gap-1 px-3 py-2 rounded-md hover:bg-gray-50 data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-all duration-200 border-0 min-w-0 flex-shrink-0" 
               data-testid="tab-wholesale"
             >
-              <Tag className="h-5 w-5 text-gray-600 group-hover:text-gray-800 transition-colors duration-200" />
+              <Tag className="h-5 w-5 text-black group-hover:text-gray-800 transition-colors duration-200" />
               <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute top-10 bg-black/90 text-white px-2 py-1 rounded text-center whitespace-nowrap z-10">
                 Códigos Mayorista
               </span>
@@ -270,7 +270,7 @@ export default function Admin() {
               className="group relative flex flex-col items-center gap-1 px-3 py-2 rounded-md hover:bg-gray-50 data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-all duration-200 border-0 min-w-0 flex-shrink-0" 
               data-testid="tab-sales"
             >
-              <BarChart3 className="h-5 w-5 text-gray-600 group-hover:text-gray-800 transition-colors duration-200" />
+              <BarChart3 className="h-5 w-5 text-black group-hover:text-gray-800 transition-colors duration-200" />
               <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute top-10 bg-black/90 text-white px-2 py-1 rounded text-center whitespace-nowrap z-10">
                 Análisis Ventas
               </span>
@@ -281,7 +281,7 @@ export default function Admin() {
               className="group relative flex flex-col items-center gap-1 px-3 py-2 rounded-md hover:bg-gray-50 data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-all duration-200 border-0 min-w-0 flex-shrink-0" 
               data-testid="tab-campaigns"
             >
-              <Target className="h-5 w-5 text-gray-600 group-hover:text-gray-800 transition-colors duration-200" />
+              <Target className="h-5 w-5 text-black group-hover:text-gray-800 transition-colors duration-200" />
               <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute top-10 bg-black/90 text-white px-2 py-1 rounded text-center whitespace-nowrap z-10">
                 Campañas Marketing
               </span>
@@ -292,7 +292,7 @@ export default function Admin() {
               className="group relative flex flex-col items-center gap-1 px-3 py-2 rounded-md hover:bg-gray-50 data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-all duration-200 border-0 min-w-0 flex-shrink-0" 
               data-testid="tab-social"
             >
-              <Globe className="h-5 w-5 text-gray-600 group-hover:text-gray-800 transition-colors duration-200" />
+              <Globe className="h-5 w-5 text-black group-hover:text-gray-800 transition-colors duration-200" />
               <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute top-10 bg-black/90 text-white px-2 py-1 rounded text-center whitespace-nowrap z-10">
                 Redes Sociales
               </span>
@@ -303,7 +303,7 @@ export default function Admin() {
               className="group relative flex flex-col items-center gap-1 px-3 py-2 rounded-md hover:bg-gray-50 data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-all duration-200 border-0 min-w-0 flex-shrink-0" 
               data-testid="tab-analytics"
             >
-              <PieChart className="h-5 w-5 text-gray-600 group-hover:text-gray-800 transition-colors duration-200" />
+              <PieChart className="h-5 w-5 text-black group-hover:text-gray-800 transition-colors duration-200" />
               <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute top-10 bg-black/90 text-white px-2 py-1 rounded text-center whitespace-nowrap z-10">
                 Analítica Avanzada
               </span>
@@ -314,7 +314,7 @@ export default function Admin() {
               className="group relative flex flex-col items-center gap-1 px-3 py-2 rounded-md hover:bg-gray-50 data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-all duration-200 border-0 min-w-0 flex-shrink-0" 
               data-testid="tab-social"
             >
-              <Instagram className="h-5 w-5 text-gray-600 group-hover:text-gray-800 transition-colors duration-200" />
+              <Instagram className="h-5 w-5 text-black group-hover:text-gray-800 transition-colors duration-200" />
               <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute top-10 bg-black/90 text-white px-2 py-1 rounded text-center whitespace-nowrap z-10">
                 Redes Sociales & Campañas
               </span>
@@ -325,7 +325,7 @@ export default function Admin() {
               className="group relative flex flex-col items-center gap-1 px-3 py-2 rounded-md hover:bg-gray-50 data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-all duration-200 border-0 min-w-0 flex-shrink-0" 
               data-testid="tab-discounts"
             >
-              <Percent className="h-5 w-5 text-gray-600 group-hover:text-gray-800 transition-colors duration-200" />
+              <Percent className="h-5 w-5 text-black group-hover:text-gray-800 transition-colors duration-200" />
               <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute top-10 bg-black/90 text-white px-2 py-1 rounded text-center whitespace-nowrap z-10">
                 Descuentos & Ofertas
               </span>
@@ -336,7 +336,7 @@ export default function Admin() {
               className="group relative flex flex-col items-center gap-1 px-3 py-2 rounded-md hover:bg-gray-50 data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-all duration-200 border-0 min-w-0 flex-shrink-0" 
               data-testid="tab-site-config"
             >
-              <Building className="h-5 w-5 text-gray-600 group-hover:text-gray-800 transition-colors duration-200" />
+              <Building className="h-5 w-5 text-black group-hover:text-gray-800 transition-colors duration-200" />
               <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute top-10 bg-black/90 text-white px-2 py-1 rounded text-center whitespace-nowrap z-10">
                 Configuración Sitio
               </span>
@@ -347,7 +347,7 @@ export default function Admin() {
               className="group relative flex flex-col items-center gap-1 px-3 py-2 rounded-md hover:bg-gray-50 data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-all duration-200 border-0 min-w-0 flex-shrink-0" 
               data-testid="tab-settings"
             >
-              <Settings className="h-5 w-5 text-gray-600 group-hover:text-gray-800 transition-colors duration-200" />
+              <Settings className="h-5 w-5 text-black group-hover:text-gray-800 transition-colors duration-200" />
               <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute top-10 bg-black/90 text-white px-2 py-1 rounded text-center whitespace-nowrap z-10">
                 Configuración General
               </span>
@@ -358,7 +358,7 @@ export default function Admin() {
               className="group relative flex flex-col items-center gap-1 px-3 py-2 rounded-md hover:bg-gray-50 data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-all duration-200 border-0 min-w-0 flex-shrink-0" 
               data-testid="tab-security"
             >
-              <Shield className="h-5 w-5 text-gray-600 group-hover:text-gray-800 transition-colors duration-200" />
+              <Shield className="h-5 w-5 text-black group-hover:text-gray-800 transition-colors duration-200" />
               <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute top-10 bg-black/90 text-white px-2 py-1 rounded text-center whitespace-nowrap z-10">
                 Logs de Seguridad
               </span>
@@ -369,7 +369,7 @@ export default function Admin() {
               className="group relative flex flex-col items-center gap-1 px-3 py-2 rounded-md hover:bg-gray-50 data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-all duration-200 border-0 min-w-0 flex-shrink-0" 
               data-testid="tab-backup"
             >
-              <Database className="h-5 w-5 text-gray-600 group-hover:text-gray-800 transition-colors duration-200" />
+              <Database className="h-5 w-5 text-black group-hover:text-gray-800 transition-colors duration-200" />
               <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute top-10 bg-black/90 text-white px-2 py-1 rounded text-center whitespace-nowrap z-10">
                 Respaldos de Datos
               </span>
@@ -380,7 +380,7 @@ export default function Admin() {
               className="group relative flex flex-col items-center gap-1 px-3 py-2 rounded-md hover:bg-gray-50 data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-all duration-200 border-0 min-w-0 flex-shrink-0" 
               data-testid="tab-financial"
             >
-              <CreditCard className="h-5 w-5 text-gray-600 group-hover:text-gray-800 transition-colors duration-200" />
+              <CreditCard className="h-5 w-5 text-black group-hover:text-gray-800 transition-colors duration-200" />
               <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute top-10 bg-black/90 text-white px-2 py-1 rounded text-center whitespace-nowrap z-10">
                 Seguridad Financiera
               </span>
