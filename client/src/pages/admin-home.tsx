@@ -23,6 +23,12 @@ import {
   Palette
 } from 'lucide-react';
 
+interface PromoCard {
+  icon: string;
+  title: string;
+  description: string;
+}
+
 interface HomeSection {
   id: string;
   title: string;
@@ -34,6 +40,8 @@ interface HomeSection {
   buttonLink?: string;
   images?: string[];
   videos?: string[];
+  bannerPromos?: string[];
+  promoCards?: PromoCard[];
   enabled: boolean;
   order: number;
 }
@@ -52,6 +60,38 @@ export default function AdminHome() {
 
   // Estado para las secciones editables
   const [sections, setSections] = useState<Record<string, HomeSection>>({
+    'promotions': {
+      id: 'promotions',
+      title: 'PROMOCIONES',
+      subtitle: 'Ofertas y Beneficios',
+      description: 'Cuadritos promocionales en banner y sección final',
+      backgroundColor: 'bg-red-600',
+      textColor: 'white',
+      buttonText: 'Ver promociones',
+      buttonLink: '#',
+      images: [],
+      videos: [],
+      bannerPromos: ['ENVÍO GRATIS +$500', 'FINANCIAMIENTO 0%', 'GARANTÍA EXTENDIDA', 'ATENCIÓN 24/7'],
+      promoCards: [
+        {
+          icon: '🚚',
+          title: 'Envío Gratis',
+          description: 'En compras superiores a $500'
+        },
+        {
+          icon: '⚡',
+          title: 'Financiamiento 0%',
+          description: 'Hasta 36 meses sin intereses'
+        },
+        {
+          icon: '🔧',
+          title: 'Garantía Extendida',
+          description: 'Protección total hasta 5 años'
+        }
+      ],
+      enabled: true,
+      order: 0
+    },
     'limited-offers': {
       id: 'limited-offers',
       title: 'OFERTAS ESPECIALES',
@@ -186,6 +226,34 @@ export default function AdminHome() {
     handleSectionUpdate(sectionId, { videos: newVideos });
   };
 
+  const addBannerPromo = (sectionId: string, promoText: string) => {
+    if (!promoText.trim()) return;
+    
+    handleSectionUpdate(sectionId, {
+      bannerPromos: [...(sections[sectionId].bannerPromos || []), promoText]
+    });
+  };
+
+  const removeBannerPromo = (sectionId: string, index: number) => {
+    const currentPromos = sections[sectionId].bannerPromos || [];
+    const newPromos = currentPromos.filter((_, i) => i !== index);
+    handleSectionUpdate(sectionId, { bannerPromos: newPromos });
+  };
+
+  const addPromoCard = (sectionId: string, card: PromoCard) => {
+    if (!card.title.trim() || !card.description.trim()) return;
+    
+    handleSectionUpdate(sectionId, {
+      promoCards: [...(sections[sectionId].promoCards || []), card]
+    });
+  };
+
+  const removePromoCard = (sectionId: string, index: number) => {
+    const currentCards = sections[sectionId].promoCards || [];
+    const newCards = currentCards.filter((_, i) => i !== index);
+    handleSectionUpdate(sectionId, { promoCards: newCards });
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white">
@@ -229,7 +297,7 @@ export default function AdminHome() {
         </div>
 
         <Tabs value={currentSection} onValueChange={setCurrentSection} className="w-full">
-          <TabsList className="grid w-full grid-cols-4 bg-gray-100">
+          <TabsList className="grid w-full grid-cols-5 bg-gray-100">
             {Object.entries(sections).map(([id, section]) => (
               <TabsTrigger 
                 key={id} 
@@ -428,6 +496,127 @@ export default function AdminHome() {
                       ))}
                     </div>
                   </div>
+
+                  {/* Gestión de promociones - Solo para la sección de promociones */}
+                  {sectionId === 'promotions' && (
+                    <>
+                      {/* Banner promociones */}
+                      <div className="space-y-4">
+                        <h3 className="text-lg font-semibold flex items-center gap-2">
+                          <Type className="h-5 w-5" />
+                          Textos del banner promocional
+                        </h3>
+                        <p className="text-sm text-gray-600">
+                          Textos que aparecen en el banner rojo horizontal después del hero
+                        </p>
+                        
+                        <div className="flex gap-2">
+                          <Input
+                            placeholder="Ej: ENVÍO GRATIS +$500"
+                            onKeyPress={(e) => {
+                              if (e.key === 'Enter') {
+                                addBannerPromo(sectionId, (e.target as HTMLInputElement).value);
+                                (e.target as HTMLInputElement).value = '';
+                              }
+                            }}
+                          />
+                          <Button
+                            type="button"
+                            onClick={(e) => {
+                              const input = e.currentTarget.previousElementSibling as HTMLInputElement;
+                              addBannerPromo(sectionId, input.value);
+                              input.value = '';
+                            }}
+                            variant="outline"
+                          >
+                            <Plus className="h-4 w-4" />
+                          </Button>
+                        </div>
+
+                        <div className="space-y-2">
+                          {(section.bannerPromos || []).map((promo, index) => (
+                            <div key={index} className="flex items-center gap-2 p-3 border rounded-lg">
+                              <span className="flex-1 font-semibold text-sm">{promo}</span>
+                              <Button
+                                size="sm"
+                                variant="destructive"
+                                onClick={() => removeBannerPromo(sectionId, index)}
+                              >
+                                <Trash2 className="h-3 w-3" />
+                              </Button>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Tarjetas promocionales */}
+                      <div className="space-y-4">
+                        <h3 className="text-lg font-semibold flex items-center gap-2">
+                          <Palette className="h-5 w-5" />
+                          Tarjetas promocionales
+                        </h3>
+                        <p className="text-sm text-gray-600">
+                          Cuadritos con íconos que aparecen al final de la página
+                        </p>
+                        
+                        <div className="grid grid-cols-3 gap-2">
+                          <Input
+                            placeholder="Ícono (emoji)"
+                            id={`promo-icon-${sectionId}`}
+                            maxLength={5}
+                          />
+                          <Input
+                            placeholder="Título"
+                            id={`promo-title-${sectionId}`}
+                          />
+                          <Input
+                            placeholder="Descripción"
+                            id={`promo-desc-${sectionId}`}
+                          />
+                        </div>
+                        <Button
+                          type="button"
+                          onClick={() => {
+                            const icon = (document.getElementById(`promo-icon-${sectionId}`) as HTMLInputElement)?.value || '';
+                            const title = (document.getElementById(`promo-title-${sectionId}`) as HTMLInputElement)?.value || '';
+                            const description = (document.getElementById(`promo-desc-${sectionId}`) as HTMLInputElement)?.value || '';
+                            
+                            if (icon && title && description) {
+                              addPromoCard(sectionId, { icon, title, description });
+                              (document.getElementById(`promo-icon-${sectionId}`) as HTMLInputElement).value = '';
+                              (document.getElementById(`promo-title-${sectionId}`) as HTMLInputElement).value = '';
+                              (document.getElementById(`promo-desc-${sectionId}`) as HTMLInputElement).value = '';
+                            }
+                          }}
+                          variant="outline"
+                          className="w-full"
+                        >
+                          <Plus className="h-4 w-4 mr-2" />
+                          Agregar tarjeta promocional
+                        </Button>
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                          {(section.promoCards || []).map((card, index) => (
+                            <div key={index} className="border rounded-lg p-4 bg-gray-50 relative group">
+                              <div className="text-center space-y-2">
+                                <div className="text-2xl">{card.icon}</div>
+                                <h4 className="font-semibold">{card.title}</h4>
+                                <p className="text-sm text-gray-600">{card.description}</p>
+                              </div>
+                              <Button
+                                size="sm"
+                                variant="destructive"
+                                className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                                onClick={() => removePromoCard(sectionId, index)}
+                              >
+                                <Trash2 className="h-3 w-3" />
+                              </Button>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </>
+                  )}
                 </CardContent>
               </Card>
 

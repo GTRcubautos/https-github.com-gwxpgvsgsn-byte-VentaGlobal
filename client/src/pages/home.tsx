@@ -164,13 +164,24 @@ export default function Home() {
       <section className="py-4 bg-red-600 text-white" data-testid="promo-banner">
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-center space-x-8 text-sm font-semibold uppercase tracking-wide">
-            <span>ENVÍO GRATIS +$500</span>
-            <span>•</span>
-            <span>FINANCIAMIENTO 0%</span>
-            <span>•</span>
-            <span>GARANTÍA EXTENDIDA</span>
-            <span>•</span>
-            <span>ATENCIÓN 24/7</span>
+            {siteConfig.home_sections?.promotions?.bannerPromos && siteConfig.home_sections.promotions.bannerPromos.length > 0 ? (
+              siteConfig.home_sections.promotions.bannerPromos.map((promo: string, index: number) => (
+                <span key={index}>
+                  {index > 0 && <span className="mx-4">•</span>}
+                  {promo}
+                </span>
+              ))
+            ) : (
+              <>
+                <span>ENVÍO GRATIS +$500</span>
+                <span>•</span>
+                <span>FINANCIAMIENTO 0%</span>
+                <span>•</span>
+                <span>GARANTÍA EXTENDIDA</span>
+                <span>•</span>
+                <span>ATENCIÓN 24/7</span>
+              </>
+            )}
           </div>
         </div>
       </section>
@@ -441,21 +452,33 @@ export default function Home() {
           
           {/* Promotion Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 max-w-4xl mx-auto">
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
-              <div className="text-2xl mb-2">🚚</div>
-              <h3 className="font-semibold mb-2">Envío Gratis</h3>
-              <p className="text-sm opacity-80">En compras superiores a $500</p>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
-              <div className="text-2xl mb-2">⚡</div>
-              <h3 className="font-semibold mb-2">Financiamiento 0%</h3>
-              <p className="text-sm opacity-80">Hasta 36 meses sin intereses</p>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
-              <div className="text-2xl mb-2">🔧</div>
-              <h3 className="font-semibold mb-2">Garantía Extendida</h3>
-              <p className="text-sm opacity-80">Protección total hasta 5 años</p>
-            </div>
+            {siteConfig.home_sections?.promotions?.promoCards && siteConfig.home_sections.promotions.promoCards.length > 0 ? (
+              siteConfig.home_sections.promotions.promoCards.map((card: any, index: number) => (
+                <div key={index} className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                  <div className="text-2xl mb-2">{card.icon}</div>
+                  <h3 className="font-semibold mb-2">{card.title}</h3>
+                  <p className="text-sm opacity-80">{card.description}</p>
+                </div>
+              ))
+            ) : (
+              <>
+                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                  <div className="text-2xl mb-2">🚚</div>
+                  <h3 className="font-semibold mb-2">Envío Gratis</h3>
+                  <p className="text-sm opacity-80">En compras superiores a $500</p>
+                </div>
+                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                  <div className="text-2xl mb-2">⚡</div>
+                  <h3 className="font-semibold mb-2">Financiamiento 0%</h3>
+                  <p className="text-sm opacity-80">Hasta 36 meses sin intereses</p>
+                </div>
+                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                  <div className="text-2xl mb-2">🔧</div>
+                  <h3 className="font-semibold mb-2">Garantía Extendida</h3>
+                  <p className="text-sm opacity-80">Protección total hasta 5 años</p>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </section>
