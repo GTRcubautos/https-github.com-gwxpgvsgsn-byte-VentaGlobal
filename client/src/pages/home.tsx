@@ -8,6 +8,7 @@ import { useStore } from "@/lib/store";
 import { Car, Bike, Smartphone, Award, Zap, Shield, Star, ArrowRight, TrendingUp, Users, ShoppingBag } from "lucide-react";
 import { Link } from "wouter";
 import type { Product } from "@shared/schema";
+import heroImage from "@assets/generated_images/Luxury_car_mountain_landscape_42bbaabd.png";
 
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -19,7 +20,7 @@ export default function Home() {
 
   const filteredProducts = products.filter(product =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    product.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (product.description && product.description.toLowerCase().includes(searchTerm.toLowerCase())) ||
     product.category.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -100,7 +101,12 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background text-foreground" data-testid="home-page">
       {/* Hero Section */}
-      <section className="relative py-24 overflow-hidden hero-pattern" data-testid="hero-section">
+      <section className="relative py-24 overflow-hidden" data-testid="hero-section" style={{
+        backgroundImage: `url(${heroImage})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}>
         <div className="absolute inset-0 automotive-gradient-overlay"></div>
         <div className="relative container mx-auto px-6">
           <div className="max-w-6xl mx-auto text-center">
