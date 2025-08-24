@@ -20,7 +20,9 @@ import {
   Image as ImageIcon,
   Video,
   Type,
-  Palette
+  Palette,
+  ChevronDown,
+  ChevronUp
 } from 'lucide-react';
 
 interface PromoCard {
@@ -52,6 +54,12 @@ export default function AdminHome() {
   
   const [currentSection, setCurrentSection] = useState('limited-offers');
   const [previewMode, setPreviewMode] = useState(false);
+  const [collapsedSections, setCollapsedSections] = useState<Record<string, boolean>>({
+    images: true,
+    videos: true,
+    bannerPromos: true,
+    promoCards: true
+  });
   
   // Obtener configuración actual del sitio
   const { data: siteConfig = {}, isLoading } = useQuery({
@@ -391,110 +399,160 @@ export default function AdminHome() {
 
                   {/* Gestión de imágenes */}
                   <div className="space-y-4">
-                    <h3 className="text-lg font-semibold flex items-center gap-2">
-                      <ImageIcon className="h-5 w-5" />
-                      Imágenes promocionales
-                    </h3>
-                    
-                    <div className="flex gap-2">
-                      <Input
-                        placeholder="URL de la imagen"
-                        onKeyPress={(e) => {
-                          if (e.key === 'Enter') {
-                            addImage(sectionId, (e.target as HTMLInputElement).value);
-                            (e.target as HTMLInputElement).value = '';
-                          }
-                        }}
-                      />
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-lg font-semibold flex items-center gap-2">
+                        <ImageIcon className="h-5 w-5" />
+                        Imágenes promocionales
+                      </h3>
                       <Button
                         type="button"
-                        onClick={(e) => {
-                          const input = e.currentTarget.previousElementSibling as HTMLInputElement;
-                          addImage(sectionId, input.value);
-                          input.value = '';
-                        }}
-                        variant="outline"
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setCollapsedSections(prev => ({ ...prev, images: !prev.images }))}
+                        className="flex items-center gap-2"
                       >
-                        <Plus className="h-4 w-4" />
+                        {collapsedSections.images ? (
+                          <>
+                            <span>Mostrar</span>
+                            <ChevronDown className="h-4 w-4" />
+                          </>
+                        ) : (
+                          <>
+                            <span>Ocultar</span>
+                            <ChevronUp className="h-4 w-4" />
+                          </>
+                        )}
                       </Button>
                     </div>
-
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                      {(section.images || []).map((imageUrl, index) => (
-                        <div key={index} className="relative group">
-                          <img
-                            src={imageUrl}
-                            alt={`Imagen ${index + 1}`}
-                            className="w-full h-32 object-cover rounded-lg border border-gray-200"
-                            onError={(e) => {
-                              (e.target as HTMLImageElement).src = 'https://via.placeholder.com/300x200?text=Error+cargando+imagen';
+                    
+                    {!collapsedSections.images && (
+                      <>
+                        <div className="flex gap-2">
+                          <Input
+                            placeholder="URL de la imagen"
+                            onKeyPress={(e) => {
+                              if (e.key === 'Enter') {
+                                addImage(sectionId, (e.target as HTMLInputElement).value);
+                                (e.target as HTMLInputElement).value = '';
+                              }
                             }}
                           />
                           <Button
-                            size="sm"
-                            variant="destructive"
-                            className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
-                            onClick={() => removeImage(sectionId, index)}
+                            type="button"
+                            onClick={(e) => {
+                              const input = e.currentTarget.previousElementSibling as HTMLInputElement;
+                              addImage(sectionId, input.value);
+                              input.value = '';
+                            }}
+                            variant="outline"
                           >
-                            <Trash2 className="h-3 w-3" />
+                            <Plus className="h-4 w-4" />
                           </Button>
                         </div>
-                      ))}
-                    </div>
+
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                          {(section.images || []).map((imageUrl, index) => (
+                            <div key={index} className="relative group">
+                              <img
+                                src={imageUrl}
+                                alt={`Imagen ${index + 1}`}
+                                className="w-full h-32 object-cover rounded-lg border border-gray-200"
+                                onError={(e) => {
+                                  (e.target as HTMLImageElement).src = 'https://via.placeholder.com/300x200?text=Error+cargando+imagen';
+                                }}
+                              />
+                              <Button
+                                size="sm"
+                                variant="destructive"
+                                className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                                onClick={() => removeImage(sectionId, index)}
+                              >
+                                <Trash2 className="h-3 w-3" />
+                              </Button>
+                            </div>
+                          ))}
+                        </div>
+                      </>
+                    )}
                   </div>
 
                   {/* Gestión de videos */}
                   <div className="space-y-4">
-                    <h3 className="text-lg font-semibold flex items-center gap-2">
-                      <Video className="h-5 w-5" />
-                      Videos promocionales
-                    </h3>
-                    
-                    <div className="flex gap-2">
-                      <Input
-                        placeholder="URL del video (MP4)"
-                        onKeyPress={(e) => {
-                          if (e.key === 'Enter') {
-                            addVideo(sectionId, (e.target as HTMLInputElement).value);
-                            (e.target as HTMLInputElement).value = '';
-                          }
-                        }}
-                      />
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-lg font-semibold flex items-center gap-2">
+                        <Video className="h-5 w-5" />
+                        Videos promocionales
+                      </h3>
                       <Button
                         type="button"
-                        onClick={(e) => {
-                          const input = e.currentTarget.previousElementSibling as HTMLInputElement;
-                          addVideo(sectionId, input.value);
-                          input.value = '';
-                        }}
-                        variant="outline"
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setCollapsedSections(prev => ({ ...prev, videos: !prev.videos }))}
+                        className="flex items-center gap-2"
                       >
-                        <Plus className="h-4 w-4" />
+                        {collapsedSections.videos ? (
+                          <>
+                            <span>Mostrar</span>
+                            <ChevronDown className="h-4 w-4" />
+                          </>
+                        ) : (
+                          <>
+                            <span>Ocultar</span>
+                            <ChevronUp className="h-4 w-4" />
+                          </>
+                        )}
                       </Button>
                     </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {(section.videos || []).map((videoUrl, index) => (
-                        <div key={index} className="relative group">
-                          <video
-                            src={videoUrl}
-                            className="w-full h-32 object-cover rounded-lg border border-gray-200"
-                            controls
-                            preload="metadata"
-                          >
-                            Tu navegador no soporta videos
-                          </video>
+                    
+                    {!collapsedSections.videos && (
+                      <>
+                        <div className="flex gap-2">
+                          <Input
+                            placeholder="URL del video (MP4)"
+                            onKeyPress={(e) => {
+                              if (e.key === 'Enter') {
+                                addVideo(sectionId, (e.target as HTMLInputElement).value);
+                                (e.target as HTMLInputElement).value = '';
+                              }
+                            }}
+                          />
                           <Button
-                            size="sm"
-                            variant="destructive"
-                            className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
-                            onClick={() => removeVideo(sectionId, index)}
+                            type="button"
+                            onClick={(e) => {
+                              const input = e.currentTarget.previousElementSibling as HTMLInputElement;
+                              addVideo(sectionId, input.value);
+                              input.value = '';
+                            }}
+                            variant="outline"
                           >
-                            <Trash2 className="h-3 w-3" />
+                            <Plus className="h-4 w-4" />
                           </Button>
                         </div>
-                      ))}
-                    </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          {(section.videos || []).map((videoUrl, index) => (
+                            <div key={index} className="relative group">
+                              <video
+                                src={videoUrl}
+                                className="w-full h-32 object-cover rounded-lg border border-gray-200"
+                                controls
+                                preload="metadata"
+                              >
+                                Tu navegador no soporta videos
+                              </video>
+                              <Button
+                                size="sm"
+                                variant="destructive"
+                                className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                                onClick={() => removeVideo(sectionId, index)}
+                              >
+                                <Trash2 className="h-3 w-3" />
+                              </Button>
+                            </div>
+                          ))}
+                        </div>
+                      </>
+                    )}
                   </div>
 
                   {/* Gestión de promociones - Solo para la sección de promociones */}
@@ -502,13 +560,37 @@ export default function AdminHome() {
                     <>
                       {/* Banner promociones */}
                       <div className="space-y-4">
-                        <h3 className="text-lg font-semibold flex items-center gap-2">
-                          <Type className="h-5 w-5" />
-                          Textos del banner promocional
-                        </h3>
-                        <p className="text-sm text-gray-600">
-                          Textos que aparecen en el banner rojo horizontal después del hero
-                        </p>
+                        <div className="flex items-center justify-between">
+                          <h3 className="text-lg font-semibold flex items-center gap-2">
+                            <Type className="h-5 w-5" />
+                            Textos del banner promocional
+                          </h3>
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => setCollapsedSections(prev => ({ ...prev, bannerPromos: !prev.bannerPromos }))}
+                            className="flex items-center gap-2"
+                          >
+                            {collapsedSections.bannerPromos ? (
+                              <>
+                                <span>Mostrar</span>
+                                <ChevronDown className="h-4 w-4" />
+                              </>
+                            ) : (
+                              <>
+                                <span>Ocultar</span>
+                                <ChevronUp className="h-4 w-4" />
+                              </>
+                            )}
+                          </Button>
+                        </div>
+                        
+                        {!collapsedSections.bannerPromos && (
+                          <>
+                            <p className="text-sm text-gray-600">
+                              Textos que aparecen en el banner rojo horizontal después del hero
+                            </p>
                         
                         <div className="flex gap-2">
                           <Input
@@ -533,31 +615,57 @@ export default function AdminHome() {
                           </Button>
                         </div>
 
-                        <div className="space-y-2">
-                          {(section.bannerPromos || []).map((promo, index) => (
-                            <div key={index} className="flex items-center gap-2 p-3 border rounded-lg">
-                              <span className="flex-1 font-semibold text-sm">{promo}</span>
-                              <Button
-                                size="sm"
-                                variant="destructive"
-                                onClick={() => removeBannerPromo(sectionId, index)}
-                              >
-                                <Trash2 className="h-3 w-3" />
-                              </Button>
+                            <div className="space-y-2">
+                              {(section.bannerPromos || []).map((promo, index) => (
+                                <div key={index} className="flex items-center gap-2 p-3 border rounded-lg">
+                                  <span className="flex-1 font-semibold text-sm">{promo}</span>
+                                  <Button
+                                    size="sm"
+                                    variant="destructive"
+                                    onClick={() => removeBannerPromo(sectionId, index)}
+                                  >
+                                    <Trash2 className="h-3 w-3" />
+                                  </Button>
+                                </div>
+                              ))}
                             </div>
-                          ))}
-                        </div>
+                          </>
+                        )}
                       </div>
 
                       {/* Tarjetas promocionales */}
                       <div className="space-y-4">
-                        <h3 className="text-lg font-semibold flex items-center gap-2">
-                          <Palette className="h-5 w-5" />
-                          Tarjetas promocionales
-                        </h3>
-                        <p className="text-sm text-gray-600">
-                          Cuadritos con íconos que aparecen al final de la página
-                        </p>
+                        <div className="flex items-center justify-between">
+                          <h3 className="text-lg font-semibold flex items-center gap-2">
+                            <Palette className="h-5 w-5" />
+                            Tarjetas promocionales
+                          </h3>
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => setCollapsedSections(prev => ({ ...prev, promoCards: !prev.promoCards }))}
+                            className="flex items-center gap-2"
+                          >
+                            {collapsedSections.promoCards ? (
+                              <>
+                                <span>Mostrar</span>
+                                <ChevronDown className="h-4 w-4" />
+                              </>
+                            ) : (
+                              <>
+                                <span>Ocultar</span>
+                                <ChevronUp className="h-4 w-4" />
+                              </>
+                            )}
+                          </Button>
+                        </div>
+                        
+                        {!collapsedSections.promoCards && (
+                          <>
+                            <p className="text-sm text-gray-600">
+                              Cuadritos con íconos que aparecen al final de la página
+                            </p>
                         
                         <div className="grid grid-cols-3 gap-2">
                           <Input
@@ -595,25 +703,27 @@ export default function AdminHome() {
                           Agregar tarjeta promocional
                         </Button>
 
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                          {(section.promoCards || []).map((card, index) => (
-                            <div key={index} className="border rounded-lg p-4 bg-gray-50 relative group">
-                              <div className="text-center space-y-2">
-                                <div className="text-2xl">{card.icon}</div>
-                                <h4 className="font-semibold">{card.title}</h4>
-                                <p className="text-sm text-gray-600">{card.description}</p>
-                              </div>
-                              <Button
-                                size="sm"
-                                variant="destructive"
-                                className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
-                                onClick={() => removePromoCard(sectionId, index)}
-                              >
-                                <Trash2 className="h-3 w-3" />
-                              </Button>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                              {(section.promoCards || []).map((card, index) => (
+                                <div key={index} className="border rounded-lg p-4 bg-gray-50 relative group">
+                                  <div className="text-center space-y-2">
+                                    <div className="text-2xl">{card.icon}</div>
+                                    <h4 className="font-semibold">{card.title}</h4>
+                                    <p className="text-sm text-gray-600">{card.description}</p>
+                                  </div>
+                                  <Button
+                                    size="sm"
+                                    variant="destructive"
+                                    className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                                    onClick={() => removePromoCard(sectionId, index)}
+                                  >
+                                    <Trash2 className="h-3 w-3" />
+                                  </Button>
+                                </div>
+                              ))}
                             </div>
-                          ))}
-                        </div>
+                          </>
+                        )}
                       </div>
                     </>
                   )}

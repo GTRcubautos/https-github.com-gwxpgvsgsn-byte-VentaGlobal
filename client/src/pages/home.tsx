@@ -425,26 +425,26 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-gray-900 via-blue-900 to-purple-900 text-white relative overflow-hidden" data-testid="cta-section">
-        <div className="absolute inset-0 bg-black/5"></div>
+      <section className="py-20 bg-gradient-to-r from-gray-800 via-black to-gray-900 text-white relative overflow-hidden" data-testid="cta-section">
+        <div className="absolute inset-0 bg-black/20"></div>
         <div className="relative container mx-auto px-6 text-center">
-          <Badge className="mb-6 bg-gradient-to-r from-blue-500 to-purple-500 text-white border-0 px-4 py-2">
+          <Badge className="mb-6 bg-red-600 text-white border-0 px-4 py-2">
             OFERTAS LIMITADAS
           </Badge>
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            El Futuro del <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">Automovilismo</span>
+            El Futuro del <span className="bg-gradient-to-r from-gray-200 to-white bg-clip-text text-transparent">Automovilismo</span>
           </h2>
           <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
             Únete a GTR CUBAUTOS y experimenta la próxima generación de vehículos premium
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/cars">
-              <Button size="lg" className="min-w-[200px] bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300" data-testid="explore-cars-button">
+              <Button size="lg" className="min-w-[200px] bg-red-600 hover:bg-red-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300" data-testid="explore-cars-button">
                 🚗 Explorar GTR Autos
               </Button>
             </Link>
             <Link href="/motorcycles">
-              <Button size="lg" variant="outline" className="min-w-[200px] border-white/30 text-white hover:bg-white hover:text-gray-900 backdrop-blur-sm" data-testid="view-motorcycles-button">
+              <Button size="lg" variant="outline" className="min-w-[200px] border-red-600 text-red-600 hover:bg-red-600 hover:text-white backdrop-blur-sm" data-testid="view-motorcycles-button">
                 🏍️ Ver Motocicletas
               </Button>
             </Link>
@@ -454,28 +454,28 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 max-w-4xl mx-auto">
             {siteConfig.home_sections?.promotions?.promoCards && siteConfig.home_sections.promotions.promoCards.length > 0 ? (
               siteConfig.home_sections.promotions.promoCards.map((card: any, index: number) => (
-                <div key={index} className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                <div key={index} className="bg-gray-800/60 backdrop-blur-sm rounded-xl p-6 border border-gray-600/30 hover:border-red-600/50 transition-all duration-300">
                   <div className="text-2xl mb-2">{card.icon}</div>
-                  <h3 className="font-semibold mb-2">{card.title}</h3>
-                  <p className="text-sm opacity-80">{card.description}</p>
+                  <h3 className="font-semibold mb-2 text-white">{card.title}</h3>
+                  <p className="text-sm opacity-80 text-gray-300">{card.description}</p>
                 </div>
               ))
             ) : (
               <>
-                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                <div className="bg-gray-800/60 backdrop-blur-sm rounded-xl p-6 border border-gray-600/30 hover:border-red-600/50 transition-all duration-300">
                   <div className="text-2xl mb-2">🚚</div>
-                  <h3 className="font-semibold mb-2">Envío Gratis</h3>
-                  <p className="text-sm opacity-80">En compras superiores a $500</p>
+                  <h3 className="font-semibold mb-2 text-white">Envío Gratis</h3>
+                  <p className="text-sm opacity-80 text-gray-300">En compras superiores a $500</p>
                 </div>
-                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                <div className="bg-gray-800/60 backdrop-blur-sm rounded-xl p-6 border border-gray-600/30 hover:border-red-600/50 transition-all duration-300">
                   <div className="text-2xl mb-2">⚡</div>
-                  <h3 className="font-semibold mb-2">Financiamiento 0%</h3>
-                  <p className="text-sm opacity-80">Hasta 36 meses sin intereses</p>
+                  <h3 className="font-semibold mb-2 text-white">Financiamiento 0%</h3>
+                  <p className="text-sm opacity-80 text-gray-300">Hasta 36 meses sin intereses</p>
                 </div>
-                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                <div className="bg-gray-800/60 backdrop-blur-sm rounded-xl p-6 border border-gray-600/30 hover:border-red-600/50 transition-all duration-300">
                   <div className="text-2xl mb-2">🔧</div>
-                  <h3 className="font-semibold mb-2">Garantía Extendida</h3>
-                  <p className="text-sm opacity-80">Protección total hasta 5 años</p>
+                  <h3 className="font-semibold mb-2 text-white">Garantía Extendida</h3>
+                  <p className="text-sm opacity-80 text-gray-300">Protección total hasta 5 años</p>
                 </div>
               </>
             )}
