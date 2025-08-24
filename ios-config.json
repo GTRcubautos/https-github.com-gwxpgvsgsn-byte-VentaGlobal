@@ -1,0 +1,155 @@
+{
+  "project_name": "GTR_CUBAUTO",
+  "bundle_identifier": "com.gtrcubauto.app",
+  "version": "1.0.0",
+  "build_number": "1",
+  "display_name": "GTR CUBAUTO",
+  "description": "Aplicación móvil de GTR CUBAUTO para repuestos automotrices",
+  "build_settings": {
+    "deployment_target": "14.0",
+    "device_family": "1,2",
+    "supported_orientations": [
+      "UIInterfaceOrientationPortrait",
+      "UIInterfaceOrientationLandscapeLeft", 
+      "UIInterfaceOrientationLandscapeRight"
+    ]
+  },
+  "app_transport_security": {
+    "allow_arbitrary_loads": true,
+    "exception_domains": {
+      "gtrcubauto.com": {
+        "exception_allows_insecure_http_loads": true,
+        "exception_minimum_tls_version": "TLSv1.0"
+      }
+    }
+  },
+  "permissions": {
+    "camera": "Esta aplicación necesita acceso a la cámara para tomar fotos de productos",
+    "photo_library": "Esta aplicación necesita acceso a tu galería para seleccionar imágenes",
+    "location": "Esta aplicación necesita tu ubicación para encontrar talleres cercanos",
+    "notifications": "Esta aplicación enviará notificaciones sobre ofertas y estados de pedidos"
+  },
+  "icons": {
+    "app_icon_sets": [
+      {
+        "size": "20x20",
+        "scale": "2x",
+        "idiom": "iphone"
+      },
+      {
+        "size": "20x20", 
+        "scale": "3x",
+        "idiom": "iphone"
+      },
+      {
+        "size": "29x29",
+        "scale": "2x", 
+        "idiom": "iphone"
+      },
+      {
+        "size": "29x29",
+        "scale": "3x",
+        "idiom": "iphone"
+      },
+      {
+        "size": "40x40",
+        "scale": "2x",
+        "idiom": "iphone"
+      },
+      {
+        "size": "40x40",
+        "scale": "3x", 
+        "idiom": "iphone"
+      },
+      {
+        "size": "60x60",
+        "scale": "2x",
+        "idiom": "iphone"
+      },
+      {
+        "size": "60x60",
+        "scale": "3x",
+        "idiom": "iphone"
+      },
+      {
+        "size": "20x20",
+        "scale": "1x",
+        "idiom": "ipad"
+      },
+      {
+        "size": "20x20",
+        "scale": "2x",
+        "idiom": "ipad"  
+      },
+      {
+        "size": "29x29",
+        "scale": "1x",
+        "idiom": "ipad"
+      },
+      {
+        "size": "29x29", 
+        "scale": "2x",
+        "idiom": "ipad"
+      },
+      {
+        "size": "40x40",
+        "scale": "1x",
+        "idiom": "ipad"
+      },
+      {
+        "size": "40x40",
+        "scale": "2x",
+        "idiom": "ipad"
+      },
+      {
+        "size": "76x76",
+        "scale": "1x",
+        "idiom": "ipad"
+      },
+      {
+        "size": "76x76",
+        "scale": "2x", 
+        "idiom": "ipad"
+      },
+      {
+        "size": "83.5x83.5",
+        "scale": "2x",
+        "idiom": "ipad"
+      },
+      {
+        "size": "1024x1024",
+        "scale": "1x",
+        "idiom": "ios-marketing"
+      }
+    ]
+  },
+  "build_phases": {
+    "pre_build": [
+      "echo 'Preparando build para GTR CUBAUTO iOS...'",
+      "npm run build"
+    ],
+    "post_build": [
+      "echo 'Build completado para GTR CUBAUTO iOS'",
+      "echo 'Verificando assets...'",
+      "ls -la dist/"
+    ]
+  },
+  "entitlements": {
+    "aps-environment": "development",
+    "com.apple.developer.applesignin": ["Default"],
+    "com.apple.security.app-sandbox": false,
+    "com.apple.security.network.client": true
+  },
+  "url_schemes": [
+    {
+      "name": "gtrcubauto",
+      "schemes": ["gtrcubauto", "gtr-cubauto"]
+    }
+  ],
+  "launch_screen": {
+    "background_color": "#000000",
+    "logo_image": "gtr_logo.png",
+    "loading_text": "GTR CUBAUTO",
+    "loading_text_color": "#FF0000"
+  }
+}

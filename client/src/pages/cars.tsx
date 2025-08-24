@@ -25,7 +25,7 @@ export default function Cars() {
     queryKey: ['/api/products', { category: 'cars', search: currentSearch }],
   });
 
-  const { data: siteConfig = {}, isLoading: configLoading } = useQuery({
+  const { data: siteConfig = {}, isLoading: configLoading } = useQuery<any>({
     queryKey: ["/api/site-config"],
   });
 
@@ -60,7 +60,7 @@ export default function Cars() {
   ).slice(0, 3);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-purple-50/20" data-testid="cars-page">
+    <div className="min-h-screen bg-black" data-testid="cars-page">
       {/* Hero Section */}
       <section className="relative py-24 overflow-hidden" data-testid="cars-hero-section">
         {/* Background Image or Video */}

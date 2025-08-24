@@ -38,7 +38,7 @@ export default function PrivacyConsentModal({ isOpen, onClose, userEmail }: Cons
             email: userEmail,
             consentType,
             granted,
-            consentVersion: privacyPolicy?.version || '1.0',
+            consentVersion: '1.0',
           })
         );
       

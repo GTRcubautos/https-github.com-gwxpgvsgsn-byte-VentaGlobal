@@ -28,13 +28,16 @@ import CheckoutSuccess from "@/pages/checkout-success";
 import PrivacyPolicy from "@/pages/privacy-policy";
 import TermsConditions from "@/pages/terms-conditions";
 import UserPrivacySettings from "@/pages/user-privacy-settings";
+import Ofertas from "@/pages/ofertas";
 import PrivacyConsentModal from "@/components/consent/privacy-consent-modal";
+import MandatoryTermsModal from "@/components/consent/mandatory-terms-modal";
 import { useConsent } from "@/hooks/use-consent";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/ofertas" component={Ofertas} />
       <Route path="/productos" component={Products} />
       <Route path="/cars" component={Cars} />
       <Route path="/autos" component={Cars} />
@@ -64,28 +67,53 @@ function Router() {
 }
 
 function App() {
-  const { showConsentModal, closeConsentModal } = useConsent();
+  const { 
+    showConsentModal, 
+    showMandatoryTerms, 
+    closeConsentModal, 
+    closeMandatoryTerms,
+    hasMandatoryAcceptance 
+  } = useConsent();
 
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <div className="min-h-screen flex flex-col">
-          <Header />
-          <main className="flex-1">
-            <Router />
-          </main>
-          <Footer />
+          {/* Solo mostrar la app si ha aceptado los términos obligatorios */}
+          {hasMandatoryAcceptance() ? (
+            <>
+              <Header />
+              <main className="flex-1">
+                <Router />
+              </main>
+              <Footer />
+              
+              {/* Floating elements */}
+              <WhatsAppFloat />
+              
+              {/* Modals */}
+              <CartModal />
+              <GameModal />
+              <WholesaleModal />
+              <PrivacyConsentModal 
+                isOpen={showConsentModal}
+                onClose={closeConsentModal}
+              />
+            </>
+          ) : (
+            // Pantalla de bloqueo hasta que acepte términos
+            <div className="min-h-screen bg-gray-950 flex items-center justify-center">
+              <div className="text-center text-white">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-500 mx-auto mb-4"></div>
+                <p>Cargando términos y condiciones...</p>
+              </div>
+            </div>
+          )}
           
-          {/* Floating elements */}
-          <WhatsAppFloat />
-          
-          {/* Modals */}
-          <CartModal />
-          <GameModal />
-          <WholesaleModal />
-          <PrivacyConsentModal 
-            isOpen={showConsentModal}
-            onClose={closeConsentModal}
+          {/* Mandatory Terms Modal - Siempre presente */}
+          <MandatoryTermsModal 
+            isOpen={showMandatoryTerms}
+            onAccept={closeMandatoryTerms}
           />
           
           <Toaster />

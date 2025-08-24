@@ -25,7 +25,7 @@ export default function Motorcycles() {
     queryKey: ['/api/products', { category: 'motorcycles', search: currentSearch }],
   });
 
-  const { data: siteConfig = {}, isLoading: configLoading } = useQuery({
+  const { data: siteConfig = {}, isLoading: configLoading } = useQuery<any>({
     queryKey: ["/api/site-config"],
   });
 
@@ -60,7 +60,7 @@ export default function Motorcycles() {
   ).slice(0, 3);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-purple-50/30 to-pink-50/20" data-testid="motorcycles-page">
+    <div className="min-h-screen bg-black" data-testid="motorcycles-page">
       {/* Hero Section */}
       <section className="relative py-24 overflow-hidden" data-testid="motorcycles-hero-section">
         {/* Background Image or Video */}
