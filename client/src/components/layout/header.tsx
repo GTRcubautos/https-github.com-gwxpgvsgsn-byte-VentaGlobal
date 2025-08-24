@@ -4,6 +4,7 @@ import { Search, ShoppingCart, Menu, X, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useStore } from '@/lib/store';
+import { GTRLogo } from '@/components/ui/logo';
 
 export default function Header() {
   const [location, setLocation] = useLocation();
@@ -47,8 +48,15 @@ export default function Header() {
       <div className="container mx-auto px-6 py-4">
         {/* Desktop Header */}
         <div className="hidden lg:flex items-center justify-between">
+          {/* Logo */}
+          <div className="flex-shrink-0">
+            <Link href="/" data-testid="logo-link">
+              <GTRLogo size="md" variant="full" className="hover:scale-105 transition-transform duration-200" />
+            </Link>
+          </div>
+          
           {/* Navigation with equal spacing */}
-          <nav className="flex items-center justify-between flex-1 max-w-4xl mx-auto" data-testid="main-navigation">
+          <nav className="flex items-center justify-center flex-1 space-x-8 ml-8" data-testid="main-navigation">
             {navigation.map((item) => (
               <Link
                 key={item.id}
@@ -125,8 +133,10 @@ export default function Header() {
         {/* Mobile Header */}
         <div className="lg:hidden">
           <div className="flex items-center justify-between">
-            {/* Mobile logo removed */}
-            <div></div>
+            {/* Mobile Logo */}
+            <Link href="/" data-testid="mobile-logo-link">
+              <GTRLogo size="sm" variant="full" className="hover:scale-105 transition-transform duration-200" />
+            </Link>
             <div className="flex items-center space-x-2">
               <Button
                 variant="ghost"
