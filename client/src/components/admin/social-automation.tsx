@@ -14,6 +14,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
+import { CreatePostDialog } from "@/components/CreatePostDialog";
 import { 
   Facebook, 
   Instagram, 
@@ -335,7 +336,7 @@ export function SocialAutomation() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-2 gap-3">
-                  <Button onClick={() => setIsCreatingPost(true)} className="h-20 flex-col">
+                  <Button onClick={() => setIsCreatingPost(true)} className="h-20 flex-col bg-black hover:bg-gray-800 text-white">
                     <Send className="h-6 w-6 mb-2" />
                     Post Manual
                   </Button>
@@ -494,7 +495,7 @@ export function SocialAutomation() {
                           </span>
                         </div>
                         <p className="text-sm text-muted-foreground truncate">{post.content}</p>
-                        <Badge size="sm" className="mt-2">
+                        <Badge className="mt-2">
                           {post.postType}
                         </Badge>
                       </div>
@@ -859,7 +860,7 @@ export function SocialAutomation() {
                     {['09:00', '12:00', '17:00', '20:00'].map((time) => (
                       <div key={time} className="flex items-center justify-between p-2 border rounded">
                         <span className="text-sm">{time}</span>
-                        <Switch size="sm" defaultChecked />
+                        <Switch defaultChecked />
                       </div>
                     ))}
                   </div>
@@ -933,6 +934,12 @@ export function SocialAutomation() {
         </TabsContent>
 
       </Tabs>
+
+      {/* Dialogs */}
+      <CreatePostDialog 
+        open={isCreatingPost} 
+        onOpenChange={setIsCreatingPost}
+      />
     </div>
   );
 }
