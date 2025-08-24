@@ -78,6 +78,16 @@ const paymentMethods = [
     instant: false,
     secure: true,
     automated: true
+  },
+  {
+    id: "cash_on_delivery",
+    name: "Pago Contra Entrega",
+    description: "Paga en efectivo al recibir tu pedido",
+    icon: Truck,
+    color: "from-red-500 to-red-700",
+    instant: false,
+    secure: true,
+    automated: false
   }
 ];
 
@@ -134,6 +144,13 @@ export default function Checkout() {
           orderId: orderData.id,
           bankAccount: orderData.paymentDetails.bankAccount
         });
+      
+      case 'cash_on_delivery':
+        // Pago contra entrega - solo confirmar orden
+        return { ok: true, message: 'Order confirmed for cash on delivery' };
+        
+      default:
+        throw new Error('Método de pago no válido');
     }
   };
 
@@ -152,7 +169,7 @@ export default function Checkout() {
         })),
         total: finalTotal.toString(),
         paymentMethod: selectedPayment,
-        status: 'processing',
+        status: selectedPayment === 'cash_on_delivery' ? 'pending' : 'processing',
         pointsEarned: Math.floor(finalTotal),
         shippingInfo: {
           name: data.name,
@@ -638,6 +655,34 @@ export default function Checkout() {
                     </div>
                   )}
 
+                  {selectedPayment === "cash_on_delivery" && (
+                    <div className="space-y-4 p-6 bg-red-50 rounded-lg border border-red-200">
+                      <h3 className="font-bold text-red-800 flex items-center gap-2">
+                        <Truck className="h-5 w-5" />
+                        Pago Contra Entrega
+                      </h3>
+                      <div className="bg-white p-4 rounded border">
+                        <div className="space-y-3">
+                          <div className="flex items-center gap-2 text-red-700">
+                            <Clock className="h-4 w-4" />
+                            <span className="font-medium">Tiempo de entrega: 2-5 días hábiles</span>
+                          </div>
+                          <div className="flex items-center gap-2 text-red-700">
+                            <Truck className="h-4 w-4" />
+                            <span>Paga en efectivo cuando recibas tu pedido</span>
+                          </div>
+                          <div className="flex justify-between mt-4 p-3 bg-black text-white rounded">
+                            <span>Monto a pagar en entrega:</span>
+                            <span className="font-bold text-lg text-green-400">${finalTotal.toFixed(2)}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <p className="text-sm text-red-700 bg-red-100 p-3 rounded">
+                        💰 Ten el monto exacto listo para la entrega. No se aceptan cheques.
+                      </p>
+                    </div>
+                  )}
+
                   <Button 
                     type="submit" 
                     disabled={isProcessing}
@@ -647,12 +692,26 @@ export default function Checkout() {
                     {isProcessing ? (
                       <div className="flex items-center gap-3">
                         <Loader2 className="w-6 h-6 animate-spin" />
-                        <span>Procesando pago automático...</span>
+                        <span>
+                          {selectedPayment === "cash_on_delivery" 
+                            ? "Confirmando pedido..." 
+                            : "Procesando pago automático..."
+                          }
+                        </span>
                       </div>
                     ) : (
                       <div className="flex items-center gap-3">
-                        <Lock className="h-6 w-6" />
-                        <span>🤖 PROCESAR PAGO AUTOMÁTICO - ${finalTotal.toFixed(2)}</span>
+                        {selectedPayment === "cash_on_delivery" ? (
+                          <>
+                            <Truck className="h-6 w-6" />
+                            <span>📦 CONFIRMAR PEDIDO - Pagar ${finalTotal.toFixed(2)} en entrega</span>
+                          </>
+                        ) : (
+                          <>
+                            <Lock className="h-6 w-6" />
+                            <span>🤖 PROCESAR PAGO AUTOMÁTICO - ${finalTotal.toFixed(2)}</span>
+                          </>
+                        )}
                       </div>
                     )}
                   </Button>

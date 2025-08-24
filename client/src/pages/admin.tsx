@@ -37,6 +37,7 @@ import InventoryManagement from '@/components/admin/inventory-management';
 import DataBackupPanel from '@/components/admin/data-backup-panel';
 import SecurityLogsPanel from '@/components/admin/security-logs-panel';
 import FinancialSecurityPanel from '@/components/security/financial-security-panel';
+import { SocialAutomation } from '@/components/admin/social-automation';
 
 const rewardsConfigSchema = z.object({
   pointsPerVisit: z.number().min(0).max(1000),
@@ -309,13 +310,13 @@ export default function Admin() {
             </TabsTrigger>
             
             <TabsTrigger 
-              value="automation" 
+              value="social" 
               className="group relative flex flex-col items-center gap-1 px-3 py-2 rounded-md hover:bg-gray-50 data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-all duration-200 border-0 min-w-0 flex-shrink-0" 
-              data-testid="tab-automation"
+              data-testid="tab-social"
             >
-              <Bot className="h-5 w-5 text-gray-600 group-hover:text-gray-800 transition-colors duration-200" />
+              <Instagram className="h-5 w-5 text-gray-600 group-hover:text-gray-800 transition-colors duration-200" />
               <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute top-10 bg-black/90 text-white px-2 py-1 rounded text-center whitespace-nowrap z-10">
-                Automatización IA
+                Redes Sociales & Campañas
               </span>
             </TabsTrigger>
             
@@ -1369,144 +1370,8 @@ export default function Admin() {
           </TabsContent>
 
           {/* Automation Tab */}
-          <TabsContent value="automation" className="space-y-6">
-            <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold">Automatización</h2>
-              <Button size="sm">
-                <Plus className="h-4 w-4 mr-2" />
-                Nueva Automatización
-              </Button>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-              <Card>
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-2">
-                    <Bot className="h-8 w-8 text-blue-500" />
-                    <div>
-                      <p className="text-2xl font-bold">8</p>
-                      <p className="text-sm text-gray-500">Automatizaciones Activas</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-2">
-                    <Mail className="h-8 w-8 text-green-500" />
-                    <div>
-                      <p className="text-2xl font-bold">1,245</p>
-                      <p className="text-sm text-gray-500">Emails Enviados</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-2">
-                    <Bell className="h-8 w-8 text-orange-500" />
-                    <div>
-                      <p className="text-2xl font-bold">456</p>
-                      <p className="text-sm text-gray-500">Notificaciones Enviadas</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Automatizaciones de Email</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between p-4 border rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
-                          <Mail className="h-5 w-5 text-green-600" />
-                        </div>
-                        <div>
-                          <p className="font-medium">Email de Bienvenida</p>
-                          <p className="text-sm text-gray-500">Activado • 98% tasa de entrega</p>
-                        </div>
-                      </div>
-                      <Switch checked />
-                    </div>
-                    <div className="flex items-center justify-between p-4 border rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                          <ShoppingCart className="h-5 w-5 text-blue-600" />
-                        </div>
-                        <div>
-                          <p className="font-medium">Carrito Abandonado</p>
-                          <p className="text-sm text-gray-500">Activado • 15% recuperación</p>
-                        </div>
-                      </div>
-                      <Switch checked />
-                    </div>
-                    <div className="flex items-center justify-between p-4 border rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
-                          <Star className="h-5 w-5 text-purple-600" />
-                        </div>
-                        <div>
-                          <p className="font-medium">Solicitud de Reseña</p>
-                          <p className="text-sm text-gray-500">Activado • 45% respuesta</p>
-                        </div>
-                      </div>
-                      <Switch checked />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Notificaciones Push</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between p-4 border rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
-                          <Package className="h-5 w-5 text-orange-600" />
-                        </div>
-                        <div>
-                          <p className="font-medium">Stock Bajo</p>
-                          <p className="text-sm text-gray-500">Cuando stock &lt; 10 unidades</p>
-                        </div>
-                      </div>
-                      <Switch checked />
-                    </div>
-                    <div className="flex items-center justify-between p-4 border rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
-                          <DollarSign className="h-5 w-5 text-green-600" />
-                        </div>
-                        <div>
-                          <p className="font-medium">Nueva Venta</p>
-                          <p className="text-sm text-gray-500">En tiempo real</p>
-                        </div>
-                      </div>
-                      <Switch checked />
-                    </div>
-                    <div className="flex items-center justify-between p-4 border rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
-                          <AlertTriangle className="h-5 w-5 text-red-600" />
-                        </div>
-                        <div>
-                          <p className="font-medium">Errores del Sistema</p>
-                          <p className="text-sm text-gray-500">Notificación inmediata</p>
-                        </div>
-                      </div>
-                      <Switch checked />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
+          <TabsContent value="social" className="space-y-6">
+            <SocialAutomation />
           </TabsContent>
 
           {/* Discounts Tab */}
