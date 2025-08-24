@@ -162,7 +162,7 @@ export default function Games() {
     },
   });
 
-  const shareToSocial = (platform: string) => {
+  const shareToSocial = (platform: string, url: string) => {
     const points = 25;
     addPoints(points);
     
@@ -173,6 +173,9 @@ export default function Games() {
         pointsEarned: points,
       });
     }
+    
+    // Open the social media app/website
+    window.open(url, '_blank');
     
     toast({
       title: `Compartido en ${platform}`,
@@ -202,8 +205,8 @@ export default function Games() {
           </p>
         </div>
         
-        {/* VIP Status & Rewards Overview */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+        {/* VIP Status & Rewards Overview - Mobile Optimized */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8 mb-8 md:mb-12 px-2 md:px-0">
           {/* VIP Status */}
           <Card className="bg-white border-gray-200">
             <CardHeader>
@@ -301,8 +304,8 @@ export default function Games() {
           </Card>
         </div>
 
-        {/* Medallas y Trofeos Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+        {/* Medallas y Trofeos Section - Mobile Optimized */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 lg:gap-8 mb-8 md:mb-12 px-2 md:px-0">
           {/* Medallas */}
           <Card className="bg-gray-900 dark:bg-gray-100 border-gray-700 dark:border-gray-300">
             <CardHeader>
@@ -438,8 +441,8 @@ export default function Games() {
           </Card>
         </div>
         
-        {/* Games Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+        {/* Games Grid - Mobile Optimized */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8 mb-8 md:mb-12 px-2 md:px-0">
           <div className="bg-gray-800 dark:bg-gray-200 rounded-lg p-6 text-center" data-testid="trivia-game">
             <div className="text-6xl mb-4">🎯</div>
             <h3 className="text-xl font-bold mb-2">Trivia Challenge</h3>
@@ -480,33 +483,33 @@ export default function Games() {
           </div>
         </div>
         
-        {/* Social Sharing */}
+        {/* Social Sharing - Mobile Optimized */}
         <div className="text-center" data-testid="social-sharing">
           <h3 className="text-2xl font-bold mb-4">¡Comparte y Gana!</h3>
-          <p className="mb-6">
+          <p className="mb-6 px-4 text-sm md:text-base">
             Comparte tus compras en redes sociales y etiquétanos para ganar 25 puntos extra
           </p>
-          <div className="flex justify-center space-x-4">
+          <div className="flex justify-center items-center space-x-3 md:space-x-6 px-4">
             <Button
-              onClick={() => shareToSocial('Facebook')}
-              className="bg-red-600 hover:bg-red-700 text-white px-6 py-2"
+              onClick={() => shareToSocial('Facebook', 'https://www.facebook.com/sharer/sharer.php?u=https://gtrcubauto.com')}
+              className="bg-blue-600 hover:bg-blue-700 text-white p-3 md:p-4 rounded-full w-12 h-12 md:w-16 md:h-16 flex items-center justify-center transition-transform hover:scale-110"
               data-testid="share-facebook"
             >
-              <i className="fab fa-facebook-f mr-2"></i>Facebook
+              <i className="fab fa-facebook-f text-lg md:text-xl"></i>
             </Button>
             <Button
-              onClick={() => shareToSocial('Instagram')}
-              className="bg-red-600 hover:bg-red-700 text-white px-6 py-2"
+              onClick={() => shareToSocial('Instagram', 'https://www.instagram.com')}
+              className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white p-3 md:p-4 rounded-full w-12 h-12 md:w-16 md:h-16 flex items-center justify-center transition-transform hover:scale-110"
               data-testid="share-instagram"
             >
-              <i className="fab fa-instagram mr-2"></i>Instagram
+              <i className="fab fa-instagram text-lg md:text-xl"></i>
             </Button>
             <Button
-              onClick={() => shareToSocial('Twitter')}
-              className="bg-red-600 hover:bg-red-700 text-white px-6 py-2"
-              data-testid="share-twitter"
+              onClick={() => shareToSocial('WhatsApp', 'https://api.whatsapp.com/send?text=¡Mira%20GTR%20CUBAUTO%20-%20Los%20mejores%20repuestos!%20https://gtrcubauto.com')}
+              className="bg-green-600 hover:bg-green-700 text-white p-3 md:p-4 rounded-full w-12 h-12 md:w-16 md:h-16 flex items-center justify-center transition-transform hover:scale-110"
+              data-testid="share-whatsapp"
             >
-              <i className="fab fa-twitter mr-2"></i>Twitter
+              <i className="fab fa-whatsapp text-lg md:text-xl"></i>
             </Button>
           </div>
         </div>
