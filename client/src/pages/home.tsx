@@ -155,20 +155,20 @@ export default function Home() {
         <div className="relative container mx-auto px-6">
           <div className="max-w-6xl mx-auto text-center">
             <div className="mb-12">
-              <h1 className="text-6xl md:text-8xl font-bold mb-6 tracking-tight text-white font-display" data-testid="hero-title">
+              <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-bold mb-4 sm:mb-6 tracking-tight text-white font-display px-2" data-testid="hero-title">
                 {siteConfig.hero_title || 'GTR CUBAUTO'}
               </h1>
-              <h2 className="text-2xl md:text-4xl font-semibold mb-8 text-red-200 tracking-wide" data-testid="hero-subtitle">
+              <h2 className="text-base sm:text-lg md:text-2xl lg:text-4xl font-semibold mb-6 sm:mb-8 text-red-200 tracking-wide px-2 leading-tight" data-testid="hero-subtitle">
                 {siteConfig.hero_subtitle || 'REPUESTOS DE CALIDAD PARA AUTOS Y MOTOS'}
               </h2>
-              <p className="text-lg md:text-xl text-gray-100 mb-12 leading-relaxed max-w-4xl mx-auto" data-testid="hero-description">
+              <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-100 mb-8 sm:mb-12 leading-relaxed max-w-4xl mx-auto px-2" data-testid="hero-description">
                 {siteConfig.hero_description || 'Todo para tu vehículo en un solo lugar. Encuentra los mejores repuestos y accesorios con garantía de calidad y los precios más competitivos del mercado.'}
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="text-lg px-10 py-4 bg-red-600 hover:bg-red-700 text-white" data-testid="hero-cta">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 px-2">
+                <Button size="lg" className="text-sm sm:text-base md:text-lg px-4 sm:px-8 md:px-10 py-3 sm:py-4 bg-red-600 hover:bg-red-700 text-white w-full sm:w-auto" data-testid="hero-cta">
                   Ver Ofertas de la Semana
                 </Button>
-                <Button size="lg" variant="outline" className="text-lg px-10 py-4 border-gray-400 text-white hover:bg-gray-700 hover:text-white" asChild data-testid="vip-cta">
+                <Button size="lg" variant="outline" className="text-sm sm:text-base md:text-lg px-4 sm:px-8 md:px-10 py-3 sm:py-4 border-gray-400 text-white hover:bg-gray-700 hover:text-white w-full sm:w-auto" asChild data-testid="vip-cta">
                   <Link href="/vip">
                     <Crown className="h-5 w-5 mr-2" />
                     Hacerse VIP

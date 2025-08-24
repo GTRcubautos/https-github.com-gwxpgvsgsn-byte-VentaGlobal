@@ -101,16 +101,16 @@ export default function CartModal() {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="max-w-3xl max-h-[80vh] overflow-hidden p-0 bg-white border border-gray-300 shadow-2xl" data-testid="cart-modal">
+      <DialogContent className="w-[95vw] sm:w-[90vw] md:w-[85vw] lg:max-w-3xl h-[90vh] sm:h-[85vh] md:max-h-[80vh] overflow-hidden p-0 bg-white border border-gray-300 shadow-2xl" data-testid="cart-modal">
         <div className="flex flex-col h-full">
-          {/* Header */}
-          <div className="p-4 bg-gradient-to-r from-gray-900 to-black text-white border-b border-gray-200">
+          {/* Header - Mobile Optimized */}
+          <div className="p-2 sm:p-4 bg-gradient-to-r from-gray-900 to-black text-white border-b border-gray-200">
             <DialogHeader>
-              <DialogTitle className="text-2xl font-bold flex items-center gap-3">
-                <ShoppingCart className="h-6 w-6" />
-                GTR CUBAUTO
+              <DialogTitle className="text-lg sm:text-xl md:text-2xl font-bold flex items-center gap-2 sm:gap-3 flex-wrap">
+                <ShoppingCart className="h-5 w-5 sm:h-6 sm:w-6 flex-shrink-0" />
+                <span className="truncate">GTR CUBAUTO</span>
                 {cart.length > 0 && (
-                  <Badge className="bg-red-600 text-white px-2 py-1 text-sm">
+                  <Badge className="bg-red-600 text-white px-1.5 sm:px-2 py-1 text-xs sm:text-sm flex-shrink-0">
                     {cart.length} {cart.length === 1 ? 'producto' : 'productos'}
                   </Badge>
                 )}
@@ -118,26 +118,26 @@ export default function CartModal() {
             </DialogHeader>
           </div>
 
-          <div className="flex-1 overflow-y-auto p-4">
+          <div className="flex-1 overflow-y-auto p-2 sm:p-4">
             {cart.length === 0 ? (
-              <div className="text-center py-12" data-testid="empty-cart">
-                <div className="bg-gray-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                  <ShoppingCart className="h-8 w-8 text-gray-600" />
+              <div className="text-center py-8 sm:py-12" data-testid="empty-cart">
+                <div className="bg-gray-100 rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                  <ShoppingCart className="h-6 w-6 sm:h-8 sm:w-8 text-gray-600" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">Carrito vacío</h3>
-                <p className="text-gray-600 mb-4">Agrega productos automotrices</p>
+                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">Carrito vacío</h3>
+                <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4">Agrega productos automotrices</p>
                 <Button 
                   onClick={() => setIsOpen(false)}
-                  className="bg-red-600 hover:bg-red-700 text-white"
+                  className="bg-red-600 hover:bg-red-700 text-white text-sm sm:text-base px-4 py-2"
                 >
                   Continuar comprando
                 </Button>
               </div>
             ) : (
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                {/* Cart Items */}
-                <div className="lg:col-span-2 space-y-3">
-                  <h3 className="text-lg font-bold text-gray-900 mb-3">Productos</h3>
+              <div className="flex flex-col lg:grid lg:grid-cols-3 gap-3 sm:gap-4">
+                {/* Cart Items - Mobile Optimized */}
+                <div className="lg:col-span-2 space-y-2 sm:space-y-3 order-2 lg:order-1">
+                  <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2 sm:mb-3 px-1">Productos</h3>
                   {cart.map((item) => (
                     <Card 
                       key={item.id} 
@@ -221,11 +221,11 @@ export default function CartModal() {
                   ))}
                 </div>
 
-                {/* Order Summary */}
-                <div className="lg:col-span-1">
-                  <Card className="sticky top-4 border border-gray-200 shadow-sm bg-white">
-                    <CardContent className="p-4">
-                      <h3 className="text-lg font-bold text-black mb-4">Resumen</h3>
+                {/* Order Summary - Mobile Optimized */}
+                <div className="lg:col-span-1 order-1 lg:order-2">
+                  <Card className="border border-gray-200 shadow-sm bg-white mb-4 lg:mb-0 lg:sticky lg:top-4">
+                    <CardContent className="p-3 sm:p-4">
+                      <h3 className="text-base sm:text-lg font-bold text-black mb-3 sm:mb-4">Resumen</h3>
                       
                       {/* Price Breakdown */}
                       <div className="space-y-2 mb-4">
@@ -286,11 +286,11 @@ export default function CartModal() {
                         </div>
                       </div>
 
-                      {/* Checkout Button */}
+                      {/* Checkout Button - Mobile Optimized */}
                       <Button
                         onClick={handleCheckout}
                         disabled={!selectedPayment || cart.length === 0 || createOrderMutation.isPending}
-                        className="w-full bg-red-600 hover:bg-red-700 text-white py-2 shadow-sm hover:shadow-md transition-all duration-200"
+                        className="w-full bg-red-600 hover:bg-red-700 text-white py-3 sm:py-2 text-sm sm:text-base shadow-sm hover:shadow-md transition-all duration-200 min-h-[44px]"
                         data-testid="checkout-button"
                       >
                         {createOrderMutation.isPending ? (

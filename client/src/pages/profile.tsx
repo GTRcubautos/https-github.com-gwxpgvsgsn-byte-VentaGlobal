@@ -154,61 +154,65 @@ export default function Profile() {
   const availableDiscount = (userPoints * 0.01).toFixed(2);
 
   return (
-    <div className="min-h-screen bg-white py-16" data-testid="profile-page">
-      <div className="container mx-auto px-6">
-        {/* Header */}
-        <div className="bg-gray-800 text-white py-8 rounded-t-lg">
-          <div className="flex items-center justify-between px-6">
-            <div className="flex items-center gap-6">
-              <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center">
-                <User className="h-10 w-10 text-white" />
+    <div className="min-h-screen bg-white py-8 sm:py-12 md:py-16" data-testid="profile-page">
+      <div className="container mx-auto px-2 sm:px-4 md:px-6">
+        {/* Header - Mobile Optimized */}
+        <div className="bg-gray-800 text-white py-4 sm:py-6 md:py-8 rounded-t-lg">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between px-3 sm:px-4 md:px-6 space-y-4 sm:space-y-0">
+            <div className="flex items-center gap-3 sm:gap-4 md:gap-6 w-full sm:w-auto">
+              <div className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
+                <User className="h-6 w-6 sm:h-8 sm:w-8 md:h-10 md:w-10 text-white" />
               </div>
-              <div>
-                <h1 className="text-3xl font-bold">
+              <div className="min-w-0 flex-1">
+                <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold truncate">
                   {user?.firstName || 'Cliente'} {user?.lastName || 'GTR'}
                 </h1>
-                <p className="text-gray-300">
+                <p className="text-gray-300 text-sm sm:text-base truncate">
                   {user?.email || 'cliente@gtrcubauto.com'}
                 </p>
-                <div className={`inline-flex items-center px-3 py-1 rounded-full bg-gradient-to-r ${vipStatus.color} text-white font-bold text-sm mt-2`}>
-                  <Crown className="h-4 w-4 mr-2" />
+                <div className={`inline-flex items-center px-2 sm:px-3 py-1 rounded-full bg-gradient-to-r ${vipStatus.color} text-white font-bold text-xs sm:text-sm mt-1 sm:mt-2`}>
+                  <Crown className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                   {vipStatus.level}
                 </div>
               </div>
             </div>
-            <div className="text-right">
-              <div className="text-3xl font-bold">{userPoints.toLocaleString()}</div>
-              <div className="text-gray-300">Puntos GTR</div>
-              <div className="text-lg font-semibold">${availableDiscount}</div>
-              <div className="text-gray-300 text-sm">En descuentos</div>
+            <div className="text-center sm:text-right w-full sm:w-auto">
+              <div className="text-2xl sm:text-3xl font-bold">{userPoints.toLocaleString()}</div>
+              <div className="text-gray-300 text-sm">Puntos GTR</div>
+              <div className="text-base sm:text-lg font-semibold">${availableDiscount}</div>
+              <div className="text-gray-300 text-xs sm:text-sm">En descuentos</div>
             </div>
           </div>
         </div>
 
-        {/* Tabs Navigation */}
+        {/* Tabs Navigation - Mobile Optimized */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-4 bg-card rounded-t-none">
-            <TabsTrigger value="overview" className="flex items-center gap-2">
-              <User className="h-4 w-4" />
-              Resumen
+          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 bg-card rounded-t-none gap-1 sm:gap-0 p-1">
+            <TabsTrigger value="overview" className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm px-2 py-2">
+              <User className="h-3 w-3 sm:h-4 sm:w-4" />
+              <span className="hidden sm:inline">Resumen</span>
+              <span className="sm:hidden">Info</span>
             </TabsTrigger>
-            <TabsTrigger value="medals" className="flex items-center gap-2">
-              <Medal className="h-4 w-4" />
-              Medallas
+            <TabsTrigger value="medals" className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm px-2 py-2">
+              <Medal className="h-3 w-3 sm:h-4 sm:w-4" />
+              <span className="hidden sm:inline">Medallas</span>
+              <span className="sm:hidden">🏅</span>
             </TabsTrigger>
-            <TabsTrigger value="trophies" className="flex items-center gap-2">
-              <Trophy className="h-4 w-4" />
-              Trofeos
+            <TabsTrigger value="trophies" className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm px-2 py-2">
+              <Trophy className="h-3 w-3 sm:h-4 sm:w-4" />
+              <span className="hidden sm:inline">Trofeos</span>
+              <span className="sm:hidden">🏆</span>
             </TabsTrigger>
-            <TabsTrigger value="vip" className="flex items-center gap-2">
-              <Crown className="h-4 w-4" />
-              Estado VIP
+            <TabsTrigger value="vip" className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm px-2 py-2">
+              <Crown className="h-3 w-3 sm:h-4 sm:w-4" />
+              <span className="hidden sm:inline">Estado VIP</span>
+              <span className="sm:hidden">VIP</span>
             </TabsTrigger>
           </TabsList>
 
-          {/* Overview Tab */}
-          <TabsContent value="overview" className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Overview Tab - Mobile Optimized */}
+          <TabsContent value="overview" className="space-y-3 sm:space-y-4 md:space-y-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
               {/* Quick Stats */}
               <Card>
                 <CardHeader>

@@ -187,21 +187,21 @@ export default function Admin() {
         <div className="container mx-auto px-2 sm:px-4 md:px-6 py-2 sm:py-4">
           <div className="flex items-center justify-between">
             <div className="min-w-0 flex-1">
-              <h1 className="text-lg sm:text-2xl md:text-3xl font-bold text-gray-700 truncate">GTR CUBAUTO Admin</h1>
-              <p className="text-xs sm:text-sm text-automotive-gray hidden sm:block">Ciudad Darío • Today {new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })}</p>
+              <h1 className="text-sm sm:text-lg md:text-2xl lg:text-3xl font-bold text-gray-700 truncate leading-tight">GTR CUBAUTO Admin</h1>
+              <p className="text-xs text-automotive-gray hidden sm:block">Ciudad Darío • Today {new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })}</p>
             </div>
-            <div className="flex items-center space-x-1 sm:space-x-2 md:space-x-4 flex-shrink-0">
+            <div className="flex items-center space-x-1 md:space-x-2 lg:space-x-4 flex-shrink-0">
               <div className="text-right text-xs sm:text-sm hidden lg:block">
                 <p className="font-medium text-gray-600">Sistema v2.4.1</p>
                 <p className="text-gray-500">Última actualización: Hoy</p>
               </div>
-              <Badge className="bg-green-100 text-green-800 text-xs px-1 sm:px-2">
-                <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full mr-1 sm:mr-2"></div>
-                <span className="hidden sm:inline">Online</span>
+              <Badge className="bg-green-100 text-green-800 text-xs px-1 py-0.5">
+                <div className="w-1.5 h-1.5 bg-green-500 rounded-full mr-1"></div>
+                <span className="hidden sm:inline text-xs">Online</span>
               </Badge>
-              <Button variant="outline" size="sm" className="hidden md:flex h-8 px-2 text-xs">
+              <Button variant="outline" size="sm" className="hidden lg:flex h-7 px-1.5 text-xs">
                 <Download className="h-3 w-3 mr-1" />
-                Exportar
+                <span className="hidden xl:inline">Exportar</span>
               </Button>
               <Button
                 onClick={() => {
@@ -214,11 +214,11 @@ export default function Admin() {
                 }}
                 variant="outline"
                 size="sm"
-                className="border-red-300 text-red-600 hover:bg-red-50 h-8 px-2 text-xs"
+                className="border-red-300 text-red-600 hover:bg-red-50 h-7 px-1.5 text-xs"
                 data-testid="admin-logout-button"
               >
-                <LogOut className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
-                <span className="hidden sm:inline">Salir</span>
+                <LogOut className="h-3 w-3" />
+                <span className="hidden md:inline ml-1">Salir</span>
               </Button>
             </div>
           </div>
@@ -227,14 +227,14 @@ export default function Admin() {
 
       <div className="container mx-auto px-2 sm:px-4 md:px-6 py-4 sm:py-8 md:py-12">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="flex w-full overflow-x-auto mb-4 sm:mb-6 md:mb-8 bg-white border border-gray-200 p-1 gap-1 scrollbar-hide">
+          <TabsList className="flex w-full overflow-x-auto mb-3 sm:mb-4 md:mb-6 lg:mb-8 bg-white border border-gray-200 p-0.5 sm:p-1 gap-0.5 sm:gap-1 scrollbar-hide text-xs sm:text-sm">
             <TabsTrigger 
               value="dashboard" 
-              className="group relative flex flex-col items-center gap-1 px-2 py-2 rounded-md hover:bg-gray-50 data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-all duration-200 border-0 min-w-0 flex-shrink-0" 
+              className="group relative flex flex-col items-center gap-0.5 px-1 sm:px-2 py-1.5 sm:py-2 rounded-md hover:bg-gray-50 data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-all duration-200 border-0 min-w-0 flex-shrink-0" 
               data-testid="tab-dashboard"
             >
-              <Home className="h-4 w-4 text-black group-hover:text-gray-800 transition-colors duration-200" />
-              <span className="text-xs font-medium text-gray-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute top-8 bg-black/90 text-gray-500 px-2 py-1 rounded text-center whitespace-nowrap z-10">Panel Principal</span>
+              <Home className="h-3 w-3 sm:h-4 sm:w-4 text-black group-hover:text-gray-800 transition-colors duration-200" />
+              <span className="text-xs font-medium text-gray-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute top-7 sm:top-8 bg-black/90 text-white px-1.5 sm:px-2 py-0.5 sm:py-1 rounded text-center whitespace-nowrap z-10 text-xs">Panel Principal</span>
             </TabsTrigger>
             
             <TabsTrigger 
