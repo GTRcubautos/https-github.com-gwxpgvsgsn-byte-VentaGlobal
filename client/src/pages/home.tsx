@@ -158,7 +158,7 @@ export default function Home() {
               <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-bold mb-4 sm:mb-6 tracking-tight text-white font-display px-2" data-testid="hero-title">
                 {siteConfig.hero_title || 'GTR CUBAUTO'}
               </h1>
-              <h2 className="text-base sm:text-lg md:text-2xl lg:text-4xl font-semibold mb-6 sm:mb-8 text-red-200 tracking-wide px-2 leading-tight" data-testid="hero-subtitle">
+              <h2 className="text-sm sm:text-base md:text-xl lg:text-2xl xl:text-4xl font-semibold mb-6 sm:mb-8 text-red-200 tracking-wide px-2 leading-tight" data-testid="hero-subtitle">
                 {siteConfig.hero_subtitle || 'REPUESTOS DE CALIDAD PARA AUTOS Y MOTOS'}
               </h2>
               <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-100 mb-8 sm:mb-12 leading-relaxed max-w-4xl mx-auto px-2" data-testid="hero-description">

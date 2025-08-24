@@ -145,7 +145,7 @@ export default function Footer() {
                 &copy; 2024 GTR CUBAUTO. Todos los derechos reservados.
               </p>
             </div>
-            <div className="flex flex-wrap justify-center md:justify-end gap-6 text-sm">
+            <div className="flex flex-wrap justify-center md:justify-end gap-6 text-xs sm:text-sm">
               <span className="text-gray-400">GTR CUBAUTO - Repuestos de Calidad</span>
             </div>
           </div>
