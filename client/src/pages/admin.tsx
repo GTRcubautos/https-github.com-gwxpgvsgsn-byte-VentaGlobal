@@ -227,9 +227,7 @@ export default function Admin() {
               data-testid="tab-dashboard"
             >
               <Home className="h-5 w-5 text-black group-hover:text-gray-800 transition-colors duration-200" />
-              <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute top-10 bg-black/90 text-white px-2 py-1 rounded text-center whitespace-nowrap z-10">
-                Panel Principal
-              </span>
+              <span className="text-xs font-medium text-gray-600">Panel Principal</span>
             </TabsTrigger>
             
             <TabsTrigger 
@@ -238,9 +236,7 @@ export default function Admin() {
               data-testid="tab-crm"
             >
               <Users className="h-5 w-5 text-black group-hover:text-gray-800 transition-colors duration-200" />
-              <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute top-10 bg-black/90 text-white px-2 py-1 rounded text-center whitespace-nowrap z-10">
-                Gestión Clientes
-              </span>
+              <span className="text-xs font-medium text-gray-600">Gestión Clientes</span>
             </TabsTrigger>
             
             <TabsTrigger 
@@ -249,9 +245,7 @@ export default function Admin() {
               data-testid="tab-inventory"
             >
               <Package className="h-5 w-5 text-black group-hover:text-gray-800 transition-colors duration-200" />
-              <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute top-10 bg-black/90 text-white px-2 py-1 rounded text-center whitespace-nowrap z-10">
-                Control Inventario
-              </span>
+              <span className="text-xs font-medium text-gray-600">Control Inventario</span>
             </TabsTrigger>
             
             <TabsTrigger 
@@ -260,9 +254,7 @@ export default function Admin() {
               data-testid="tab-wholesale"
             >
               <Tag className="h-5 w-5 text-black group-hover:text-gray-800 transition-colors duration-200" />
-              <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute top-10 bg-black/90 text-white px-2 py-1 rounded text-center whitespace-nowrap z-10">
-                Códigos Mayorista
-              </span>
+              <span className="text-xs font-medium text-gray-600">Códigos Mayorista</span>
             </TabsTrigger>
             
             <TabsTrigger 
@@ -271,9 +263,7 @@ export default function Admin() {
               data-testid="tab-sales"
             >
               <BarChart3 className="h-5 w-5 text-black group-hover:text-gray-800 transition-colors duration-200" />
-              <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute top-10 bg-black/90 text-white px-2 py-1 rounded text-center whitespace-nowrap z-10">
-                Análisis Ventas
-              </span>
+              <span className="text-xs font-medium text-gray-600">Análisis Ventas</span>
             </TabsTrigger>
             
             <TabsTrigger 
@@ -282,9 +272,7 @@ export default function Admin() {
               data-testid="tab-campaigns"
             >
               <Target className="h-5 w-5 text-black group-hover:text-gray-800 transition-colors duration-200" />
-              <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute top-10 bg-black/90 text-white px-2 py-1 rounded text-center whitespace-nowrap z-10">
-                Campañas Marketing
-              </span>
+              <span className="text-xs font-medium text-gray-600">Campañas Marketing</span>
             </TabsTrigger>
             
             <TabsTrigger 
@@ -293,9 +281,7 @@ export default function Admin() {
               data-testid="tab-social"
             >
               <Globe className="h-5 w-5 text-black group-hover:text-gray-800 transition-colors duration-200" />
-              <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute top-10 bg-black/90 text-white px-2 py-1 rounded text-center whitespace-nowrap z-10">
-                Redes Sociales
-              </span>
+              <span className="text-xs font-medium text-gray-600">Redes Sociales</span>
             </TabsTrigger>
             
             <TabsTrigger 
@@ -304,21 +290,9 @@ export default function Admin() {
               data-testid="tab-analytics"
             >
               <PieChart className="h-5 w-5 text-black group-hover:text-gray-800 transition-colors duration-200" />
-              <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute top-10 bg-black/90 text-white px-2 py-1 rounded text-center whitespace-nowrap z-10">
-                Analítica Avanzada
-              </span>
+              <span className="text-xs font-medium text-gray-600">Analítica Avanzada</span>
             </TabsTrigger>
             
-            <TabsTrigger 
-              value="social" 
-              className="group relative flex flex-col items-center gap-1 px-3 py-2 rounded-md hover:bg-gray-50 data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-all duration-200 border-0 min-w-0 flex-shrink-0" 
-              data-testid="tab-social"
-            >
-              <Instagram className="h-5 w-5 text-black group-hover:text-gray-800 transition-colors duration-200" />
-              <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute top-10 bg-black/90 text-white px-2 py-1 rounded text-center whitespace-nowrap z-10">
-                Redes Sociales & Campañas
-              </span>
-            </TabsTrigger>
             
             <TabsTrigger 
               value="discounts" 
@@ -326,9 +300,7 @@ export default function Admin() {
               data-testid="tab-discounts"
             >
               <Percent className="h-5 w-5 text-black group-hover:text-gray-800 transition-colors duration-200" />
-              <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute top-10 bg-black/90 text-white px-2 py-1 rounded text-center whitespace-nowrap z-10">
-                Descuentos & Ofertas
-              </span>
+              <span className="text-xs font-medium text-gray-600">Descuentos & Ofertas</span>
             </TabsTrigger>
             
             <TabsTrigger 
@@ -337,9 +309,7 @@ export default function Admin() {
               data-testid="tab-site-config"
             >
               <Building className="h-5 w-5 text-black group-hover:text-gray-800 transition-colors duration-200" />
-              <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute top-10 bg-black/90 text-white px-2 py-1 rounded text-center whitespace-nowrap z-10">
-                Configuración Sitio
-              </span>
+              <span className="text-xs font-medium text-gray-600">Configuración Sitio</span>
             </TabsTrigger>
             
             <TabsTrigger 
@@ -348,9 +318,7 @@ export default function Admin() {
               data-testid="tab-settings"
             >
               <Settings className="h-5 w-5 text-black group-hover:text-gray-800 transition-colors duration-200" />
-              <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute top-10 bg-black/90 text-white px-2 py-1 rounded text-center whitespace-nowrap z-10">
-                Configuración General
-              </span>
+              <span className="text-xs font-medium text-gray-600">Configuración General</span>
             </TabsTrigger>
             
             <TabsTrigger 
@@ -359,9 +327,7 @@ export default function Admin() {
               data-testid="tab-security"
             >
               <Shield className="h-5 w-5 text-black group-hover:text-gray-800 transition-colors duration-200" />
-              <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute top-10 bg-black/90 text-white px-2 py-1 rounded text-center whitespace-nowrap z-10">
-                Logs de Seguridad
-              </span>
+              <span className="text-xs font-medium text-gray-600">Logs de Seguridad</span>
             </TabsTrigger>
             
             <TabsTrigger 
@@ -370,9 +336,7 @@ export default function Admin() {
               data-testid="tab-backup"
             >
               <Database className="h-5 w-5 text-black group-hover:text-gray-800 transition-colors duration-200" />
-              <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute top-10 bg-black/90 text-white px-2 py-1 rounded text-center whitespace-nowrap z-10">
-                Respaldos de Datos
-              </span>
+              <span className="text-xs font-medium text-gray-600">Respaldos de Datos</span>
             </TabsTrigger>
             
             <TabsTrigger 
@@ -381,9 +345,7 @@ export default function Admin() {
               data-testid="tab-financial"
             >
               <CreditCard className="h-5 w-5 text-black group-hover:text-gray-800 transition-colors duration-200" />
-              <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute top-10 bg-black/90 text-white px-2 py-1 rounded text-center whitespace-nowrap z-10">
-                Seguridad Financiera
-              </span>
+              <span className="text-xs font-medium text-gray-600">Seguridad Financiera</span>
             </TabsTrigger>
           </TabsList>
 
@@ -1109,15 +1071,12 @@ export default function Admin() {
 
           {/* Social Media Tab */}
           <TabsContent value="social" className="space-y-6">
-            <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold">Redes Sociales</h2>
-              <Button size="sm">
-                <Plus className="h-4 w-4 mr-2" />
-                Nueva Publicación
-              </Button>
-            </div>
+            <SocialAutomation />
+          </TabsContent>
 
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+          {/* Analytics Tab */}
+          <TabsContent value="analytics" className="space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <Card>
                 <CardContent className="p-4">
                   <div className="flex items-center gap-2">
@@ -1370,9 +1329,6 @@ export default function Admin() {
           </TabsContent>
 
           {/* Automation Tab */}
-          <TabsContent value="social" className="space-y-6">
-            <SocialAutomation />
-          </TabsContent>
 
           {/* Discounts Tab */}
           <TabsContent value="discounts" className="space-y-6">
