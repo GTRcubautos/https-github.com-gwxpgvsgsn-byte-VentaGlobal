@@ -405,6 +405,45 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Admin routes for home page configuration
+  app.post("/api/admin/home-config", async (req, res) => {
+    try {
+      const { home_sections } = req.body;
+      
+      if (!home_sections || typeof home_sections !== 'object') {
+        return res.status(400).json({ error: "Invalid home sections data" });
+      }
+
+      // Save home sections configuration
+      await storage.setSiteConfig('home_sections', home_sections, 'home');
+      
+      // Also save individual promotional data for backward compatibility
+      const limitedOffersSection = home_sections['limited-offers'];
+      if (limitedOffersSection) {
+        if (limitedOffersSection.images) {
+          await storage.setSiteConfig('promotional_images', limitedOffersSection.images, 'home');
+        }
+        if (limitedOffersSection.videos) {
+          await storage.setSiteConfig('promotional_videos', limitedOffersSection.videos, 'home');
+        }
+      }
+
+      res.json({ success: true, message: "Home configuration updated successfully" });
+    } catch (error) {
+      console.error("Failed to save home configuration:", error);
+      res.status(500).json({ error: "Failed to save home configuration" });
+    }
+  });
+
+  app.get("/api/admin/home-config", async (req, res) => {
+    try {
+      const homeSections = await storage.getSiteConfig('home_sections');
+      res.json({ home_sections: homeSections || {} });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch home configuration" });
+    }
+  });
+
   // Wholesale Codes routes
   app.get("/api/wholesale-codes", async (req, res) => {
     try {

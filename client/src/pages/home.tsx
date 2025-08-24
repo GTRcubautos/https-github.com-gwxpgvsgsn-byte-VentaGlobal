@@ -197,24 +197,25 @@ export default function Home() {
 
       {/* Promotional Content Section */}
       {((siteConfig.promotional_images && siteConfig.promotional_images.length > 0) || 
-        (siteConfig.promotional_videos && siteConfig.promotional_videos.length > 0)) && (
+        (siteConfig.promotional_videos && siteConfig.promotional_videos.length > 0) ||
+        (siteConfig.home_sections && siteConfig.home_sections['limited-offers'] && siteConfig.home_sections['limited-offers'].enabled)) && (
         <section className="py-20 bg-gradient-to-br from-gray-900 via-black to-gray-900" data-testid="promotional-section">
           <div className="container mx-auto px-6">
             <div className="text-center mb-16">
               <Badge className="mb-6 bg-red-600 text-white px-8 py-3 text-lg font-semibold">
-                OFERTAS ESPECIALES
+                {siteConfig.home_sections?.['limited-offers']?.title || 'OFERTAS ESPECIALES'}
               </Badge>
               <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-                Promociones Exclusivas
+                {siteConfig.home_sections?.['limited-offers']?.subtitle || 'Promociones Exclusivas'}
               </h2>
               <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-                No te pierdas estas increíbles ofertas limitadas
+                {siteConfig.home_sections?.['limited-offers']?.description || 'No te pierdas estas increíbles ofertas limitadas'}
               </p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-              {/* Promotional Images */}
-              {siteConfig.promotional_images && siteConfig.promotional_images.map((imageUrl, index) => (
+              {/* Promotional Images - Use home_sections first, fallback to old config */}
+              {(siteConfig.home_sections?.['limited-offers']?.images || siteConfig.promotional_images || []).map((imageUrl: string, index: number) => (
                 imageUrl && (
                   <div key={`promo-img-${index}`} className="group relative overflow-hidden rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-500 hover:scale-105">
                     <div className="aspect-video overflow-hidden">
@@ -232,7 +233,7 @@ export default function Home() {
                         <div className="flex items-center justify-between">
                           <Badge className="bg-red-600 text-white">Oferta Limitada</Badge>
                           <Button size="sm" className="bg-white text-black hover:bg-gray-200">
-                            Ver Detalles
+                            {siteConfig.home_sections?.['limited-offers']?.buttonText || 'Ver Detalles'}
                           </Button>
                         </div>
                       </div>
@@ -241,8 +242,8 @@ export default function Home() {
                 )
               ))}
               
-              {/* Promotional Videos */}
-              {siteConfig.promotional_videos && siteConfig.promotional_videos.map((videoUrl, index) => (
+              {/* Promotional Videos - Use home_sections first, fallback to old config */}
+              {(siteConfig.home_sections?.['limited-offers']?.videos || siteConfig.promotional_videos || []).map((videoUrl: string, index: number) => (
                 videoUrl && (
                   <div key={`promo-vid-${index}`} className="group relative overflow-hidden rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-500 hover:scale-105">
                     <div className="aspect-video overflow-hidden">

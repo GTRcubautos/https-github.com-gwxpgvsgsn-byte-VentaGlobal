@@ -17,6 +17,7 @@ import Games from "@/pages/games";
 import Profile from "@/pages/profile";
 import Wholesale from "@/pages/wholesale";
 import Admin from "@/pages/admin";
+import AdminHome from "@/pages/admin-home";
 import AdminLogin from "@/pages/admin-login";
 import ProtectedAdmin from "@/components/admin/protected-admin";
 import Subscription from "@/pages/subscription";
@@ -47,6 +48,11 @@ function Router() {
       <Route path="/admin">
         <ProtectedAdmin>
           <Admin />
+        </ProtectedAdmin>
+      </Route>
+      <Route path="/admin/home">
+        <ProtectedAdmin>
+          <AdminHome />
         </ProtectedAdmin>
       </Route>
       <Route path="/suscripcion" component={Subscription} />
