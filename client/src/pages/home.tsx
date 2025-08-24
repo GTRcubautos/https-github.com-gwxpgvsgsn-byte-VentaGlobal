@@ -180,26 +180,26 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Promociones Banner */}
-      <section className="py-4 bg-red-600 text-white" data-testid="promo-banner">
-        <div className="container mx-auto px-6">
-          <div className="flex items-center justify-center space-x-8 text-sm font-semibold uppercase tracking-wide">
+      {/* Promociones Banner - Mobile Optimized */}
+      <section className="py-3 sm:py-4 bg-red-600 text-white" data-testid="promo-banner">
+        <div className="container mx-auto px-2 sm:px-4 md:px-6">
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 md:gap-6 lg:gap-8 text-xs sm:text-sm font-semibold uppercase tracking-wide">
             {siteConfig.home_sections?.promotions?.bannerPromos && siteConfig.home_sections.promotions.bannerPromos.length > 0 ? (
               siteConfig.home_sections.promotions.bannerPromos.map((promo: string, index: number) => (
-                <span key={index}>
-                  {index > 0 && <span className="mx-4">•</span>}
-                  {promo}
-                </span>
+                <div key={index} className="flex items-center">
+                  {index > 0 && <span className="mx-1 sm:mx-2 md:mx-3 text-red-200">•</span>}
+                  <span className="whitespace-nowrap">{promo}</span>
+                </div>
               ))
             ) : (
               <>
-                <span>ENVÍO GRATIS +$500</span>
-                <span>•</span>
-                <span>FINANCIAMIENTO 0%</span>
-                <span>•</span>
-                <span>GARANTÍA EXTENDIDA</span>
-                <span>•</span>
-                <span>ATENCIÓN 24/7</span>
+                <span className="whitespace-nowrap">ENVÍO GRATIS +$500</span>
+                <span className="text-red-200 hidden sm:inline">•</span>
+                <span className="whitespace-nowrap">FINANCIAMIENTO 0%</span>
+                <span className="text-red-200 hidden sm:inline">•</span>
+                <span className="whitespace-nowrap">GARANTÍA EXTENDIDA</span>
+                <span className="text-red-200 hidden sm:inline">•</span>
+                <span className="whitespace-nowrap">ATENCIÓN 24/7</span>
               </>
             )}
           </div>
