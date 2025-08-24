@@ -25,7 +25,7 @@ export default function Motorcycles() {
     queryKey: ['/api/products', { category: 'motorcycles', search: currentSearch }],
   });
 
-  const { data: siteConfig = {}, isLoading: configLoading } = useQuery<any>({
+  const { data: siteConfig = {}, isLoading: configLoading } = useQuery({
     queryKey: ["/api/site-config"],
   });
 
@@ -60,7 +60,7 @@ export default function Motorcycles() {
   ).slice(0, 3);
 
   return (
-    <div className="min-h-screen bg-black" data-testid="motorcycles-page">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-purple-50/30 to-pink-50/20" data-testid="motorcycles-page">
       {/* Hero Section */}
       <section className="relative py-24 overflow-hidden" data-testid="motorcycles-hero-section">
         {/* Background Image or Video */}
@@ -127,7 +127,7 @@ export default function Motorcycles() {
       <div className="container mx-auto px-6 pb-16">
         {/* Search and Filter Section */}
         <div className="mb-12">
-          <Card className="p-6 bg-gray-900/90 backdrop-blur-sm border-gray-700 shadow-xl">
+          <Card className="p-6 bg-white/80 backdrop-blur-sm border-0 shadow-xl">
             <div className="flex flex-col md:flex-row gap-4 items-center">
               <div className="flex-1 w-full">
                 <SearchBar
@@ -136,24 +136,25 @@ export default function Motorcycles() {
                   className="w-full"
                 />
               </div>
-              <Button className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white">
+              <Button variant="outline" className="flex items-center gap-2 border-purple-200 text-purple-600 hover:bg-purple-50">
                 <Filter className="h-4 w-4" />
                 Filtros Avanzados
               </Button>
             </div>
             {currentSearch && (
-              <div className="mt-4 flex items-center justify-between bg-gray-800 p-4 rounded-xl border border-gray-600">
+              <div className="mt-4 flex items-center justify-between bg-gradient-to-r from-purple-50 to-pink-50 p-4 rounded-xl border border-purple-100">
                 <div className="flex items-center gap-2">
-                  <Search className="h-5 w-5 text-red-400" />
-                  <span className="text-white font-medium">
+                  <Search className="h-5 w-5 text-purple-600" />
+                  <span className="text-purple-800 font-medium">
                     Resultados para: "{currentSearch}"
                   </span>
-                  <Badge className="bg-red-600 text-white">{motorcycles.length}</Badge>
+                  <Badge className="bg-purple-600 text-white">{motorcycles.length}</Badge>
                 </div>
                 <Button
                   size="sm"
+                  variant="ghost"
                   onClick={clearSearch}
-                  className="bg-red-600 hover:bg-red-700 text-white"
+                  className="text-purple-600 hover:text-purple-800 hover:bg-purple-100"
                   data-testid="clear-search"
                 >
                   Limpiar búsqueda
@@ -165,36 +166,36 @@ export default function Motorcycles() {
 
         {/* Stats Section */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
-          <Card className="p-6 text-center bg-gray-800 border-gray-700 hover:scale-105 transition-transform duration-300">
-            <Bike className="h-10 w-10 mx-auto mb-3 text-red-400" />
-            <div className="text-3xl font-bold text-white mb-1">{motorcycles.length}</div>
-            <div className="text-sm text-gray-300 uppercase tracking-wider">Suzuki & Yamaha</div>
+          <Card className="p-6 text-center bg-gradient-to-br from-purple-500/10 to-purple-600/20 border-purple-200/50 hover:scale-105 transition-transform duration-300">
+            <Bike className="h-10 w-10 mx-auto mb-3 text-purple-600" />
+            <div className="text-3xl font-bold text-purple-700 mb-1">{motorcycles.length}</div>
+            <div className="text-sm text-purple-600 uppercase tracking-wider">Suzuki & Yamaha</div>
           </Card>
-          <Card className="p-6 text-center bg-gray-800 border-gray-700 hover:scale-105 transition-transform duration-300">
-            <Wind className="h-10 w-10 mx-auto mb-3 text-red-400" />
-            <div className="text-3xl font-bold text-white mb-1">500+</div>
-            <div className="text-sm text-gray-300 uppercase tracking-wider">Piezas Disponibles</div>
+          <Card className="p-6 text-center bg-gradient-to-br from-pink-500/10 to-pink-600/20 border-pink-200/50 hover:scale-105 transition-transform duration-300">
+            <Wind className="h-10 w-10 mx-auto mb-3 text-pink-600" />
+            <div className="text-3xl font-bold text-pink-700 mb-1">500+</div>
+            <div className="text-sm text-pink-600 uppercase tracking-wider">Piezas Disponibles</div>
           </Card>
-          <Card className="p-6 text-center bg-gray-800 border-gray-700 hover:scale-105 transition-transform duration-300">
-            <Star className="h-10 w-10 mx-auto mb-3 text-red-400" />
-            <div className="text-3xl font-bold text-white mb-1">10+</div>
-            <div className="text-sm text-gray-300 uppercase tracking-wider">Años Experiencia</div>
+          <Card className="p-6 text-center bg-gradient-to-br from-orange-500/10 to-orange-600/20 border-orange-200/50 hover:scale-105 transition-transform duration-300">
+            <Star className="h-10 w-10 mx-auto mb-3 text-orange-600" />
+            <div className="text-3xl font-bold text-orange-700 mb-1">10+</div>
+            <div className="text-sm text-orange-600 uppercase tracking-wider">Años Experiencia</div>
           </Card>
-          <Card className="p-6 text-center bg-gray-800 border-gray-700 hover:scale-105 transition-transform duration-300">
-            <Shield className="h-10 w-10 mx-auto mb-3 text-red-400" />
-            <div className="text-2xl font-bold text-white mb-1">🔧</div>
-            <div className="text-sm text-gray-300 uppercase tracking-wider">Taller Especializado</div>
+          <Card className="p-6 text-center bg-gradient-to-br from-green-500/10 to-green-600/20 border-green-200/50 hover:scale-105 transition-transform duration-300">
+            <Shield className="h-10 w-10 mx-auto mb-3 text-green-600" />
+            <div className="text-2xl font-bold text-green-700 mb-1">🔧</div>
+            <div className="text-sm text-green-600 uppercase tracking-wider">Taller Especializado</div>
           </Card>
         </div>
 
         {/* Promotional Banner */}
         <div className="mb-12">
-          <Card className="p-6 bg-gradient-to-r from-red-600 via-gray-800 to-red-600 text-white border-0 overflow-hidden relative">
+          <Card className="p-6 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 text-white border-0 overflow-hidden relative">
             <div className="absolute inset-0 bg-black/20"></div>
             <div className="relative flex flex-col md:flex-row items-center justify-between">
               <div className="mb-4 md:mb-0">
                 <h3 className="text-2xl font-bold mb-2">🏍️ Especialistas Suzuki & Yamaha</h3>
-                <p className="text-gray-100">Piezas originales • Repuestos garantizados • Taller especializado • Servicio técnico</p>
+                <p className="text-purple-100">Piezas originales • Repuestos garantizados • Taller especializado • Servicio técnico</p>
               </div>
               <Badge className="bg-white/20 text-white backdrop-blur-sm px-4 py-2 text-lg font-bold">
                 SERVICIO GARANTIZADO
@@ -207,14 +208,14 @@ export default function Motorcycles() {
         {isLoading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[...Array(6)].map((_, i) => (
-              <Card key={i} className="animate-pulse overflow-hidden bg-gray-800/50 backdrop-blur-sm border-gray-700">
-                <div className="bg-gray-700 aspect-video relative overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-600/30 to-transparent animate-pulse"></div>
+              <Card key={i} className="animate-pulse overflow-hidden bg-white/50 backdrop-blur-sm">
+                <div className="bg-gradient-to-r from-purple-200 via-pink-300 to-orange-200 aspect-video relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-pulse"></div>
                 </div>
                 <CardContent className="p-6">
-                  <div className="bg-gray-700 h-6 rounded mb-3"></div>
-                  <div className="bg-gray-700 h-4 rounded w-2/3 mb-4"></div>
-                  <div className="bg-gray-700 h-12 rounded"></div>
+                  <div className="bg-gradient-to-r from-purple-200 to-pink-300 h-6 rounded mb-3"></div>
+                  <div className="bg-gradient-to-r from-purple-200 to-pink-300 h-4 rounded w-2/3 mb-4"></div>
+                  <div className="bg-gradient-to-r from-purple-200 to-pink-300 h-12 rounded"></div>
                 </CardContent>
               </Card>
             ))}

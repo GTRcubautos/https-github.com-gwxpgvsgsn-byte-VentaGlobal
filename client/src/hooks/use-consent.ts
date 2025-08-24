@@ -2,67 +2,37 @@ import { useState, useEffect } from "react";
 
 export function useConsent() {
   const [showConsentModal, setShowConsentModal] = useState(false);
-  const [showMandatoryTerms, setShowMandatoryTerms] = useState(false);
 
-  // Verificar términos obligatorios primero
+  // Verificar si el usuario ya dio su consentimiento
   useEffect(() => {
-    const hasAcceptedTerms = localStorage.getItem('gtr-mandatory-terms-accepted');
-    const termsDate = localStorage.getItem('gtr-terms-acceptance-date');
-    
-    // Si no ha aceptado términos o fue hace más de 1 año, mostrar modal obligatorio
-    if (!hasAcceptedTerms || (termsDate && isConsentExpired(termsDate))) {
-      setShowMandatoryTerms(true);
-      return; // No continuar con otras verificaciones hasta que acepte términos
-    }
-
-    // Solo después de aceptar términos, verificar consentimientos opcionales
     const hasGivenConsent = localStorage.getItem('gtr-consent-given');
     const consentDate = localStorage.getItem('gtr-consent-date');
     
+    // Si no ha dado consentimiento o fue hace más de 1 año, mostrar modal
     if (!hasGivenConsent || (consentDate && isConsentExpired(consentDate))) {
+      // Esperar un poco para que la página cargue
       const timer = setTimeout(() => {
         setShowConsentModal(true);
-      }, 1000);
+      }, 2000);
       
       return () => clearTimeout(timer);
     }
   }, []);
-
-  const closeMandatoryTerms = () => {
-    setShowMandatoryTerms(false);
-    
-    // Después de aceptar términos, verificar consentimientos opcionales
-    const hasGivenConsent = localStorage.getItem('gtr-consent-given');
-    const consentDate = localStorage.getItem('gtr-consent-date');
-    
-    if (!hasGivenConsent || (consentDate && isConsentExpired(consentDate))) {
-      setTimeout(() => {
-        setShowConsentModal(true);
-      }, 500);
-    }
-  };
 
   const closeConsentModal = () => {
     setShowConsentModal(false);
   };
 
   const hasConsent = (consentType: string): boolean => {
+    // Verificar desde localStorage por ahora
     const consent = localStorage.getItem(`gtr-consent-${consentType}`);
     return consent === 'true';
   };
 
-  const hasMandatoryAcceptance = (): boolean => {
-    const hasAcceptedTerms = localStorage.getItem('gtr-mandatory-terms-accepted');
-    return hasAcceptedTerms === 'true';
-  };
-
   return {
     showConsentModal,
-    showMandatoryTerms,
     closeConsentModal,
-    closeMandatoryTerms,
     hasConsent,
-    hasMandatoryAcceptance,
   };
 }
 

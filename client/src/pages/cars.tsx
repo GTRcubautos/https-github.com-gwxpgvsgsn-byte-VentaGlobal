@@ -25,7 +25,7 @@ export default function Cars() {
     queryKey: ['/api/products', { category: 'cars', search: currentSearch }],
   });
 
-  const { data: siteConfig = {}, isLoading: configLoading } = useQuery<any>({
+  const { data: siteConfig = {}, isLoading: configLoading } = useQuery({
     queryKey: ["/api/site-config"],
   });
 
@@ -60,7 +60,7 @@ export default function Cars() {
   ).slice(0, 3);
 
   return (
-    <div className="min-h-screen bg-black" data-testid="cars-page">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-purple-50/20" data-testid="cars-page">
       {/* Hero Section */}
       <section className="relative py-24 overflow-hidden" data-testid="cars-hero-section">
         {/* Background Image or Video */}
@@ -127,7 +127,7 @@ export default function Cars() {
       <div className="container mx-auto px-6 pb-16">
         {/* Search and Filter Section */}
         <div className="mb-12">
-          <Card className="p-6 bg-gray-900/90 backdrop-blur-sm border-gray-700 shadow-xl">
+          <Card className="p-6 bg-white/80 backdrop-blur-sm border-0 shadow-xl">
             <div className="flex flex-col md:flex-row gap-4 items-center">
               <div className="flex-1 w-full">
                 <SearchBar
@@ -136,24 +136,25 @@ export default function Cars() {
                   className="w-full"
                 />
               </div>
-              <Button className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white">
+              <Button variant="outline" className="flex items-center gap-2 border-blue-200 text-blue-600 hover:bg-blue-50">
                 <Filter className="h-4 w-4" />
                 Filtros Avanzados
               </Button>
             </div>
             {currentSearch && (
-              <div className="mt-4 flex items-center justify-between bg-gray-800 p-4 rounded-xl border border-gray-600">
+              <div className="mt-4 flex items-center justify-between bg-gradient-to-r from-blue-50 to-purple-50 p-4 rounded-xl border border-blue-100">
                 <div className="flex items-center gap-2">
-                  <Search className="h-5 w-5 text-red-400" />
-                  <span className="text-white font-medium">
+                  <Search className="h-5 w-5 text-blue-600" />
+                  <span className="text-blue-800 font-medium">
                     Resultados para: "{currentSearch}"
                   </span>
-                  <Badge className="bg-red-600 text-white">{cars.length}</Badge>
+                  <Badge className="bg-blue-600 text-white">{cars.length}</Badge>
                 </div>
                 <Button
                   size="sm"
+                  variant="ghost"
                   onClick={clearSearch}
-                  className="bg-red-600 hover:bg-red-700 text-white"
+                  className="text-blue-600 hover:text-blue-800 hover:bg-blue-100"
                   data-testid="clear-search"
                 >
                   Limpiar búsqueda
@@ -165,31 +166,31 @@ export default function Cars() {
 
         {/* Stats Section */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
-          <Card className="p-6 text-center bg-gray-800 border-gray-700 hover:scale-105 transition-transform duration-300">
-            <Car className="h-10 w-10 mx-auto mb-3 text-red-400" />
-            <div className="text-3xl font-bold text-white mb-1">{cars.length}</div>
-            <div className="text-sm text-gray-300 uppercase tracking-wider">Autos Clásicos</div>
+          <Card className="p-6 text-center bg-gradient-to-br from-blue-500/10 to-blue-600/20 border-blue-200/50 hover:scale-105 transition-transform duration-300">
+            <Car className="h-10 w-10 mx-auto mb-3 text-blue-600" />
+            <div className="text-3xl font-bold text-blue-700 mb-1">{cars.length}</div>
+            <div className="text-sm text-blue-600 uppercase tracking-wider">Autos Clásicos</div>
           </Card>
-          <Card className="p-6 text-center bg-gray-800 border-gray-700 hover:scale-105 transition-transform duration-300">
-            <Zap className="h-10 w-10 mx-auto mb-3 text-red-400" />
-            <div className="text-3xl font-bold text-white mb-1">1000+</div>
-            <div className="text-sm text-gray-300 uppercase tracking-wider">Piezas Disponibles</div>
+          <Card className="p-6 text-center bg-gradient-to-br from-purple-500/10 to-purple-600/20 border-purple-200/50 hover:scale-105 transition-transform duration-300">
+            <Zap className="h-10 w-10 mx-auto mb-3 text-purple-600" />
+            <div className="text-3xl font-bold text-purple-700 mb-1">1000+</div>
+            <div className="text-sm text-purple-600 uppercase tracking-wider">Piezas Disponibles</div>
           </Card>
-          <Card className="p-6 text-center bg-gray-800 border-gray-700 hover:scale-105 transition-transform duration-300">
-            <Star className="h-10 w-10 mx-auto mb-3 text-red-400" />
-            <div className="text-3xl font-bold text-white mb-1">15+</div>
-            <div className="text-sm text-gray-300 uppercase tracking-wider">Años Experiencia</div>
+          <Card className="p-6 text-center bg-gradient-to-br from-cyan-500/10 to-cyan-600/20 border-cyan-200/50 hover:scale-105 transition-transform duration-300">
+            <Star className="h-10 w-10 mx-auto mb-3 text-cyan-600" />
+            <div className="text-3xl font-bold text-cyan-700 mb-1">15+</div>
+            <div className="text-sm text-cyan-600 uppercase tracking-wider">Años Experiencia</div>
           </Card>
-          <Card className="p-6 text-center bg-gray-800 border-gray-700 hover:scale-105 transition-transform duration-300">
-            <Shield className="h-10 w-10 mx-auto mb-3 text-red-400" />
-            <div className="text-2xl font-bold text-white mb-1">🔧</div>
-            <div className="text-sm text-gray-300 uppercase tracking-wider">Servicio Técnico</div>
+          <Card className="p-6 text-center bg-gradient-to-br from-green-500/10 to-green-600/20 border-green-200/50 hover:scale-105 transition-transform duration-300">
+            <Shield className="h-10 w-10 mx-auto mb-3 text-green-600" />
+            <div className="text-2xl font-bold text-green-700 mb-1">🔧</div>
+            <div className="text-sm text-green-600 uppercase tracking-wider">Servicio Técnico</div>
           </Card>
         </div>
 
         {/* Promotional Banner */}
         <div className="mb-12">
-          <Card className="p-6 bg-gradient-to-r from-red-600 via-gray-800 to-red-600 text-white border-0 overflow-hidden relative">
+          <Card className="p-6 bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 text-white border-0 overflow-hidden relative">
             <div className="absolute inset-0 bg-black/20"></div>
             <div className="relative flex flex-col md:flex-row items-center justify-between">
               <div className="mb-4 md:mb-0">
