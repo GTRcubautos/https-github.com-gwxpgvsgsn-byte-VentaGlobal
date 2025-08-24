@@ -180,7 +180,7 @@ export default function Admin() {
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-black">GTR CUBAUTO Admin</h1>
+              <h1 className="text-3xl font-bold text-gray-700">GTR CUBAUTO Admin</h1>
               <p className="text-automotive-gray">Ciudad Darío • Today {new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })}</p>
             </div>
             <div className="flex items-center space-x-4">
@@ -550,7 +550,7 @@ export default function Admin() {
 
             <Card>
               <CardHeader>
-                <CardTitle>Lista de Clientes</CardTitle>
+                <CardTitle className="text-gray-700">Lista de Clientes</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -694,7 +694,7 @@ export default function Admin() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <Card>
                 <CardHeader>
-                  <CardTitle>Ventas Comparativas por Período</CardTitle>
+                  <CardTitle className="text-gray-700">Ventas Comparativas por Período</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="h-80">
@@ -752,7 +752,7 @@ export default function Admin() {
 
               <Card>
                 <CardHeader>
-                  <CardTitle>Distribución de Ventas por Categoría</CardTitle>
+                  <CardTitle className="text-gray-700">Distribución de Ventas por Categoría</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="h-80">
@@ -798,7 +798,7 @@ export default function Admin() {
 
               <Card>
                 <CardHeader>
-                  <CardTitle>Productos Más Vendidos</CardTitle>
+                  <CardTitle className="text-gray-700">Productos Más Vendidos</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="h-80">
@@ -838,7 +838,7 @@ export default function Admin() {
 
               <Card>
                 <CardHeader>
-                  <CardTitle>Rendimiento Semanal vs Mensual</CardTitle>
+                  <CardTitle className="text-gray-700">Rendimiento Semanal vs Mensual</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="h-80">
@@ -952,7 +952,7 @@ export default function Admin() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <Card>
                 <CardHeader>
-                  <CardTitle>Crear Campaña Automática</CardTitle>
+                  <CardTitle className="text-gray-700">Crear Campaña Automática</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <form className="space-y-4">
@@ -1029,7 +1029,7 @@ export default function Admin() {
 
               <Card>
                 <CardHeader>
-                  <CardTitle>Campañas Activas</CardTitle>
+                  <CardTitle className="text-gray-700">Campañas Activas</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
@@ -1142,7 +1142,7 @@ export default function Admin() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <Card>
                 <CardHeader>
-                  <CardTitle>Publicaciones Programadas</CardTitle>
+                  <CardTitle className="text-gray-700">Publicaciones Programadas</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
@@ -1172,7 +1172,7 @@ export default function Admin() {
 
               <Card>
                 <CardHeader>
-                  <CardTitle>Rendimiento del Contenido</CardTitle>
+                  <CardTitle className="text-gray-700">Rendimiento del Contenido</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
@@ -1285,7 +1285,7 @@ export default function Admin() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <Card>
                 <CardHeader>
-                  <CardTitle>Productos Más Vistos</CardTitle>
+                  <CardTitle className="text-gray-700">Productos Más Vistos</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
@@ -1309,7 +1309,7 @@ export default function Admin() {
 
               <Card>
                 <CardHeader>
-                  <CardTitle>Fuentes de Tráfico</CardTitle>
+                  <CardTitle className="text-gray-700">Fuentes de Tráfico</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
@@ -1390,7 +1390,7 @@ export default function Admin() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <Card>
                 <CardHeader>
-                  <CardTitle>Crear Nuevo Descuento</CardTitle>
+                  <CardTitle className="text-gray-700">Crear Nuevo Descuento</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <form className="space-y-4">
@@ -1423,7 +1423,7 @@ export default function Admin() {
 
               <Card>
                 <CardHeader>
-                  <CardTitle>Descuentos Activos</CardTitle>
+                  <CardTitle className="text-gray-700">Descuentos Activos</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
@@ -1482,7 +1482,7 @@ export default function Admin() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <Card>
                 <CardHeader>
-                  <CardTitle>Configuración General</CardTitle>
+                  <CardTitle className="text-gray-700">Configuración General</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex items-center justify-between">
@@ -1518,7 +1518,7 @@ export default function Admin() {
 
               <Card>
                 <CardHeader>
-                  <CardTitle>Configuración de Seguridad</CardTitle>
+                  <CardTitle className="text-gray-700">Configuración de Seguridad</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex items-center justify-between">
@@ -1554,7 +1554,7 @@ export default function Admin() {
 
               <Card>
                 <CardHeader>
-                  <CardTitle>Configuración de Pagos</CardTitle>
+                  <CardTitle className="text-gray-700">Configuración de Pagos</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div>
@@ -1586,7 +1586,7 @@ export default function Admin() {
 
               <Card>
                 <CardHeader>
-                  <CardTitle>Respaldo y Recuperación</CardTitle>
+                  <CardTitle className="text-gray-700">Respaldo y Recuperación</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex items-center justify-between">
