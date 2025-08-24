@@ -174,7 +174,7 @@ export default function Admin() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50" data-testid="admin-page">
+    <div className="min-h-screen pb-20 bg-gray-50" data-testid="admin-page">
       {/* Header */}
       <div className="bg-white shadow-sm border-b">
         <div className="container mx-auto px-6 py-4">
@@ -218,7 +218,7 @@ export default function Admin() {
         </div>
       </div>
 
-      <div className="container mx-auto px-6 py-8">
+      <div className="container mx-auto px-6 py-12">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="flex w-full overflow-x-auto mb-8 bg-white border border-gray-200 p-1 gap-1">
             <TabsTrigger 
@@ -350,9 +350,9 @@ export default function Admin() {
           </TabsList>
 
           {/* Dashboard Tab */}
-          <TabsContent value="dashboard" className="space-y-6">
+          <TabsContent value="dashboard" className="space-y-8">
             {/* KPI Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               <Card className="bg-gradient-to-br from-blue-500/10 to-blue-600/20 border-blue-200/50 hover:scale-105 transition-transform duration-300">
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
@@ -427,7 +427,7 @@ export default function Admin() {
             </div>
 
             {/* Charts Row */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
@@ -486,7 +486,7 @@ export default function Admin() {
           </TabsContent>
 
           {/* CRM Tab */}
-          <TabsContent value="crm" className="space-y-6">
+          <TabsContent value="crm" className="space-y-8">
             <div className="flex justify-between items-center">
               <h2 className="text-2xl font-bold">Gestión de Clientes (CRM)</h2>
               <div className="flex gap-2">
@@ -501,7 +501,7 @@ export default function Admin() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
               <Card>
                 <CardContent className="p-4">
                   <div className="flex items-center gap-2">
@@ -582,17 +582,17 @@ export default function Admin() {
           </TabsContent>
 
           {/* Inventory Tab */}
-          <TabsContent value="inventory" className="space-y-6">
+          <TabsContent value="inventory" className="space-y-8">
             <InventoryManagement />
           </TabsContent>
 
           {/* Wholesale Codes Tab */}
-          <TabsContent value="wholesale" className="space-y-6">
+          <TabsContent value="wholesale" className="space-y-8">
             <WholesaleCodes />
           </TabsContent>
 
           {/* Sales Tab */}
-          <TabsContent value="sales" className="space-y-6">
+          <TabsContent value="sales" className="space-y-8">
             <div className="flex justify-between items-center">
               <h2 className="text-2xl font-bold">Análisis de Ventas Avanzado</h2>
               <div className="flex gap-2">
@@ -616,7 +616,7 @@ export default function Admin() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
               <Card className="bg-gradient-to-br from-green-500/10 to-green-600/20 border-green-200/50">
                 <CardContent className="p-4">
                   <div className="flex items-center gap-2">
@@ -691,7 +691,7 @@ export default function Admin() {
               </Card>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <Card>
                 <CardHeader>
                   <CardTitle>Ventas Comparativas por Período</CardTitle>
@@ -887,7 +887,7 @@ export default function Admin() {
           </TabsContent>
 
           {/* Campaigns Tab */}
-          <TabsContent value="campaigns" className="space-y-6">
+          <TabsContent value="campaigns" className="space-y-8">
             <div className="flex justify-between items-center">
               <h2 className="text-2xl font-bold">Gestión de Campañas Automáticas</h2>
               <div className="flex gap-2">
@@ -902,7 +902,7 @@ export default function Admin() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
               <Card>
                 <CardContent className="p-4">
                   <div className="flex items-center gap-2">
@@ -949,7 +949,7 @@ export default function Admin() {
               </Card>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <Card>
                 <CardHeader>
                   <CardTitle>Crear Campaña Automática</CardTitle>
@@ -1070,13 +1070,13 @@ export default function Admin() {
           </TabsContent>
 
           {/* Social Media Tab */}
-          <TabsContent value="social" className="space-y-6">
+          <TabsContent value="social" className="space-y-8">
             <SocialAutomation />
           </TabsContent>
 
           {/* Analytics Tab */}
-          <TabsContent value="analytics" className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <TabsContent value="analytics" className="space-y-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <Card>
                 <CardContent className="p-4">
                   <div className="flex items-center gap-2">
@@ -1139,7 +1139,7 @@ export default function Admin() {
               </Card>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <Card>
                 <CardHeader>
                   <CardTitle>Publicaciones Programadas</CardTitle>
@@ -1204,7 +1204,7 @@ export default function Admin() {
           </TabsContent>
 
           {/* Analytics Tab */}
-          <TabsContent value="analytics" className="space-y-6">
+          <TabsContent value="analytics" className="space-y-8">
             <div className="flex justify-between items-center">
               <h2 className="text-2xl font-bold">Analítica Web</h2>
               <Select defaultValue="30d">
@@ -1219,7 +1219,7 @@ export default function Admin() {
               </Select>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
               <Card>
                 <CardContent className="p-4">
                   <div className="flex items-center gap-2">
@@ -1282,7 +1282,7 @@ export default function Admin() {
               </Card>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <Card>
                 <CardHeader>
                   <CardTitle>Productos Más Vistos</CardTitle>
@@ -1331,7 +1331,7 @@ export default function Admin() {
           {/* Automation Tab */}
 
           {/* Discounts Tab */}
-          <TabsContent value="discounts" className="space-y-6">
+          <TabsContent value="discounts" className="space-y-8">
             <div className="flex justify-between items-center">
               <h2 className="text-2xl font-bold">Configuración de Descuentos</h2>
               <Button size="sm">
@@ -1340,7 +1340,7 @@ export default function Admin() {
               </Button>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
               <Card>
                 <CardContent className="p-4">
                   <div className="flex items-center gap-2">
@@ -1387,7 +1387,7 @@ export default function Admin() {
               </Card>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <Card>
                 <CardHeader>
                   <CardTitle>Crear Nuevo Descuento</CardTitle>
@@ -1470,7 +1470,7 @@ export default function Admin() {
           </TabsContent>
 
           {/* Settings Tab */}
-          <TabsContent value="settings" className="space-y-6">
+          <TabsContent value="settings" className="space-y-8">
             <div className="flex justify-between items-center">
               <h2 className="text-2xl font-bold">Configuración del Sistema</h2>
               <Button variant="outline" size="sm">
@@ -1479,7 +1479,7 @@ export default function Admin() {
               </Button>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <Card>
                 <CardHeader>
                   <CardTitle>Configuración General</CardTitle>
@@ -1616,22 +1616,22 @@ export default function Admin() {
           </TabsContent>
 
           {/* Site Configuration Tab */}
-          <TabsContent value="site-config" className="space-y-6">
+          <TabsContent value="site-config" className="space-y-8">
             <SiteConfigPanel />
           </TabsContent>
 
           {/* Security Logs Tab */}
-          <TabsContent value="security" className="space-y-6">
+          <TabsContent value="security" className="space-y-8">
             <SecurityLogsPanel />
           </TabsContent>
 
           {/* Data Backup Tab */}
-          <TabsContent value="backup" className="space-y-6">
+          <TabsContent value="backup" className="space-y-8">
             <DataBackupPanel />
           </TabsContent>
 
           {/* Financial Security Tab */}
-          <TabsContent value="financial" className="space-y-6">
+          <TabsContent value="financial" className="space-y-8">
             <FinancialSecurityPanel />
           </TabsContent>
         </Tabs>
