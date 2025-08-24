@@ -47,9 +47,9 @@ export default function Header() {
       <div className="container mx-auto px-6 py-4">
         {/* Desktop Header */}
         <div className="hidden lg:flex items-center justify-between">
-          {/* Left Navigation */}
-          <nav className="flex items-center space-x-8" data-testid="left-navigation">
-            {navigation.slice(0, 4).map((item) => (
+          {/* Navigation with equal spacing */}
+          <nav className="flex items-center justify-between flex-1 max-w-4xl mx-auto" data-testid="main-navigation">
+            {navigation.map((item) => (
               <Link
                 key={item.id}
                 href={item.href}
@@ -65,29 +65,8 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* Center spacer */}
-          <div className="flex-1"></div>
-
-          {/* Right side with Logo + Navigation + Search + Cart */}
-          <div className="flex items-center space-x-6">
-            {/* Logo space removed */}
-            {/* Right Navigation */}
-            <nav className="flex items-center space-x-8" data-testid="right-navigation">
-              {navigation.slice(4).map((item) => (
-                <Link
-                  key={item.id}
-                  href={item.href}
-                  className={`text-sm font-semibold transition-all duration-300 ${
-                    location === item.href 
-                      ? 'text-red-500 scale-105' 
-                      : 'text-white hover:text-red-400 hover:scale-105'
-                  }`}
-                  data-testid={`nav-${item.id}`}
-                >
-                  {item.name}
-                </Link>
-              ))}
-            </nav>
+          {/* Right side controls */}
+          <div className="flex items-center space-x-4 ml-8">
 
             {/* Retractable Search */}
             <div className="flex items-center">
