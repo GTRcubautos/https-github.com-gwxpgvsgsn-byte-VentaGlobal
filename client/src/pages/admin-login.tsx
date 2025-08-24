@@ -33,7 +33,7 @@ export default function AdminLogin() {
 
     try {
       // Simple password check - in production this should be more secure
-      if (password === 'GTR_ADMIN_2024') {
+      if (password === 'Gerardo') {
         // Set admin session
         localStorage.setItem('admin_authenticated', 'true');
         localStorage.setItem('admin_session', Date.now().toString());
