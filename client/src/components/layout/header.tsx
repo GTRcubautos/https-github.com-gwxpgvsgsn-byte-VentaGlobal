@@ -19,6 +19,7 @@ export default function Header() {
     { name: 'Autos', href: '/autos', id: 'autos' },
     { name: 'Motos', href: '/motos', id: 'motos' },
     { name: 'Juegos', href: '/juegos', id: 'juegos' },
+    { name: 'Mi Perfil', href: '/perfil', id: 'perfil' },
     { name: 'Mayoristas', href: '/mayoristas', id: 'mayoristas' },
     { name: 'Admin', href: '/admin', id: 'admin' },
   ];

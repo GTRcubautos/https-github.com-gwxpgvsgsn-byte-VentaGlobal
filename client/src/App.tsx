@@ -14,6 +14,7 @@ import Products from "@/pages/products";
 import Cars from "@/pages/cars";
 import Motorcycles from "@/pages/motorcycles";
 import Games from "@/pages/games";
+import Profile from "@/pages/profile";
 import Wholesale from "@/pages/wholesale";
 import Admin from "@/pages/admin";
 import Subscription from "@/pages/subscription";
@@ -33,6 +34,7 @@ function Router() {
       <Route path="/motorcycles" component={Motorcycles} />
       <Route path="/motos" component={Motorcycles} />
       <Route path="/juegos" component={Games} />
+      <Route path="/perfil" component={Profile} />
       <Route path="/mayoristas" component={Wholesale} />
       <Route path="/admin" component={Admin} />
       <Route path="/suscripcion" component={Subscription} />
