@@ -183,21 +183,21 @@ export default function Games() {
   const availableDiscount = (userPoints * 0.01).toFixed(2);
 
   return (
-    <div className="py-16 bg-secondary text-white" data-testid="games-page">
+    <div className="py-16 bg-black dark:bg-white text-white dark:text-black" data-testid="games-page">
       <div className="container mx-auto px-4">
         <h2 className="text-4xl font-bold text-center mb-2">Centro de Juegos</h2>
-        <div className="w-20 h-1 bg-primary mx-auto mb-8"></div>
+        <div className="w-20 h-1 bg-red-600 mx-auto mb-8"></div>
         
         {/* Daily Bible Verse */}
         <div 
-          className="bg-primary bg-opacity-20 rounded-lg p-6 mb-12 text-center max-w-2xl mx-auto"
+          className="bg-gray-900 dark:bg-gray-100 bg-opacity-80 rounded-lg p-6 mb-12 text-center max-w-2xl mx-auto"
           data-testid="daily-verse"
         >
-          <h3 className="text-primary text-xl font-bold mb-4">Versículo del Día</h3>
+          <h3 className="text-red-600 text-xl font-bold mb-4">Versículo del Día</h3>
           <p className="text-lg italic mb-2" data-testid="verse-text">
             "{dailyVerse.text}"
           </p>
-          <p className="text-primary font-semibold" data-testid="verse-reference">
+          <p className="text-red-600 font-semibold" data-testid="verse-reference">
             - {dailyVerse.reference}
           </p>
         </div>
@@ -205,7 +205,7 @@ export default function Games() {
         {/* VIP Status & Rewards Overview */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
           {/* VIP Status */}
-          <Card className="bg-gradient-to-br from-gray-900/90 to-gray-800/90 border-primary/20">
+          <Card className="bg-gray-900 dark:bg-gray-100 border-gray-700 dark:border-gray-300">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white">
                 <Crown className="h-6 w-6 text-yellow-400" />
@@ -214,7 +214,7 @@ export default function Games() {
             </CardHeader>
             <CardContent>
               <div className="text-center space-y-4">
-                <div className={`inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r ${vipStatus.color} text-white font-bold`}>
+                <div className="inline-flex items-center px-4 py-2 rounded-full bg-red-600 text-white font-bold">
                   {vipStatus.level}
                 </div>
                 <div className="text-white">
@@ -223,7 +223,7 @@ export default function Games() {
                   </div>
                   <div className="text-sm text-gray-300">Puntos Totales</div>
                 </div>
-                <div className="text-primary font-bold text-xl" data-testid="available-discount">
+                <div className="text-red-600 font-bold text-xl" data-testid="available-discount">
                   ${availableDiscount} en descuentos
                 </div>
                 {vipStatus.discount > 0 && (
@@ -236,7 +236,7 @@ export default function Games() {
           </Card>
 
           {/* Medallas Earned */}
-          <Card className="bg-gradient-to-br from-gray-900/90 to-gray-800/90 border-primary/20">
+          <Card className="bg-gray-900 dark:bg-gray-100 border-gray-700 dark:border-gray-300">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white">
                 <Medal className="h-6 w-6 text-orange-400" />
@@ -271,7 +271,7 @@ export default function Games() {
           </Card>
 
           {/* Trofeos Earned */}
-          <Card className="bg-gradient-to-br from-gray-900/90 to-gray-800/90 border-primary/20">
+          <Card className="bg-gray-900 dark:bg-gray-100 border-gray-700 dark:border-gray-300">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white">
                 <Trophy className="h-6 w-6 text-yellow-400" />
@@ -304,7 +304,7 @@ export default function Games() {
         {/* Medallas y Trofeos Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
           {/* Medallas */}
-          <Card className="bg-gradient-to-br from-gray-900/90 to-gray-800/90 border-primary/20">
+          <Card className="bg-gray-900 dark:bg-gray-100 border-gray-700 dark:border-gray-300">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white">
                 <Medal className="h-6 w-6 text-orange-400" />
@@ -364,7 +364,7 @@ export default function Games() {
           </Card>
 
           {/* Trofeos */}
-          <Card className="bg-gradient-to-br from-gray-900/90 to-gray-800/90 border-primary/20">
+          <Card className="bg-gray-900 dark:bg-gray-100 border-gray-700 dark:border-gray-300">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white">
                 <Trophy className="h-6 w-6 text-yellow-400" />
@@ -440,39 +440,39 @@ export default function Games() {
         
         {/* Games Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          <div className="bg-white bg-opacity-10 rounded-lg p-6 text-center" data-testid="trivia-game">
+          <div className="bg-gray-800 dark:bg-gray-200 rounded-lg p-6 text-center" data-testid="trivia-game">
             <div className="text-6xl mb-4">🎯</div>
             <h3 className="text-xl font-bold mb-2">Trivia Challenge</h3>
             <p className="mb-4">Responde preguntas y gana puntos</p>
             <Button
               onClick={() => openGameModal('trivia')}
-              className="bg-primary hover:bg-primary/90 text-white px-6 py-2"
+              className="bg-red-600 hover:bg-red-700 text-white px-6 py-2"
               data-testid="play-trivia"
             >
               Jugar Ahora
             </Button>
           </div>
           
-          <div className="bg-white bg-opacity-10 rounded-lg p-6 text-center" data-testid="roulette-game">
+          <div className="bg-gray-800 dark:bg-gray-200 rounded-lg p-6 text-center" data-testid="roulette-game">
             <div className="text-6xl mb-4">🎰</div>
             <h3 className="text-xl font-bold mb-2">Ruleta de Premios</h3>
             <p className="mb-4">Gira y gana descuentos increíbles</p>
             <Button
               onClick={() => openGameModal('roulette')}
-              className="bg-primary hover:bg-primary/90 text-white px-6 py-2"
+              className="bg-red-600 hover:bg-red-700 text-white px-6 py-2"
               data-testid="play-roulette"
             >
               Girar Ruleta
             </Button>
           </div>
           
-          <div className="bg-white bg-opacity-10 rounded-lg p-6 text-center" data-testid="puzzle-game">
+          <div className="bg-gray-800 dark:bg-gray-200 rounded-lg p-6 text-center" data-testid="puzzle-game">
             <div className="text-6xl mb-4">🧩</div>
             <h3 className="text-xl font-bold mb-2">Puzzle Master</h3>
             <p className="mb-4">Resuelve puzzles complejos</p>
             <Button
               onClick={() => openGameModal('puzzle')}
-              className="bg-primary hover:bg-primary/90 text-white px-6 py-2"
+              className="bg-red-600 hover:bg-red-700 text-white px-6 py-2"
               data-testid="play-puzzle"
             >
               Resolver
@@ -489,21 +489,21 @@ export default function Games() {
           <div className="flex justify-center space-x-4">
             <Button
               onClick={() => shareToSocial('Facebook')}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2"
+              className="bg-red-600 hover:bg-red-700 text-white px-6 py-2"
               data-testid="share-facebook"
             >
               <i className="fab fa-facebook-f mr-2"></i>Facebook
             </Button>
             <Button
               onClick={() => shareToSocial('Instagram')}
-              className="bg-pink-600 hover:bg-pink-700 text-white px-6 py-2"
+              className="bg-red-600 hover:bg-red-700 text-white px-6 py-2"
               data-testid="share-instagram"
             >
               <i className="fab fa-instagram mr-2"></i>Instagram
             </Button>
             <Button
               onClick={() => shareToSocial('Twitter')}
-              className="bg-blue-400 hover:bg-blue-500 text-white px-6 py-2"
+              className="bg-red-600 hover:bg-red-700 text-white px-6 py-2"
               data-testid="share-twitter"
             >
               <i className="fab fa-twitter mr-2"></i>Twitter

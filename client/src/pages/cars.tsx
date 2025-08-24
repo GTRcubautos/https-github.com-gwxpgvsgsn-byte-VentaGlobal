@@ -60,7 +60,7 @@ export default function Cars() {
   ).slice(0, 3);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-purple-50/20" data-testid="cars-page">
+    <div className="min-h-screen bg-white dark:bg-black" data-testid="cars-page">
       {/* Hero Section */}
       <section className="relative py-24 overflow-hidden" data-testid="cars-hero-section">
         {/* Background Image or Video */}
@@ -92,7 +92,7 @@ export default function Cars() {
         <div className="relative container mx-auto px-6">
           <div className="max-w-6xl mx-auto text-center">
             <div className="mb-12">
-              <Badge className="mb-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0 px-6 py-3 text-sm font-medium">
+              <Badge className="mb-4 bg-black dark:bg-white text-white dark:text-black border-0 px-6 py-3 text-sm font-medium">
                 <Car className="h-4 w-4 mr-2" />
                 {siteConfig.cars_hero_subtitle || "GTR CUBAUTOS - MULTISERVICIO AUTOMOTRIZ"}
               </Badge>
@@ -108,11 +108,11 @@ export default function Cars() {
               <div className="flex justify-center gap-4 mb-8">
                 {featuredCars.map((car, index) => (
                   <div key={car.id} className="relative">
-                    <Badge className="absolute -top-2 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-yellow-500 to-orange-500 text-white text-xs px-2 py-1 z-10">
+                    <Badge className="absolute -top-2 left-1/2 transform -translate-x-1/2 bg-red-600 text-white text-xs px-2 py-1 z-10">
                       <Crown className="h-3 w-3 mr-1" />
                       DESTACADO
                     </Badge>
-                    <div className="w-20 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold text-xs">
+                    <div className="w-20 h-12 bg-gray-900 dark:bg-gray-100 rounded-lg flex items-center justify-center text-white dark:text-black font-bold text-xs">
                       GTR
                     </div>
                   </div>
@@ -127,7 +127,7 @@ export default function Cars() {
       <div className="container mx-auto px-6 pb-16">
         {/* Search and Filter Section */}
         <div className="mb-12">
-          <Card className="p-6 bg-white/80 backdrop-blur-sm border-0 shadow-xl">
+          <Card className="p-6 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-xl">
             <div className="flex flex-col md:flex-row gap-4 items-center">
               <div className="flex-1 w-full">
                 <SearchBar
@@ -136,25 +136,25 @@ export default function Cars() {
                   className="w-full"
                 />
               </div>
-              <Button variant="outline" className="flex items-center gap-2 border-blue-200 text-blue-600 hover:bg-blue-50">
+              <Button variant="outline" className="flex items-center gap-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">
                 <Filter className="h-4 w-4" />
                 Filtros Avanzados
               </Button>
             </div>
             {currentSearch && (
-              <div className="mt-4 flex items-center justify-between bg-gradient-to-r from-blue-50 to-purple-50 p-4 rounded-xl border border-blue-100">
+              <div className="mt-4 flex items-center justify-between bg-gray-100 dark:bg-gray-800 p-4 rounded-xl border border-gray-200 dark:border-gray-700">
                 <div className="flex items-center gap-2">
-                  <Search className="h-5 w-5 text-blue-600" />
-                  <span className="text-blue-800 font-medium">
+                  <Search className="h-5 w-5 text-gray-600 dark:text-gray-400" />
+                  <span className="text-gray-800 dark:text-gray-200 font-medium">
                     Resultados para: "{currentSearch}"
                   </span>
-                  <Badge className="bg-blue-600 text-white">{cars.length}</Badge>
+                  <Badge className="bg-black dark:bg-white text-white dark:text-black">{cars.length}</Badge>
                 </div>
                 <Button
                   size="sm"
                   variant="ghost"
                   onClick={clearSearch}
-                  className="text-blue-600 hover:text-blue-800 hover:bg-blue-100"
+                  className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
                   data-testid="clear-search"
                 >
                   Limpiar búsqueda
@@ -166,38 +166,37 @@ export default function Cars() {
 
         {/* Stats Section */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
-          <Card className="p-6 text-center bg-gradient-to-br from-blue-500/10 to-blue-600/20 border-blue-200/50 hover:scale-105 transition-transform duration-300">
-            <Car className="h-10 w-10 mx-auto mb-3 text-blue-600" />
-            <div className="text-3xl font-bold text-blue-700 mb-1">{cars.length}</div>
-            <div className="text-sm text-blue-600 uppercase tracking-wider">Autos Clásicos</div>
+          <Card className="p-6 text-center bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700 hover:scale-105 transition-transform duration-300">
+            <Car className="h-10 w-10 mx-auto mb-3 text-gray-700 dark:text-gray-300" />
+            <div className="text-3xl font-bold text-black dark:text-white mb-1">{cars.length}</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400 uppercase tracking-wider">Autos Clásicos</div>
           </Card>
-          <Card className="p-6 text-center bg-gradient-to-br from-purple-500/10 to-purple-600/20 border-purple-200/50 hover:scale-105 transition-transform duration-300">
-            <Zap className="h-10 w-10 mx-auto mb-3 text-purple-600" />
-            <div className="text-3xl font-bold text-purple-700 mb-1">1000+</div>
-            <div className="text-sm text-purple-600 uppercase tracking-wider">Piezas Disponibles</div>
+          <Card className="p-6 text-center bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700 hover:scale-105 transition-transform duration-300">
+            <Zap className="h-10 w-10 mx-auto mb-3 text-gray-700 dark:text-gray-300" />
+            <div className="text-3xl font-bold text-black dark:text-white mb-1">1000+</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400 uppercase tracking-wider">Piezas Disponibles</div>
           </Card>
-          <Card className="p-6 text-center bg-gradient-to-br from-cyan-500/10 to-cyan-600/20 border-cyan-200/50 hover:scale-105 transition-transform duration-300">
-            <Star className="h-10 w-10 mx-auto mb-3 text-cyan-600" />
-            <div className="text-3xl font-bold text-cyan-700 mb-1">15+</div>
-            <div className="text-sm text-cyan-600 uppercase tracking-wider">Años Experiencia</div>
+          <Card className="p-6 text-center bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700 hover:scale-105 transition-transform duration-300">
+            <Star className="h-10 w-10 mx-auto mb-3 text-gray-700 dark:text-gray-300" />
+            <div className="text-3xl font-bold text-black dark:text-white mb-1">15+</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400 uppercase tracking-wider">Años Experiencia</div>
           </Card>
-          <Card className="p-6 text-center bg-gradient-to-br from-green-500/10 to-green-600/20 border-green-200/50 hover:scale-105 transition-transform duration-300">
-            <Shield className="h-10 w-10 mx-auto mb-3 text-green-600" />
-            <div className="text-2xl font-bold text-green-700 mb-1">🔧</div>
-            <div className="text-sm text-green-600 uppercase tracking-wider">Servicio Técnico</div>
+          <Card className="p-6 text-center bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700 hover:scale-105 transition-transform duration-300">
+            <Shield className="h-10 w-10 mx-auto mb-3 text-gray-700 dark:text-gray-300" />
+            <div className="text-2xl font-bold text-black dark:text-white mb-1">🔧</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400 uppercase tracking-wider">Servicio Técnico</div>
           </Card>
         </div>
 
         {/* Promotional Banner */}
         <div className="mb-12">
-          <Card className="p-6 bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 text-white border-0 overflow-hidden relative">
-            <div className="absolute inset-0 bg-black/20"></div>
-            <div className="relative flex flex-col md:flex-row items-center justify-between">
+          <Card className="p-6 bg-black dark:bg-white text-white dark:text-black border-0 overflow-hidden relative">
+            <div className="flex flex-col md:flex-row items-center justify-between">
               <div className="mb-4 md:mb-0">
                 <h3 className="text-2xl font-bold mb-2">🚗 Multiservicio Automotriz Completo</h3>
-                <p className="text-blue-100">Autos clásicos • Piezas originales • Repuestos • Servicios especializados</p>
+                <p className="text-gray-300 dark:text-gray-600">Autos clásicos • Piezas originales • Repuestos • Servicios especializados</p>
               </div>
-              <Badge className="bg-white/20 text-white backdrop-blur-sm px-4 py-2 text-lg font-bold">
+              <Badge className="bg-red-600 text-white px-4 py-2 text-lg font-bold">
                 SERVICIO GARANTIZADO
               </Badge>
             </div>
@@ -235,7 +234,7 @@ export default function Cars() {
               }
             </p>
             {currentSearch && (
-              <Button onClick={clearSearch} className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white">
+              <Button onClick={clearSearch} className="bg-red-600 hover:bg-red-700 text-white">
                 Ver todos los autos
               </Button>
             )}
@@ -248,11 +247,11 @@ export default function Cars() {
                 {currentSearch ? `Resultados de búsqueda (${cars.length})` : `Catálogo GTR Autos (${cars.length})`}
               </h2>
               <div className="flex items-center gap-2">
-                <Badge variant="outline" className="text-blue-600 border-blue-200">
+                <Badge variant="outline" className="text-gray-600 dark:text-gray-400 border-gray-300 dark:border-gray-600">
                   <Gauge className="h-3 w-3 mr-1" />
                   Performance
                 </Badge>
-                <Badge variant="outline" className="text-purple-600 border-purple-200">
+                <Badge variant="outline" className="text-gray-600 dark:text-gray-400 border-gray-300 dark:border-gray-600">
                   <Crown className="h-3 w-3 mr-1" />
                   Premium
                 </Badge>
@@ -261,7 +260,7 @@ export default function Cars() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" data-testid="cars-grid">
               {cars.map((car) => (
-                <Card key={car.id} className="group overflow-hidden bg-white/80 backdrop-blur-sm border-0 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105">
+                <Card key={car.id} className="group overflow-hidden bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105">
                   <div className="aspect-video overflow-hidden relative">
                     <img
                       src={car.imageUrl || 'https://via.placeholder.com/600x400/3B82F6/FFFFFF?text=GTR+AUTO'}
@@ -271,7 +270,7 @@ export default function Cars() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                     <div className="absolute top-4 left-4">
-                      <Badge className="bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0">
+                      <Badge className="bg-black dark:bg-white text-white dark:text-black border-0">
                         GTR PREMIUM
                       </Badge>
                     </div>
@@ -297,7 +296,7 @@ export default function Cars() {
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex flex-col">
                         <span className="text-sm text-muted-foreground">Precio GTR</span>
-                        <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                        <span className="text-2xl font-bold text-black dark:text-white">
                           ${car.retailPrice}
                         </span>
                       </div>
@@ -310,7 +309,7 @@ export default function Cars() {
                     </div>
                     <Button 
                       onClick={() => handleAddToCart(car)}
-                      className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-300"
+                      className="w-full bg-red-600 hover:bg-red-700 text-white shadow-lg hover:shadow-xl transition-all duration-300"
                       data-testid={`add-to-cart-${car.id}`}
                     >
                       <Car className="h-4 w-4 mr-2" />
