@@ -30,6 +30,15 @@ export default function Home() {
 
   const featuredProducts = filteredProducts.slice(0, 6);
 
+  // Productos con envío gratis (precio >= 500)
+  const freeShippingProducts = products.filter(p => p.retailPrice >= 500);
+  
+  // Productos con descuentos (si tienen wholesalePrice diferente)
+  const discountedProducts = products.filter(p => p.wholesalePrice && p.wholesalePrice < p.retailPrice);
+  
+  // Productos nuevos (últimos 30 días - simulado para demo)
+  const newProducts = products.slice(-10); // Últimos 10 productos como "nuevos"
+
   const categories = [
     {
       id: "cars",
@@ -39,7 +48,9 @@ export default function Home() {
       description: "Frenos, suspensión, motor y más",
       path: "/cars",
       gradient: "from-red-600 via-red-700 to-red-800",
-      offer: "ENVÍO GRATIS"
+      offer: "ENVÍO GRATIS",
+      automatedCount: freeShippingProducts.filter(p => p.category === "cars").length,
+      automatedDescription: `${freeShippingProducts.filter(p => p.category === "cars").length} productos con envío gratis`
     },
     {
       id: "motorcycles", 
@@ -49,7 +60,9 @@ export default function Home() {
       description: "Cadenas, llantas, carrocería",
       path: "/motorcycles",
       gradient: "from-gray-700 via-gray-800 to-gray-900",
-      offer: "DESCUENTOS"
+      offer: "DESCUENTOS",
+      automatedCount: discountedProducts.filter(p => p.category === "motorcycles").length,
+      automatedDescription: `${discountedProducts.filter(p => p.category === "motorcycles").length} productos con descuentos`
     },
     {
       id: "electronics",
@@ -59,7 +72,9 @@ export default function Home() {
       description: "Audio, navegación, alarmas",
       path: "/electronics",
       gradient: "from-gray-600 via-gray-700 to-gray-800",
-      offer: "NUEVOS"
+      offer: "NUEVOS",
+      automatedCount: newProducts.filter(p => p.category === "electronics").length,
+      automatedDescription: `${newProducts.filter(p => p.category === "electronics").length} productos nuevos en inventario`
     },
   ];
 
@@ -290,7 +305,7 @@ export default function Home() {
               CATEGORÍAS DE REPUESTOS
             </Badge>
             <div className="flex justify-center mb-6">
-              <Button size="lg" className="text-3xl md:text-5xl font-bold px-12 py-6 h-auto bg-gradient-to-r from-green-600 to-green-800 hover:from-green-700 hover:to-green-900 shadow-green">
+              <Button size="lg" className="text-3xl md:text-5xl font-bold px-12 py-6 h-auto bg-black hover:bg-gray-900 text-white shadow-xl">
                 Repuestos de Calidad
               </Button>
             </div>
@@ -317,11 +332,19 @@ export default function Home() {
                     </div>
                     <CardContent className="p-6 bg-white">
                       <h3 className="text-xl font-bold mb-2 text-automotive-black group-hover:text-automotive-red transition-colors">{category.name}</h3>
-                      <p className="text-automotive-gray mb-4 text-sm leading-relaxed">{category.description}</p>
+                      <p className="text-automotive-gray mb-2 text-sm leading-relaxed">{category.description}</p>
+                      <p className="text-green-600 mb-4 text-xs font-semibold leading-relaxed">
+                        ✅ {category.automatedDescription}
+                      </p>
                       <div className="flex items-center justify-between">
-                        <Badge className="bg-gray-100 text-automotive-gray border-0 text-xs px-3 py-1">
-                          {category.count} productos
-                        </Badge>
+                        <div className="flex flex-col gap-1">
+                          <Badge className="bg-gray-100 text-automotive-gray border-0 text-xs px-3 py-1">
+                            {category.count} productos total
+                          </Badge>
+                          <Badge className="bg-green-100 text-green-700 border-0 text-xs px-3 py-1">
+                            {category.automatedCount} {category.offer.toLowerCase()}
+                          </Badge>
+                        </div>
                         <div className="flex items-center text-automotive-red group-hover:text-automotive-red transition-colors">
                           <span className="text-sm font-semibold mr-1">Ver más</span>
                           <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-all duration-300" />
@@ -341,7 +364,7 @@ export default function Home() {
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <div className="flex flex-col items-center gap-4">
-              <Button size="lg" className="text-2xl font-bold px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 shadow-blue">
+              <Button size="lg" className="text-2xl font-bold px-8 py-4 bg-red-600 hover:bg-red-700 text-white shadow-xl">
                 Productos Destacados
               </Button>
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
