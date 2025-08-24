@@ -181,27 +181,27 @@ export default function Admin() {
   }
 
   return (
-    <div className="min-h-screen pb-20 bg-gray-50" data-testid="admin-page">
-      {/* Header */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="container mx-auto px-6 py-4">
+    <div className="min-h-screen pb-16 sm:pb-20 bg-gray-50" data-testid="admin-page">
+      {/* Header - Mobile Optimized */}
+      <div className="bg-white shadow-sm border-b sticky top-0 z-50">
+        <div className="container mx-auto px-2 sm:px-4 md:px-6 py-2 sm:py-4">
           <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-700">GTR CUBAUTO Admin</h1>
-              <p className="text-automotive-gray">Ciudad Darío • Today {new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })}</p>
+            <div className="min-w-0 flex-1">
+              <h1 className="text-lg sm:text-2xl md:text-3xl font-bold text-gray-700 truncate">GTR CUBAUTO Admin</h1>
+              <p className="text-xs sm:text-sm text-automotive-gray hidden sm:block">Ciudad Darío • Today {new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })}</p>
             </div>
-            <div className="flex items-center space-x-4">
-              <div className="text-right text-sm">
+            <div className="flex items-center space-x-1 sm:space-x-2 md:space-x-4 flex-shrink-0">
+              <div className="text-right text-xs sm:text-sm hidden lg:block">
                 <p className="font-medium text-gray-600">Sistema v2.4.1</p>
                 <p className="text-gray-500">Última actualización: Hoy</p>
               </div>
-              <Badge className="bg-green-100 text-green-800">
-                <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
-                Online
+              <Badge className="bg-green-100 text-green-800 text-xs px-1 sm:px-2">
+                <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full mr-1 sm:mr-2"></div>
+                <span className="hidden sm:inline">Online</span>
               </Badge>
-              <Button variant="outline" size="sm">
-                <Download className="h-4 w-4 mr-2" />
-                Exportar Datos
+              <Button variant="outline" size="sm" className="hidden md:flex h-8 px-2 text-xs">
+                <Download className="h-3 w-3 mr-1" />
+                Exportar
               </Button>
               <Button
                 onClick={() => {
@@ -214,20 +214,20 @@ export default function Admin() {
                 }}
                 variant="outline"
                 size="sm"
-                className="border-red-300 text-red-600 hover:bg-red-50"
+                className="border-red-300 text-red-600 hover:bg-red-50 h-8 px-2 text-xs"
                 data-testid="admin-logout-button"
               >
-                <LogOut className="h-4 w-4 mr-2" />
-                Salir
+                <LogOut className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
+                <span className="hidden sm:inline">Salir</span>
               </Button>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="container mx-auto px-6 py-12">
+      <div className="container mx-auto px-2 sm:px-4 md:px-6 py-4 sm:py-8 md:py-12">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="flex w-full overflow-x-auto mb-8 bg-white border border-gray-200 p-1 gap-1">
+          <TabsList className="flex w-full overflow-x-auto mb-4 sm:mb-6 md:mb-8 bg-white border border-gray-200 p-1 gap-1 scrollbar-hide">
             <TabsTrigger 
               value="dashboard" 
               className="group relative flex flex-col items-center gap-1 px-2 py-2 rounded-md hover:bg-gray-50 data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-all duration-200 border-0 min-w-0 flex-shrink-0" 
@@ -358,83 +358,83 @@ export default function Admin() {
 
           {/* Dashboard Tab */}
           <TabsContent value="dashboard" className="space-y-8">
-            {/* KPI Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              <Card className="bg-gradient-to-br from-blue-500/10 to-blue-600/20 border-blue-200/50 hover:scale-105 transition-transform duration-300">
-                <CardContent className="p-6">
+            {/* KPI Cards - Mobile Optimized */}
+            <div className="admin-stats-grid">
+              <Card className="bg-gradient-to-br from-blue-500/10 to-blue-600/20 border-blue-200/50 hover:scale-105 transition-transform duration-300 admin-card-mobile">
+                <CardContent className="p-3 sm:p-4 lg:p-6">
                   <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-blue-600 font-medium">Total Usuarios</p>
-                      <p className="text-3xl font-bold text-blue-700" data-testid="total-users">
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xs sm:text-sm text-blue-600 font-medium">Total Usuarios</p>
+                      <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-blue-700 truncate" data-testid="total-users">
                         {users.length}
                       </p>
                       <div className="flex items-center text-xs text-blue-600 mt-1">
                         <TrendingUp className="h-3 w-3 mr-1" />
-                        +12% este mes
+                        <span className="truncate">+12% este mes</span>
                       </div>
                     </div>
-                    <Users className="h-12 w-12 text-blue-600" />
+                    <Users className="h-8 w-8 sm:h-10 sm:w-10 lg:h-12 lg:w-12 text-blue-600 flex-shrink-0" />
                   </div>
                 </CardContent>
               </Card>
 
-              <Card className="bg-gradient-to-br from-green-500/10 to-green-600/20 border-green-200/50 hover:scale-105 transition-transform duration-300">
-                <CardContent className="p-6">
+              <Card className="bg-gradient-to-br from-green-500/10 to-green-600/20 border-green-200/50 hover:scale-105 transition-transform duration-300 admin-card-mobile">
+                <CardContent className="p-3 sm:p-4 lg:p-6">
                   <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-green-600 font-medium">Ingresos Totales</p>
-                      <p className="text-3xl font-bold text-green-700" data-testid="total-revenue">
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xs sm:text-sm text-green-600 font-medium">Ingresos Totales</p>
+                      <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-green-700 truncate" data-testid="total-revenue">
                         ${totalRevenue.toFixed(2)}
                       </p>
                       <div className="flex items-center text-xs text-green-600 mt-1">
                         <TrendingUp className="h-3 w-3 mr-1" />
-                        +18% este mes
+                        <span className="truncate">+18% este mes</span>
                       </div>
                     </div>
-                    <DollarSign className="h-12 w-12 text-green-600" />
+                    <DollarSign className="h-8 w-8 sm:h-10 sm:w-10 lg:h-12 lg:w-12 text-green-600 flex-shrink-0" />
                   </div>
                 </CardContent>
               </Card>
 
-              <Card className="bg-gradient-to-br from-purple-500/10 to-purple-600/20 border-purple-200/50 hover:scale-105 transition-transform duration-300">
-                <CardContent className="p-6">
+              <Card className="bg-gradient-to-br from-purple-500/10 to-purple-600/20 border-purple-200/50 hover:scale-105 transition-transform duration-300 admin-card-mobile">
+                <CardContent className="p-3 sm:p-4 lg:p-6">
                   <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-purple-600 font-medium">Pedidos Hoy</p>
-                      <p className="text-3xl font-bold text-purple-700" data-testid="today-orders">
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xs sm:text-sm text-purple-600 font-medium">Pedidos Hoy</p>
+                      <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-purple-700 truncate" data-testid="today-orders">
                         {todayOrders}
                       </p>
                       <div className="flex items-center text-xs text-purple-600 mt-1">
                         <TrendingUp className="h-3 w-3 mr-1" />
-                        +8% vs ayer
+                        <span className="truncate">+8% vs ayer</span>
                       </div>
                     </div>
-                    <ShoppingCart className="h-12 w-12 text-purple-600" />
+                    <ShoppingCart className="h-8 w-8 sm:h-10 sm:w-10 lg:h-12 lg:w-12 text-purple-600 flex-shrink-0" />
                   </div>
                 </CardContent>
               </Card>
 
-              <Card className="bg-gradient-to-br from-orange-500/10 to-orange-600/20 border-orange-200/50 hover:scale-105 transition-transform duration-300">
-                <CardContent className="p-6">
+              <Card className="bg-gradient-to-br from-orange-500/10 to-orange-600/20 border-orange-200/50 hover:scale-105 transition-transform duration-300 admin-card-mobile">
+                <CardContent className="p-3 sm:p-4 lg:p-6">
                   <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-orange-600 font-medium">Tasa Conversión</p>
-                      <p className="text-3xl font-bold text-orange-700" data-testid="conversion-rate">
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xs sm:text-sm text-orange-600 font-medium">Tasa Conversión</p>
+                      <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-orange-700 truncate" data-testid="conversion-rate">
                         {conversionRate.toFixed(1)}%
                       </p>
                       <div className="flex items-center text-xs text-orange-600 mt-1">
                         <TrendingUp className="h-3 w-3 mr-1" />
-                        +2.3% este mes
+                        <span className="truncate">+2.3% este mes</span>
                       </div>
                     </div>
-                    <Target className="h-12 w-12 text-orange-600" />
+                    <Target className="h-8 w-8 sm:h-10 sm:w-10 lg:h-12 lg:w-12 text-orange-600 flex-shrink-0" />
                   </div>
                 </CardContent>
               </Card>
             </div>
 
-            {/* Charts Row */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Charts Row - Mobile Optimized */}
+            <div className="admin-chart-grid">
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">

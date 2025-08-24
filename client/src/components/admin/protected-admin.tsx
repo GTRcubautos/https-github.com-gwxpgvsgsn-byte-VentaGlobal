@@ -20,11 +20,11 @@ export default function ProtectedAdmin({ children }: ProtectedAdminProps) {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
-        <Card className="bg-gray-900 border-gray-700 p-8">
-          <CardContent className="flex flex-col items-center space-y-4">
-            <div className="animate-spin w-8 h-8 border-4 border-red-600 border-t-transparent rounded-full" />
-            <p className="text-white">Verificando acceso...</p>
+      <div className="min-h-screen bg-black flex items-center justify-center p-4">
+        <Card className="bg-gray-900 border-gray-700 p-4 sm:p-6 md:p-8 max-w-md mx-auto">
+          <CardContent className="flex flex-col items-center space-y-3 sm:space-y-4">
+            <div className="animate-spin w-6 h-6 sm:w-8 sm:h-8 border-4 border-red-600 border-t-transparent rounded-full" />
+            <p className="text-white text-sm sm:text-base">Verificando acceso...</p>
           </CardContent>
         </Card>
       </div>
@@ -33,12 +33,12 @@ export default function ProtectedAdmin({ children }: ProtectedAdminProps) {
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
-        <Card className="bg-gray-900 border-gray-700 p-8">
-          <CardContent className="flex flex-col items-center space-y-4">
-            <Shield className="h-16 w-16 text-red-600" />
-            <h2 className="text-2xl font-bold text-white">Acceso Denegado</h2>
-            <p className="text-gray-400 text-center">
+      <div className="min-h-screen bg-black flex items-center justify-center p-4">
+        <Card className="bg-gray-900 border-gray-700 p-4 sm:p-6 md:p-8 max-w-md mx-auto">
+          <CardContent className="flex flex-col items-center space-y-3 sm:space-y-4">
+            <Shield className="h-12 w-12 sm:h-16 sm:w-16 text-red-600" />
+            <h2 className="text-xl sm:text-2xl font-bold text-white text-center">Acceso Denegado</h2>
+            <p className="text-gray-400 text-center text-sm sm:text-base">
               Redirigiendo al formulario de autenticación...
             </p>
           </CardContent>

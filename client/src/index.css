@@ -95,6 +95,23 @@
   .admin-card-mobile {
     @apply bg-white rounded-lg shadow-sm border p-3 sm:p-4 lg:p-6;
   }
+
+  /* Admin dashboard grid responsive */
+  .admin-stats-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 lg:gap-6;
+  }
+
+  .admin-chart-grid {
+    @apply grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6;
+  }
+
+  .admin-table-mobile {
+    @apply overflow-x-auto scrollbar-hide;
+  }
+
+  .admin-button-group {
+    @apply flex flex-col sm:flex-row gap-2 sm:gap-4;
+  }
 }
 
 :root {
