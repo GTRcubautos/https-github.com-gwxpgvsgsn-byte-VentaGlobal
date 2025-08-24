@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertOrderSchema, insertGameResultSchema, insertRewardsConfigSchema, insertCampaignConfigSchema } from "@shared/schema";
+import { insertOrderSchema, insertGameResultSchema, insertRewardsConfigSchema, insertCampaignConfigSchema, insertSocialPostSchema, insertContentTemplateSchema } from "@shared/schema";
 import Stripe from "stripe";
 
 if (!process.env.STRIPE_SECRET_KEY) {
@@ -278,6 +278,98 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(campaign);
     } catch (error) {
       res.status(500).json({ error: "Failed to update campaign" });
+    }
+  });
+
+  // Social Posts API
+  app.get("/api/social-posts", async (req, res) => {
+    try {
+      const posts = await storage.getAllSocialPosts();
+      res.json(posts);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch social posts" });
+    }
+  });
+
+  app.post("/api/social-posts", async (req, res) => {
+    try {
+      const postData = insertSocialPostSchema.parse(req.body);
+      const post = await storage.createSocialPost(postData);
+      res.json(post);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to create social post" });
+    }
+  });
+
+  app.post("/api/social-posts/generate", async (req, res) => {
+    try {
+      const { templateId, productId, platforms } = req.body;
+      const template = await storage.getContentTemplate(templateId);
+      if (!template) {
+        return res.status(404).json({ error: "Template not found" });
+      }
+
+      let product = null;
+      if (productId) {
+        product = await storage.getProduct(productId);
+      }
+
+      // Generate content from template
+      let content = template.content;
+      if (product) {
+        content = content.replace(/\{product_name\}/g, product.name);
+        content = content.replace(/\{product_price\}/g, `$${product.retailPrice}`);
+        content = content.replace(/\{product_description\}/g, product.description);
+      }
+      content = content.replace(/\{store_name\}/g, "GTR CUBAUTO");
+
+      const postData = {
+        platforms: platforms || template.platforms,
+        content,
+        templateId,
+        productId: productId || null,
+        postType: "automated" as const,
+        status: "scheduled" as const,
+        scheduledAt: new Date(Date.now() + 60000 * 5), // Schedule 5 minutes from now
+      };
+
+      const post = await storage.createSocialPost(postData);
+      res.json(post);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to generate automated content" });
+    }
+  });
+
+  // Content Templates API
+  app.get("/api/content-templates", async (req, res) => {
+    try {
+      const templates = await storage.getAllContentTemplates();
+      res.json(templates);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch content templates" });
+    }
+  });
+
+  app.post("/api/content-templates", async (req, res) => {
+    try {
+      const templateData = insertContentTemplateSchema.parse(req.body);
+      const template = await storage.createContentTemplate(templateData);
+      res.json(template);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to create content template" });
+    }
+  });
+
+  app.put("/api/content-templates/:id", async (req, res) => {
+    try {
+      const updates = req.body;
+      const template = await storage.updateContentTemplate(req.params.id, updates);
+      if (!template) {
+        return res.status(404).json({ error: "Template not found" });
+      }
+      res.json(template);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to update template" });
     }
   });
 

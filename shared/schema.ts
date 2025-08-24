@@ -58,10 +58,14 @@ export const gameResults = pgTable("game_results", {
 export const campaignConfig = pgTable("campaign_config", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   name: text("name").notNull(),
-  platform: text("platform").notNull().default("youtube"),
+  platforms: jsonb("platforms").notNull(), // Array of platform IDs
   dailyBudget: decimal("daily_budget", { precision: 8, scale: 2 }).notNull(),
   targetAudience: text("target_audience").notNull(),
   status: text("status").notNull().default("active"), // active, paused, completed
+  automationType: text("automation_type").notNull().default("manual"), // scheduled, triggered, content_based, manual
+  contentTemplate: text("content_template"),
+  triggers: jsonb("triggers"), // Automation triggers
+  schedule: jsonb("schedule"), // Schedule settings
   metrics: jsonb("metrics"),
   isAutomated: boolean("is_automated").notNull().default(false),
   scheduleTime: text("schedule_time"), // cron format
@@ -71,15 +75,35 @@ export const campaignConfig = pgTable("campaign_config", {
 // Social Media Posts
 export const socialPosts = pgTable("social_posts", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  platform: text("platform").notNull(), // facebook, instagram, twitter, whatsapp
+  platforms: jsonb("platforms").notNull(), // Array of platform IDs
   content: text("content").notNull(),
+  hashtags: jsonb("hashtags"), // Array of hashtags
+  mentions: jsonb("mentions"), // Array of mentions
   mediaUrls: jsonb("media_urls"),
   scheduledAt: timestamp("scheduled_at"),
   publishedAt: timestamp("published_at"),
-  status: text("status").notNull().default("draft"), // draft, scheduled, published, failed
-  engagement: jsonb("engagement"), // likes, shares, comments
+  status: text("status").notNull().default("draft"), // draft, scheduled, published, failed, publishing
+  postType: text("post_type").notNull().default("manual"), // manual, automated, template, recurring
+  automation: jsonb("automation"), // Automation settings
+  engagement: jsonb("engagement"), // likes, shares, comments, views
   campaignId: varchar("campaign_id").references(() => campaignConfig.id),
+  templateId: varchar("template_id"),
+  productId: varchar("product_id").references(() => products.id),
   createdAt: timestamp("created_at").notNull().default(sql`now()`),
+});
+
+// Content Templates for automated posting
+export const contentTemplates = pgTable("content_templates", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: text("name").notNull(),
+  category: text("category").notNull(), // product, promotion, news, engagement
+  content: text("content").notNull(),
+  variables: jsonb("variables").notNull(), // Array of variable names
+  platforms: jsonb("platforms").notNull(), // Array of platform IDs
+  mediaRequired: boolean("media_required").default(false),
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").notNull().default(sql`now()`),
+  updatedAt: timestamp("updated_at").notNull().default(sql`now()`),
 });
 
 // Customer Relationship Management
@@ -205,6 +229,12 @@ export const insertSocialPostSchema = createInsertSchema(socialPosts).omit({
   createdAt: true,
 });
 
+export const insertContentTemplateSchema = createInsertSchema(contentTemplates).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
 export const insertCustomerSchema = createInsertSchema(customers).omit({
   id: true,
   createdAt: true,
@@ -274,3 +304,6 @@ export type InsertAnalytics = z.infer<typeof insertAnalyticsSchema>;
 
 export type SiteConfig = typeof siteConfig.$inferSelect;
 export type InsertSiteConfig = z.infer<typeof insertSiteConfigSchema>;
+
+export type ContentTemplate = typeof contentTemplates.$inferSelect;
+export type InsertContentTemplate = z.infer<typeof insertContentTemplateSchema>;

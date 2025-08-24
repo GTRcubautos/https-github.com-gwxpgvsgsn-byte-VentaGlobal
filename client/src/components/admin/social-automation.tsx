@@ -1,4 +1,5 @@
 import { useState } from "react";
+import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -29,19 +30,40 @@ import {
   Pause,
   Eye,
   Edit,
-  Trash2
+  Trash2,
+  Copy,
+  Zap,
+  FileText,
+  RefreshCw,
+  ChevronDown,
+  Image,
+  Video,
+  Hash,
+  AtSign,
+  Globe,
+  Bot,
+  Sparkles
 } from "lucide-react";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 
 interface SocialPost {
   id: string;
-  platform: string;
+  platform: string[];
   content: string;
   mediaUrls?: string[];
+  hashtags?: string[];
+  mentions?: string[];
   scheduledAt?: string;
   publishedAt?: string;
-  status: 'draft' | 'scheduled' | 'published' | 'failed';
+  status: 'draft' | 'scheduled' | 'published' | 'failed' | 'publishing';
+  postType: 'manual' | 'automated' | 'template' | 'recurring';
+  automation?: {
+    isRecurring: boolean;
+    frequency?: 'daily' | 'weekly' | 'monthly';
+    endDate?: string;
+    triggers?: string[];
+  };
   engagement?: {
     likes: number;
     shares: number;
@@ -49,29 +71,62 @@ interface SocialPost {
     views: number;
   };
   campaignId?: string;
+  templateId?: string;
+  productId?: string;
 }
 
 interface Campaign {
   id: string;
   name: string;
-  platform: string;
+  platforms: string[];
   status: string;
   isAutomated: boolean;
+  automationType: 'scheduled' | 'triggered' | 'content_based' | 'manual';
   scheduleTime?: string;
   dailyBudget: string;
   targetAudience: string;
+  contentTemplate?: string;
+  triggers?: {
+    newProduct: boolean;
+    priceUpdate: boolean;
+    stockAlert: boolean;
+    salesMilestone: boolean;
+  };
+  schedule?: {
+    startDate: string;
+    endDate?: string;
+    frequency: 'daily' | 'weekly' | 'monthly';
+    times: string[];
+    daysOfWeek?: number[];
+  };
   metrics?: {
     views: number;
     clicks: number;
     conversions: number;
     ctr: number;
+    postsGenerated: number;
   };
+}
+
+interface ContentTemplate {
+  id: string;
+  name: string;
+  category: 'product' | 'promotion' | 'news' | 'engagement';
+  content: string;
+  variables: string[];
+  platforms: string[];
+  mediaRequired: boolean;
+  isActive: boolean;
 }
 
 export function SocialAutomation() {
   const [selectedDate, setSelectedDate] = useState<Date>();
   const [isCreatingPost, setIsCreatingPost] = useState(false);
   const [isCreatingCampaign, setIsCreatingCampaign] = useState(false);
+  const [isCreatingTemplate, setIsCreatingTemplate] = useState(false);
+  const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>([]);
+  const [activeView, setActiveView] = useState<'grid' | 'calendar'>('grid');
+  const [automationMode, setAutomationMode] = useState<'manual' | 'automated'>('manual');
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -81,6 +136,14 @@ export function SocialAutomation() {
 
   const { data: campaigns = [] } = useQuery<Campaign[]>({
     queryKey: ["/api/campaigns"],
+  });
+
+  const { data: templates = [] } = useQuery<ContentTemplate[]>({
+    queryKey: ["/api/content-templates"],
+  });
+
+  const { data: products = [] } = useQuery({
+    queryKey: ["/api/products"],
   });
 
   const createPostMutation = useMutation({
@@ -111,10 +174,39 @@ export function SocialAutomation() {
     },
   });
 
+  const createTemplateMutation = useMutation({
+    mutationFn: async (templateData: Partial<ContentTemplate>) => {
+      return await apiRequest("POST", "/api/content-templates", templateData);
+    },
+    onSuccess: () => {
+      toast({
+        title: "Plantilla Creada",
+        description: "La plantilla de contenido ha sido creada exitosamente",
+      });
+      queryClient.invalidateQueries({ queryKey: ["/api/content-templates"] });
+      setIsCreatingTemplate(false);
+    },
+  });
+
+  const generateAutomatedContentMutation = useMutation({
+    mutationFn: async (data: { templateId: string; productId?: string; platforms: string[] }) => {
+      return await apiRequest("POST", "/api/social-posts/generate", data);
+    },
+    onSuccess: () => {
+      toast({
+        title: "Contenido Generado",
+        description: "Se ha generado contenido automáticamente",
+      });
+      queryClient.invalidateQueries({ queryKey: ["/api/social-posts"] });
+    },
+  });
+
   const platforms = [
     { id: "facebook", name: "Facebook", icon: Facebook, color: "bg-blue-600" },
     { id: "instagram", name: "Instagram", icon: Instagram, color: "bg-pink-600" },
     { id: "twitter", name: "Twitter/X", icon: Twitter, color: "bg-black" },
+    { id: "youtube", name: "YouTube", icon: Play, color: "bg-red-600" },
+    { id: "tiktok", name: "TikTok", icon: MessageCircle, color: "bg-black" },
     { id: "whatsapp", name: "WhatsApp", icon: MessageCircle, color: "bg-green-600" },
   ];
 
@@ -143,13 +235,17 @@ export function SocialAutomation() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-foreground">Automatización Social</h2>
-          <p className="text-muted-foreground">Gestiona tus campañas y publicaciones en redes sociales</p>
+          <h2 className="text-2xl font-bold text-foreground">Automatización Social Avanzada</h2>
+          <p className="text-muted-foreground">Gestiona, programa y automatiza tus campañas multicanal</p>
         </div>
         <div className="flex gap-2">
+          <Button onClick={() => setIsCreatingTemplate(true)} variant="outline">
+            <FileText className="h-4 w-4 mr-2" />
+            Nueva Plantilla
+          </Button>
           <Button onClick={() => setIsCreatingCampaign(true)} variant="outline">
-            <Plus className="h-4 w-4 mr-2" />
-            Nueva Campaña
+            <Zap className="h-4 w-4 mr-2" />
+            Campaña Automática
           </Button>
           <Button onClick={() => setIsCreatingPost(true)}>
             <Plus className="h-4 w-4 mr-2" />
@@ -158,19 +254,301 @@ export function SocialAutomation() {
         </div>
       </div>
 
-      <Tabs defaultValue="posts" className="space-y-4">
-        <TabsList>
+      {/* Quick Actions & Stats */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <Card className="bg-gradient-to-r from-blue-500 to-blue-600 text-white">
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-blue-100 text-sm">Posts Programados</p>
+                <p className="text-2xl font-bold">
+                  {posts.filter(p => p.status === 'scheduled').length}
+                </p>
+              </div>
+              <Clock className="h-8 w-8 text-blue-200" />
+            </div>
+          </CardContent>
+        </Card>
+        
+        <Card className="bg-gradient-to-r from-green-500 to-green-600 text-white">
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-green-100 text-sm">Campañas Activas</p>
+                <p className="text-2xl font-bold">
+                  {campaigns.filter(c => c.status === 'active').length}
+                </p>
+              </div>
+              <Bot className="h-8 w-8 text-green-200" />
+            </div>
+          </CardContent>
+        </Card>
+        
+        <Card className="bg-gradient-to-r from-purple-500 to-purple-600 text-white">
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-purple-100 text-sm">Plantillas</p>
+                <p className="text-2xl font-bold">{templates.length}</p>
+              </div>
+              <Sparkles className="h-8 w-8 text-purple-200" />
+            </div>
+          </CardContent>
+        </Card>
+        
+        <Card className="bg-gradient-to-r from-orange-500 to-orange-600 text-white">
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-orange-100 text-sm">Auto-Posts Hoy</p>
+                <p className="text-2xl font-bold">
+                  {posts.filter(p => p.postType === 'automated' && 
+                    new Date(p.scheduledAt || '').toDateString() === new Date().toDateString()).length}
+                </p>
+              </div>
+              <RefreshCw className="h-8 w-8 text-orange-200" />
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      <Tabs defaultValue="dashboard" className="space-y-4">
+        <TabsList className="grid w-full grid-cols-6">
+          <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
+          <TabsTrigger value="calendar">Calendario</TabsTrigger>
           <TabsTrigger value="posts">Publicaciones</TabsTrigger>
           <TabsTrigger value="campaigns">Campañas</TabsTrigger>
-          <TabsTrigger value="analytics">Analíticas</TabsTrigger>
-          <TabsTrigger value="settings">Configuración</TabsTrigger>
+          <TabsTrigger value="templates">Plantillas</TabsTrigger>
+          <TabsTrigger value="automation">Automatización</TabsTrigger>
         </TabsList>
+
+        {/* Dashboard Tab */}
+        <TabsContent value="dashboard" className="space-y-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Quick Create */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Zap className="h-5 w-5 text-primary" />
+                  Creación Rápida
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-2 gap-3">
+                  <Button onClick={() => setIsCreatingPost(true)} className="h-20 flex-col">
+                    <Send className="h-6 w-6 mb-2" />
+                    Post Manual
+                  </Button>
+                  <Button 
+                    onClick={() => setAutomationMode('automated')} 
+                    variant="outline" 
+                    className="h-20 flex-col"
+                  >
+                    <Bot className="h-6 w-6 mb-2" />
+                    Auto-Post
+                  </Button>
+                </div>
+                
+                {/* Platform Selection */}
+                <div>
+                  <Label className="text-sm font-medium">Plataformas de Destino</Label>
+                  <div className="grid grid-cols-3 gap-2 mt-2">
+                    {platforms.map((platform) => {
+                      const PlatformIcon = platform.icon;
+                      const isSelected = selectedPlatforms.includes(platform.id);
+                      return (
+                        <Button
+                          key={platform.id}
+                          variant={isSelected ? "default" : "outline"}
+                          size="sm"
+                          onClick={() => {
+                            setSelectedPlatforms(prev => 
+                              isSelected 
+                                ? prev.filter(p => p !== platform.id)
+                                : [...prev, platform.id]
+                            );
+                          }}
+                          className="flex-col h-16"
+                        >
+                          <PlatformIcon className="h-4 w-4 mb-1" />
+                          <span className="text-xs">{platform.name}</span>
+                        </Button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Quick Template Actions */}
+                <div className="border-t pt-4">
+                  <Label className="text-sm font-medium mb-2 block">Plantillas Rápidas</Label>
+                  <div className="space-y-2">
+                    {templates.slice(0, 3).map((template) => (
+                      <Button
+                        key={template.id}
+                        variant="ghost"
+                        size="sm"
+                        className="w-full justify-start"
+                        onClick={() => generateAutomatedContentMutation.mutate({
+                          templateId: template.id,
+                          platforms: selectedPlatforms.length > 0 ? selectedPlatforms : ['facebook', 'instagram']
+                        })}
+                      >
+                        <FileText className="h-4 w-4 mr-2" />
+                        {template.name}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Upcoming Posts */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Clock className="h-5 w-5 text-primary" />
+                  Próximas Publicaciones
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  {posts
+                    .filter(p => p.status === 'scheduled')
+                    .sort((a, b) => new Date(a.scheduledAt || '').getTime() - new Date(b.scheduledAt || '').getTime())
+                    .slice(0, 5)
+                    .map((post) => (
+                      <div key={post.id} className="flex items-center gap-3 p-3 border rounded-lg">
+                        <div className="flex">
+                          {(Array.isArray(post.platform) ? post.platform : [post.platform]).map((platformId, index) => {
+                            const PlatformIcon = getPlatformIcon(platformId);
+                            return (
+                              <div key={platformId} className={`p-1 rounded ${getPlatformColor(platformId)} ${index > 0 ? '-ml-2' : ''}`}>
+                                <PlatformIcon className="h-3 w-3 text-white" />
+                              </div>
+                            );
+                          })}
+                        </div>
+                        <div className="flex-1">
+                          <p className="text-sm font-medium truncate">{post.content}</p>
+                          <p className="text-xs text-muted-foreground">
+                            {post.scheduledAt && format(new Date(post.scheduledAt), "MMM d, HH:mm", { locale: es })}
+                          </p>
+                        </div>
+                        <Badge variant={post.postType === 'automated' ? 'default' : 'secondary'}>
+                          {post.postType === 'automated' ? 'Auto' : 'Manual'}
+                        </Badge>
+                      </div>
+                    ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
+
+        {/* Calendar Tab */}
+        <TabsContent value="calendar" className="space-y-4">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <Card className="lg:col-span-2">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <CalendarIcon className="h-5 w-5 text-primary" />
+                  Calendario de Publicaciones
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <Calendar
+                  mode="single"
+                  selected={selectedDate}
+                  onSelect={setSelectedDate}
+                  className="rounded-md border"
+                />
+              </CardContent>
+            </Card>
+            
+            <Card>
+              <CardHeader>
+                <CardTitle>
+                  {selectedDate ? format(selectedDate, "d MMMM", { locale: es }) : "Selecciona una fecha"}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  {selectedDate && posts
+                    .filter(p => p.scheduledAt && 
+                      new Date(p.scheduledAt).toDateString() === selectedDate.toDateString())
+                    .map((post) => (
+                      <div key={post.id} className="p-3 border rounded-lg">
+                        <div className="flex items-center gap-2 mb-2">
+                          <div className="flex">
+                            {(Array.isArray(post.platform) ? post.platform : [post.platform]).map((platformId) => {
+                              const PlatformIcon = getPlatformIcon(platformId);
+                              return (
+                                <div key={platformId} className={`p-1 rounded mr-1 ${getPlatformColor(platformId)}`}>
+                                  <PlatformIcon className="h-3 w-3 text-white" />
+                                </div>
+                              );
+                            })}
+                          </div>
+                          <span className="text-sm font-medium">
+                            {post.scheduledAt && format(new Date(post.scheduledAt), "HH:mm")}
+                          </span>
+                        </div>
+                        <p className="text-sm text-muted-foreground truncate">{post.content}</p>
+                        <Badge size="sm" className="mt-2">
+                          {post.postType}
+                        </Badge>
+                      </div>
+                    ))}
+                  
+                  {selectedDate && posts.filter(p => p.scheduledAt && 
+                    new Date(p.scheduledAt).toDateString() === selectedDate.toDateString()).length === 0 && (
+                    <p className="text-sm text-muted-foreground text-center py-4">
+                      No hay publicaciones programadas para esta fecha
+                    </p>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
 
         {/* Posts Tab */}
         <TabsContent value="posts" className="space-y-4">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex gap-2">
+              <Button
+                variant={activeView === 'grid' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setActiveView('grid')}
+              >
+                Grid
+              </Button>
+              <Button
+                variant={activeView === 'calendar' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setActiveView('calendar')}
+              >
+                <CalendarIcon className="h-4 w-4 mr-2" />
+                Calendario
+              </Button>
+            </div>
+            <div className="flex gap-2">
+              <Select defaultValue="all">
+                <SelectTrigger className="w-32">
+                  <SelectValue placeholder="Estado" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Todos</SelectItem>
+                  <SelectItem value="draft">Borrador</SelectItem>
+                  <SelectItem value="scheduled">Programado</SelectItem>
+                  <SelectItem value="published">Publicado</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          
           <div className="grid gap-4">
             {posts.map((post) => {
-              const PlatformIcon = getPlatformIcon(post.platform);
               const statusBadge = getStatusBadge(post.status);
               
               return (
@@ -178,25 +556,49 @@ export function SocialAutomation() {
                   <CardContent className="p-6">
                     <div className="flex items-start justify-between">
                       <div className="flex items-start space-x-4 flex-1">
-                        <div className={`p-2 rounded-lg ${getPlatformColor(post.platform)} flex items-center justify-center`}>
-                          <PlatformIcon className="h-5 w-5 text-white" />
+                        <div className="flex">
+                          {(Array.isArray(post.platform) ? post.platform : [post.platform]).map((platformId, index) => {
+                            const PlatformIcon = getPlatformIcon(platformId);
+                            return (
+                              <div key={platformId} className={`p-2 rounded-lg ${getPlatformColor(platformId)} ${index > 0 ? '-ml-2' : ''} border-2 border-white`}>
+                                <PlatformIcon className="h-4 w-4 text-white" />
+                              </div>
+                            );
+                          })}
                         </div>
                         <div className="flex-1">
                           <div className="flex items-center gap-2 mb-2">
                             <Badge {...statusBadge}>
                               {statusBadge.text}
                             </Badge>
-                            <span className="text-sm text-muted-foreground capitalize">
-                              {post.platform}
-                            </span>
+                            <Badge variant="outline">
+                              {post.postType}
+                            </Badge>
+                            {post.automation?.isRecurring && (
+                              <Badge variant="secondary">
+                                <RefreshCw className="h-3 w-3 mr-1" />
+                                Recurrente
+                              </Badge>
+                            )}
                           </div>
                           <p className="text-foreground mb-2">{post.content}</p>
+                          
+                          {post.hashtags && post.hashtags.length > 0 && (
+                            <div className="flex items-center gap-1 mb-2">
+                              <Hash className="h-3 w-3 text-muted-foreground" />
+                              <span className="text-sm text-muted-foreground">
+                                {post.hashtags.join(' ')}
+                              </span>
+                            </div>
+                          )}
+                          
                           {post.scheduledAt && (
                             <div className="flex items-center text-sm text-muted-foreground">
                               <Clock className="h-4 w-4 mr-1" />
                               Programado para: {format(new Date(post.scheduledAt), "PPp", { locale: es })}
                             </div>
                           )}
+                          
                           {post.engagement && (
                             <div className="flex items-center gap-4 mt-3 text-sm text-muted-foreground">
                               <span>{post.engagement.views} vistas</span>
@@ -208,6 +610,9 @@ export function SocialAutomation() {
                         </div>
                       </div>
                       <div className="flex items-center gap-2">
+                        <Button variant="ghost" size="sm">
+                          <Copy className="h-4 w-4" />
+                        </Button>
                         <Button variant="ghost" size="sm">
                           <Eye className="h-4 w-4" />
                         </Button>
@@ -230,15 +635,20 @@ export function SocialAutomation() {
         <TabsContent value="campaigns" className="space-y-4">
           <div className="grid gap-4">
             {campaigns.map((campaign) => {
-              const PlatformIcon = getPlatformIcon(campaign.platform);
-              
               return (
                 <Card key={campaign.id} className="border border-border shadow-soft">
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-4">
-                        <div className={`p-2 rounded-lg ${getPlatformColor(campaign.platform)} flex items-center justify-center`}>
-                          <PlatformIcon className="h-5 w-5 text-white" />
+                        <div className="flex">
+                          {(campaign.platforms || []).map((platformId, index) => {
+                            const PlatformIcon = getPlatformIcon(platformId);
+                            return (
+                              <div key={platformId} className={`p-2 rounded-lg ${getPlatformColor(platformId)} ${index > 0 ? '-ml-2' : ''} border-2 border-white`}>
+                                <PlatformIcon className="h-4 w-4 text-white" />
+                              </div>
+                            );
+                          })}
                         </div>
                         <div>
                           <h3 className="font-semibold text-foreground">{campaign.name}</h3>
@@ -247,22 +657,41 @@ export function SocialAutomation() {
                             <Badge variant={campaign.status === 'active' ? 'default' : 'secondary'}>
                               {campaign.status === 'active' ? 'Activa' : 'Pausada'}
                             </Badge>
+                            <Badge variant="outline">
+                              {campaign.automationType}
+                            </Badge>
                             {campaign.isAutomated && (
-                              <Badge variant="outline">
+                              <Badge className="bg-green-100 text-green-800">
+                                <Bot className="h-3 w-3 mr-1" />
                                 Automatizada
                               </Badge>
                             )}
                           </div>
+                          {campaign.schedule && (
+                            <p className="text-xs text-muted-foreground mt-1">
+                              Frecuencia: {campaign.schedule.frequency} | 
+                              Horarios: {campaign.schedule.times.join(', ')}
+                            </p>
+                          )}
                         </div>
                       </div>
                       <div className="text-right">
                         <div className="text-sm text-muted-foreground">Presupuesto diario</div>
                         <div className="font-semibold text-foreground">${campaign.dailyBudget}</div>
                         {campaign.metrics && (
-                          <div className="text-sm text-muted-foreground mt-1">
-                            CTR: {campaign.metrics.ctr}%
+                          <div className="grid grid-cols-2 gap-2 text-xs text-muted-foreground mt-2">
+                            <div>CTR: {campaign.metrics.ctr}%</div>
+                            <div>Posts: {campaign.metrics.postsGenerated || 0}</div>
                           </div>
                         )}
+                        <div className="flex gap-1 mt-2">
+                          <Button variant="ghost" size="sm">
+                            <Edit className="h-3 w-3" />
+                          </Button>
+                          <Button variant="ghost" size="sm">
+                            {campaign.status === 'active' ? <Pause className="h-3 w-3" /> : <Play className="h-3 w-3" />}
+                          </Button>
+                        </div>
                       </div>
                     </div>
                   </CardContent>
@@ -272,99 +701,237 @@ export function SocialAutomation() {
           </div>
         </TabsContent>
 
-        {/* Analytics Tab */}
-        <TabsContent value="analytics" className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-muted-foreground">Posts Publicados</p>
-                    <p className="text-2xl font-bold text-foreground">
-                      {posts.filter(p => p.status === 'published').length}
-                    </p>
+        {/* Templates Tab */}
+        <TabsContent value="templates" className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {templates.map((template) => (
+              <Card key={template.id} className="border border-border shadow-soft">
+                <CardHeader className="pb-3">
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-lg">{template.name}</CardTitle>
+                    <Badge variant={template.isActive ? 'default' : 'secondary'}>
+                      {template.isActive ? 'Activa' : 'Inactiva'}
+                    </Badge>
                   </div>
-                  <Send className="h-8 w-8 text-muted-foreground" />
-                </div>
-              </CardContent>
-            </Card>
+                  <Badge variant="outline" className="w-fit">
+                    {template.category}
+                  </Badge>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <p className="text-sm text-muted-foreground line-clamp-3">
+                    {template.content}
+                  </p>
+                  
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs text-muted-foreground">Plataformas:</span>
+                    <div className="flex">
+                      {template.platforms.map((platformId, index) => {
+                        const PlatformIcon = getPlatformIcon(platformId);
+                        return (
+                          <div key={platformId} className={`p-1 rounded ${getPlatformColor(platformId)} ${index > 0 ? '-ml-1' : ''}`}>
+                            <PlatformIcon className="h-3 w-3 text-white" />
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                  
+                  {template.variables.length > 0 && (
+                    <div>
+                      <span className="text-xs text-muted-foreground">Variables:</span>
+                      <div className="flex flex-wrap gap-1 mt-1">
+                        {template.variables.map((variable) => (
+                          <Badge key={variable} variant="secondary" className="text-xs">
+                            {variable}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  
+                  <div className="flex gap-2 pt-2">
+                    <Button 
+                      size="sm" 
+                      className="flex-1"
+                      onClick={() => generateAutomatedContentMutation.mutate({
+                        templateId: template.id,
+                        platforms: template.platforms
+                      })}
+                    >
+                      <Zap className="h-3 w-3 mr-1" />
+                      Usar
+                    </Button>
+                    <Button variant="ghost" size="sm">
+                      <Edit className="h-3 w-3" />
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
             
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-muted-foreground">Campañas Activas</p>
-                    <p className="text-2xl font-bold text-foreground">
-                      {campaigns.filter(c => c.status === 'active').length}
-                    </p>
-                  </div>
-                  <Play className="h-8 w-8 text-muted-foreground" />
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-muted-foreground">Engagement Total</p>
-                    <p className="text-2xl font-bold text-foreground">
-                      {posts.reduce((sum, post) => sum + (post.engagement?.likes || 0), 0)}
-                    </p>
-                  </div>
-                  <Users className="h-8 w-8 text-muted-foreground" />
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-muted-foreground">Alcance Total</p>
-                    <p className="text-2xl font-bold text-foreground">
-                      {posts.reduce((sum, post) => sum + (post.engagement?.views || 0), 0)}
-                    </p>
-                  </div>
-                  <BarChart3 className="h-8 w-8 text-muted-foreground" />
-                </div>
+            {/* Add New Template Card */}
+            <Card 
+              className="border-dashed border-2 border-border hover:border-primary cursor-pointer transition-colors"
+              onClick={() => setIsCreatingTemplate(true)}
+            >
+              <CardContent className="flex flex-col items-center justify-center h-full p-6 min-h-[200px]">
+                <Plus className="h-8 w-8 text-muted-foreground mb-2" />
+                <p className="text-sm text-muted-foreground text-center">
+                  Crear Nueva Plantilla
+                </p>
               </CardContent>
             </Card>
           </div>
         </TabsContent>
 
-        {/* Settings Tab */}
-        <TabsContent value="settings" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Configuración de Plataformas</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {platforms.map((platform) => {
-                const PlatformIcon = platform.icon;
-                return (
-                  <div key={platform.id} className="flex items-center justify-between p-4 border border-border rounded-lg">
-                    <div className="flex items-center space-x-3">
-                      <div className={`p-2 rounded-lg ${platform.color} flex items-center justify-center`}>
-                        <PlatformIcon className="h-5 w-5 text-white" />
+        {/* Automation Tab */}
+        <TabsContent value="automation" className="space-y-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Automation Rules */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Bot className="h-5 w-5 text-primary" />
+                  Reglas de Automatización
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between p-3 border rounded-lg">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 bg-blue-100 rounded-lg">
+                        <Globe className="h-4 w-4 text-blue-600" />
                       </div>
                       <div>
-                        <h3 className="font-medium text-foreground">{platform.name}</h3>
-                        <p className="text-sm text-muted-foreground">Configura la integración</p>
+                        <p className="font-medium">Nuevos Productos</p>
+                        <p className="text-sm text-muted-foreground">Auto-publicar cuando se agreguen productos</p>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-2">
-                      <Switch />
-                      <Button variant="outline" size="sm">
-                        Configurar
-                      </Button>
-                    </div>
+                    <Switch defaultChecked />
                   </div>
-                );
-              })}
+                  
+                  <div className="flex items-center justify-between p-3 border rounded-lg">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 bg-green-100 rounded-lg">
+                        <BarChart3 className="h-4 w-4 text-green-600" />
+                      </div>
+                      <div>
+                        <p className="font-medium">Ofertas Especiales</p>
+                        <p className="text-sm text-muted-foreground">Publicar automáticamente cambios de precio</p>
+                      </div>
+                    </div>
+                    <Switch />
+                  </div>
+                  
+                  <div className="flex items-center justify-between p-3 border rounded-lg">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 bg-orange-100 rounded-lg">
+                        <Clock className="h-4 w-4 text-orange-600" />
+                      </div>
+                      <div>
+                        <p className="font-medium">Posts Programados</p>
+                        <p className="text-sm text-muted-foreground">Contenido semanal automático</p>
+                      </div>
+                    </div>
+                    <Switch defaultChecked />
+                  </div>
+                </div>
+                
+                <Button className="w-full" variant="outline">
+                  <Settings className="h-4 w-4 mr-2" />
+                  Configurar Reglas Avanzadas
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* Scheduling */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Clock className="h-5 w-5 text-primary" />
+                  Programación Inteligente
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <Label className="text-sm font-medium">Horarios Óptimos</Label>
+                  <div className="grid grid-cols-2 gap-2 mt-2">
+                    {['09:00', '12:00', '17:00', '20:00'].map((time) => (
+                      <div key={time} className="flex items-center justify-between p-2 border rounded">
+                        <span className="text-sm">{time}</span>
+                        <Switch size="sm" defaultChecked />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                
+                <div>
+                  <Label className="text-sm font-medium">Días de la Semana</Label>
+                  <div className="grid grid-cols-4 gap-2 mt-2">
+                    {['L', 'M', 'X', 'J', 'V', 'S', 'D'].map((day, index) => (
+                      <Button
+                        key={day}
+                        variant={index < 5 ? 'default' : 'outline'}
+                        size="sm"
+                        className="h-8"
+                      >
+                        {day}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+                
+                <div className="border-t pt-4">
+                  <div className="flex items-center justify-between mb-3">
+                    <Label className="text-sm font-medium">Publicación Automática</Label>
+                    <Switch defaultChecked />
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    Las publicaciones programadas se enviarán automáticamente en las fechas especificadas
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+          
+          {/* Activity Log */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <BarChart3 className="h-5 w-5 text-primary" />
+                Registro de Actividad Automática
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                {[
+                  { action: 'Post automático publicado', platform: 'facebook', time: '10:30 AM', status: 'success' },
+                  { action: 'Nuevo producto detectado', platform: 'instagram', time: '09:15 AM', status: 'pending' },
+                  { action: 'Campaña programada iniciada', platform: 'twitter', time: '08:00 AM', status: 'success' },
+                  { action: 'Post recurrente creado', platform: 'youtube', time: '07:30 AM', status: 'success' },
+                ].map((log, index) => (
+                  <div key={index} className="flex items-center gap-3 p-3 border rounded-lg">
+                    <div className={`p-2 rounded-lg ${getPlatformColor(log.platform)}`}>
+                      {React.createElement(getPlatformIcon(log.platform), { 
+                        className: "h-4 w-4 text-white" 
+                      })}
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-sm font-medium">{log.action}</p>
+                      <p className="text-xs text-muted-foreground">{log.time}</p>
+                    </div>
+                    <Badge 
+                      variant={log.status === 'success' ? 'default' : log.status === 'pending' ? 'secondary' : 'destructive'}
+                    >
+                      {log.status === 'success' ? 'Completado' : log.status === 'pending' ? 'Pendiente' : 'Error'}
+                    </Badge>
+                  </div>
+                ))}
+              </div>
             </CardContent>
           </Card>
         </TabsContent>
+
       </Tabs>
     </div>
   );

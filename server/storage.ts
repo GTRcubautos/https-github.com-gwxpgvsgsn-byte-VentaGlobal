@@ -4,7 +4,9 @@ import {
   type Order, type InsertOrder,
   type RewardsConfig, type InsertRewardsConfig,
   type GameResult, type InsertGameResult,
-  type CampaignConfig, type InsertCampaignConfig
+  type CampaignConfig, type InsertCampaignConfig,
+  type SocialPost, type InsertSocialPost,
+  type ContentTemplate, type InsertContentTemplate
 } from "@shared/schema";
 import { randomUUID } from "crypto";
 
@@ -43,6 +45,18 @@ export interface IStorage {
   getAllCampaigns(): Promise<CampaignConfig[]>;
   createCampaign(campaign: InsertCampaignConfig): Promise<CampaignConfig>;
   updateCampaign(id: string, updates: Partial<CampaignConfig>): Promise<CampaignConfig | undefined>;
+
+  // Social Posts
+  getAllSocialPosts(): Promise<SocialPost[]>;
+  createSocialPost(post: InsertSocialPost): Promise<SocialPost>;
+  getSocialPost(id: string): Promise<SocialPost | undefined>;
+  updateSocialPost(id: string, updates: Partial<SocialPost>): Promise<SocialPost | undefined>;
+
+  // Content Templates
+  getAllContentTemplates(): Promise<ContentTemplate[]>;
+  getContentTemplate(id: string): Promise<ContentTemplate | undefined>;
+  createContentTemplate(template: InsertContentTemplate): Promise<ContentTemplate>;
+  updateContentTemplate(id: string, updates: Partial<ContentTemplate>): Promise<ContentTemplate | undefined>;
 }
 
 export class MemStorage implements IStorage {
@@ -52,6 +66,8 @@ export class MemStorage implements IStorage {
   private rewardsConfig: RewardsConfig | null = null;
   private gameResults: Map<string, GameResult> = new Map();
   private campaigns: Map<string, CampaignConfig> = new Map();
+  private socialPosts: Map<string, SocialPost> = new Map();
+  private contentTemplates: Map<string, ContentTemplate> = new Map();
 
   constructor() {
     this.initializeData();
@@ -127,11 +143,25 @@ export class MemStorage implements IStorage {
     // Initialize sample campaign
     const sampleCampaign: InsertCampaignConfig = {
       name: "Productos Tecnológicos 2024",
-      platform: "youtube",
+      platforms: ["youtube", "facebook", "instagram"],
       dailyBudget: "100.00",
       targetAudience: "Tecnología",
       status: "active",
-      metrics: { views: 12450, ctr: 3.2, conversions: 45 },
+      automationType: "scheduled",
+      metrics: { 
+        views: 12450, 
+        clicks: 380,
+        ctr: 3.2, 
+        conversions: 45,
+        postsGenerated: 12
+      },
+      isAutomated: true,
+      schedule: {
+        startDate: "2024-01-01",
+        frequency: "daily",
+        times: ["09:00", "15:00"],
+        daysOfWeek: [1, 2, 3, 4, 5]
+      }
     };
 
     const campaignId = randomUUID();
@@ -139,9 +169,40 @@ export class MemStorage implements IStorage {
       ...sampleCampaign, 
       id: campaignId, 
       createdAt: new Date(),
-      status: sampleCampaign.status || 'active',
-      platform: sampleCampaign.platform || 'youtube'
+      status: sampleCampaign.status || 'active'
     });
+
+    // Initialize sample content templates
+    const sampleTemplates: InsertContentTemplate[] = [
+      {
+        name: "Promoción de Productos",
+        content: "🚗 ¡Nuevo {product_name} disponible en {store_name}! 💰 Solo por ${product_price}. ✨ {product_description}. ¡Aprovecha esta oferta limitada! #GTRCubauto #AutoPartes #Ofertas",
+        platforms: ["facebook", "instagram", "twitter"],
+        category: "promociones",
+        variables: ["product_name", "product_price", "product_description", "store_name"],
+        isActive: true
+      },
+      {
+        name: "Bienvenida Nuevos Clientes",
+        content: "🎉 ¡Bienvenido a {store_name}! Somos tu tienda de confianza para partes automotrices. Descubre nuestro catálogo completo y obtén los mejores precios del mercado. #Bienvenidos #AutoPartes #Calidad",
+        platforms: ["facebook", "instagram", "whatsapp"],
+        category: "marketing",
+        variables: ["store_name"],
+        isActive: true
+      },
+      {
+        name: "Testimonios de Clientes",
+        content: "⭐ '¡Excelente calidad y servicio en {store_name}! Encontré exactamente lo que necesitaba para mi auto.' - Cliente satisfecho. ¿Necesitas partes automotrices de calidad? ¡Visítanos! #Testimonios #Calidad #AutoPartes",
+        platforms: ["facebook", "instagram", "youtube"],
+        category: "testimonios",
+        variables: ["store_name"],
+        isActive: true
+      }
+    ];
+
+    for (const template of sampleTemplates) {
+      this.createContentTemplate(template);
+    }
   }
 
   // User methods
@@ -321,7 +382,9 @@ export class MemStorage implements IStorage {
       id, 
       createdAt: new Date(),
       status: insertCampaign.status || 'active',
-      platform: insertCampaign.platform || 'youtube'
+      platforms: insertCampaign.platforms || ['facebook'],
+      automationType: insertCampaign.automationType || 'manual',
+      isAutomated: insertCampaign.isAutomated || false
     };
     this.campaigns.set(id, campaign);
     return campaign;
@@ -334,6 +397,63 @@ export class MemStorage implements IStorage {
     const updatedCampaign = { ...campaign, ...updates };
     this.campaigns.set(id, updatedCampaign);
     return updatedCampaign;
+  }
+
+  // Social Posts methods
+  async getAllSocialPosts(): Promise<SocialPost[]> {
+    return Array.from(this.socialPosts.values());
+  }
+
+  async createSocialPost(post: InsertSocialPost): Promise<SocialPost> {
+    const newPost: SocialPost = {
+      id: randomUUID(),
+      createdAt: new Date(),
+      ...post,
+    };
+    this.socialPosts.set(newPost.id, newPost);
+    return newPost;
+  }
+
+  async getSocialPost(id: string): Promise<SocialPost | undefined> {
+    return this.socialPosts.get(id);
+  }
+
+  async updateSocialPost(id: string, updates: Partial<SocialPost>): Promise<SocialPost | undefined> {
+    const post = this.socialPosts.get(id);
+    if (!post) return undefined;
+    
+    const updatedPost = { ...post, ...updates };
+    this.socialPosts.set(id, updatedPost);
+    return updatedPost;
+  }
+
+  // Content Templates methods
+  async getAllContentTemplates(): Promise<ContentTemplate[]> {
+    return Array.from(this.contentTemplates.values());
+  }
+
+  async getContentTemplate(id: string): Promise<ContentTemplate | undefined> {
+    return this.contentTemplates.get(id);
+  }
+
+  async createContentTemplate(template: InsertContentTemplate): Promise<ContentTemplate> {
+    const newTemplate: ContentTemplate = {
+      id: randomUUID(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      ...template,
+    };
+    this.contentTemplates.set(newTemplate.id, newTemplate);
+    return newTemplate;
+  }
+
+  async updateContentTemplate(id: string, updates: Partial<ContentTemplate>): Promise<ContentTemplate | undefined> {
+    const template = this.contentTemplates.get(id);
+    if (!template) return undefined;
+    
+    const updatedTemplate = { ...template, ...updates, updatedAt: new Date() };
+    this.contentTemplates.set(id, updatedTemplate);
+    return updatedTemplate;
   }
 }
 
