@@ -423,7 +423,7 @@ export default function Home() {
       <section className="py-20" data-testid="features-section">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4 text-foreground">¿Por Qué GTR CUBAUTOS?</h2>
+            <h2 className="text-4xl font-bold mb-4 text-black">¿Por Qué GTR CUBAUTOS?</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               Líderes en innovación automotriz y experiencia premium
             </p>
