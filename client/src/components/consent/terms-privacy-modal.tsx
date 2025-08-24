@@ -44,14 +44,14 @@ export default function TermsPrivacyModal({ isOpen, onAccept, onReject }: TermsP
 
   return (
     <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4" data-testid="terms-privacy-modal">
-      <Card className="w-full max-w-4xl max-h-[90vh] bg-gray-900 border-gray-700 shadow-2xl">
+      <Card className="w-full max-w-md max-h-[70vh] bg-gray-900 border-gray-700 shadow-2xl">
         <CardHeader className="pb-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <Shield className="h-8 w-8 text-blue-400" />
               <div>
-                <CardTitle className="text-2xl text-white">Términos y Política de Privacidad</CardTitle>
-                <p className="text-gray-400 text-sm">Debes aceptar para continuar usando GTR CUBAUTO</p>
+                <CardTitle className="text-lg text-white">Términos y Privacidad</CardTitle>
+                <p className="text-gray-400 text-xs">Debes aceptar para continuar</p>
               </div>
             </div>
             <Badge className="bg-red-500/20 text-red-300 border-red-500/30">
@@ -83,12 +83,12 @@ export default function TermsPrivacyModal({ isOpen, onAccept, onReject }: TermsP
             </TabsList>
 
             <TabsContent value="terms" className="mt-6">
-              <ScrollArea className="h-96 w-full rounded-lg border border-gray-700 bg-gray-800/50 p-6">
+              <ScrollArea className="h-48 w-full rounded-lg border border-gray-700 bg-gray-800/50 p-4">
                 <div className="space-y-6 text-gray-300">
                   <div>
-                    <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
-                      <FileText className="h-5 w-5 text-blue-400" />
-                      Términos y Condiciones de Uso
+                    <h3 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
+                      <FileText className="h-4 w-4 text-blue-400" />
+                      Términos y Condiciones
                     </h3>
                     <p className="text-sm text-gray-400 mb-4">
                       Última actualización: {new Date().toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })}
@@ -97,7 +97,7 @@ export default function TermsPrivacyModal({ isOpen, onAccept, onReject }: TermsP
 
                   <div className="space-y-4">
                     <div>
-                      <h4 className="text-lg font-semibold text-white mb-2">1. Aceptación de Términos</h4>
+                      <h4 className="text-sm font-semibold text-white mb-2">1. Aceptación de Términos</h4>
                       <p className="text-sm leading-relaxed">
                         Al acceder y utilizar el sitio web de GTR CUBAUTO, usted acepta estar sujeto a estos 
                         términos y condiciones de uso. Si no está de acuerdo con alguna parte de estos términos, 
@@ -106,7 +106,7 @@ export default function TermsPrivacyModal({ isOpen, onAccept, onReject }: TermsP
                     </div>
 
                     <div>
-                      <h4 className="text-lg font-semibold text-white mb-2">2. Descripción del Servicio</h4>
+                      <h4 className="text-sm font-semibold text-white mb-2">2. Descripción del Servicio</h4>
                       <p className="text-sm leading-relaxed">
                         GTR CUBAUTO es una plataforma de comercio electrónico especializada en la venta de 
                         repuestos automotrices, accesorios para vehículos, y servicios relacionados con el 
@@ -115,7 +115,7 @@ export default function TermsPrivacyModal({ isOpen, onAccept, onReject }: TermsP
                     </div>
 
                     <div>
-                      <h4 className="text-lg font-semibold text-white mb-2">3. Registro de Cuenta</h4>
+                      <h4 className="text-sm font-semibold text-white mb-2">3. Registro de Cuenta</h4>
                       <ul className="text-sm space-y-1 list-disc list-inside">
                         <li>Debe proporcionar información precisa y completa durante el registro</li>
                         <li>Es responsable de mantener la confidencialidad de su cuenta</li>
@@ -125,7 +125,7 @@ export default function TermsPrivacyModal({ isOpen, onAccept, onReject }: TermsP
                     </div>
 
                     <div>
-                      <h4 className="text-lg font-semibold text-white mb-2">4. Compras y Pagos</h4>
+                      <h4 className="text-sm font-semibold text-white mb-2">4. Compras y Pagos</h4>
                       <ul className="text-sm space-y-1 list-disc list-inside">
                         <li>Todos los precios están sujetos a cambios sin previo aviso</li>
                         <li>Los pagos se procesan de forma segura a través de Stripe</li>
@@ -135,7 +135,7 @@ export default function TermsPrivacyModal({ isOpen, onAccept, onReject }: TermsP
                     </div>
 
                     <div>
-                      <h4 className="text-lg font-semibold text-white mb-2">5. Política de Devoluciones</h4>
+                      <h4 className="text-sm font-semibold text-white mb-2">5. Política de Devoluciones</h4>
                       <p className="text-sm leading-relaxed">
                         Ofrecemos devoluciones dentro de 30 días de la compra para productos en condiciones 
                         originales. Los gastos de envío para devoluciones corren por cuenta del cliente, 
@@ -144,7 +144,7 @@ export default function TermsPrivacyModal({ isOpen, onAccept, onReject }: TermsP
                     </div>
 
                     <div>
-                      <h4 className="text-lg font-semibold text-white mb-2">6. Uso Aceptable</h4>
+                      <h4 className="text-sm font-semibold text-white mb-2">6. Uso Aceptable</h4>
                       <p className="text-sm leading-relaxed mb-2">
                         Al utilizar nuestro sitio, usted se compromete a NO:
                       </p>
@@ -157,7 +157,7 @@ export default function TermsPrivacyModal({ isOpen, onAccept, onReject }: TermsP
                     </div>
 
                     <div>
-                      <h4 className="text-lg font-semibold text-white mb-2">7. Limitación de Responsabilidad</h4>
+                      <h4 className="text-sm font-semibold text-white mb-2">7. Limitación de Responsabilidad</h4>
                       <p className="text-sm leading-relaxed">
                         GTR CUBAUTO no será responsable por daños indirectos, incidentales, especiales 
                         o consecuentes que resulten del uso de nuestro sitio web o productos, incluso 
@@ -166,7 +166,7 @@ export default function TermsPrivacyModal({ isOpen, onAccept, onReject }: TermsP
                     </div>
 
                     <div>
-                      <h4 className="text-lg font-semibold text-white mb-2">8. Modificaciones</h4>
+                      <h4 className="text-sm font-semibold text-white mb-2">8. Modificaciones</h4>
                       <p className="text-sm leading-relaxed">
                         Nos reservamos el derecho de modificar estos términos en cualquier momento. 
                         Las modificaciones entrarán en vigor inmediatamente después de su publicación 
@@ -194,12 +194,12 @@ export default function TermsPrivacyModal({ isOpen, onAccept, onReject }: TermsP
             </TabsContent>
 
             <TabsContent value="privacy" className="mt-6">
-              <ScrollArea className="h-96 w-full rounded-lg border border-gray-700 bg-gray-800/50 p-6">
+              <ScrollArea className="h-48 w-full rounded-lg border border-gray-700 bg-gray-800/50 p-4">
                 <div className="space-y-6 text-gray-300">
                   <div>
-                    <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
-                      <Lock className="h-5 w-5 text-blue-400" />
-                      Política de Privacidad y Protección de Datos
+                    <h3 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
+                      <Lock className="h-4 w-4 text-blue-400" />
+                      Política de Privacidad
                     </h3>
                     <p className="text-sm text-gray-400 mb-4">
                       Última actualización: {new Date().toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })}
@@ -208,7 +208,7 @@ export default function TermsPrivacyModal({ isOpen, onAccept, onReject }: TermsP
 
                   <div className="space-y-4">
                     <div>
-                      <h4 className="text-lg font-semibold text-white mb-2">1. Información que Recopilamos</h4>
+                      <h4 className="text-sm font-semibold text-white mb-2">1. Información que Recopilamos</h4>
                       <p className="text-sm leading-relaxed mb-2">
                         Recopilamos información que nos proporciona directamente y de forma automática:
                       </p>
@@ -221,7 +221,7 @@ export default function TermsPrivacyModal({ isOpen, onAccept, onReject }: TermsP
                     </div>
 
                     <div>
-                      <h4 className="text-lg font-semibold text-white mb-2">2. Cómo Usamos su Información</h4>
+                      <h4 className="text-sm font-semibold text-white mb-2">2. Cómo Usamos su Información</h4>
                       <ul className="text-sm space-y-1 list-disc list-inside">
                         <li>Procesar sus pedidos y pagos</li>
                         <li>Enviar confirmaciones y actualizaciones de estado</li>
@@ -232,7 +232,7 @@ export default function TermsPrivacyModal({ isOpen, onAccept, onReject }: TermsP
                     </div>
 
                     <div>
-                      <h4 className="text-lg font-semibold text-white mb-2">3. Protección de Datos</h4>
+                      <h4 className="text-sm font-semibold text-white mb-2">3. Protección de Datos</h4>
                       <p className="text-sm leading-relaxed mb-2">
                         Implementamos medidas de seguridad de nivel empresarial:
                       </p>
@@ -246,7 +246,7 @@ export default function TermsPrivacyModal({ isOpen, onAccept, onReject }: TermsP
                     </div>
 
                     <div>
-                      <h4 className="text-lg font-semibold text-white mb-2">4. Sus Derechos de Privacidad</h4>
+                      <h4 className="text-sm font-semibold text-white mb-2">4. Sus Derechos de Privacidad</h4>
                       <p className="text-sm leading-relaxed mb-2">
                         Bajo las regulaciones GDPR y CCPA, usted tiene derecho a:
                       </p>
@@ -260,7 +260,7 @@ export default function TermsPrivacyModal({ isOpen, onAccept, onReject }: TermsP
                     </div>
 
                     <div>
-                      <h4 className="text-lg font-semibold text-white mb-2">5. Compartir Información</h4>
+                      <h4 className="text-sm font-semibold text-white mb-2">5. Compartir Información</h4>
                       <p className="text-sm leading-relaxed mb-2">
                         NO vendemos ni alquilamos su información personal. Solo compartimos datos con:
                       </p>
@@ -273,7 +273,7 @@ export default function TermsPrivacyModal({ isOpen, onAccept, onReject }: TermsP
                     </div>
 
                     <div>
-                      <h4 className="text-lg font-semibold text-white mb-2">6. Cookies y Tecnologías Similares</h4>
+                      <h4 className="text-sm font-semibold text-white mb-2">6. Cookies y Tecnologías Similares</h4>
                       <p className="text-sm leading-relaxed mb-2">
                         Utilizamos cookies para:
                       </p>
@@ -289,7 +289,7 @@ export default function TermsPrivacyModal({ isOpen, onAccept, onReject }: TermsP
                     </div>
 
                     <div>
-                      <h4 className="text-lg font-semibold text-white mb-2">7. Retención de Datos</h4>
+                      <h4 className="text-sm font-semibold text-white mb-2">7. Retención de Datos</h4>
                       <p className="text-sm leading-relaxed">
                         Conservamos su información personal solo el tiempo necesario para cumplir con los 
                         propósitos descritos en esta política, a menos que la ley requiera un período de 
@@ -298,7 +298,7 @@ export default function TermsPrivacyModal({ isOpen, onAccept, onReject }: TermsP
                     </div>
 
                     <div>
-                      <h4 className="text-lg font-semibold text-white mb-2">8. Contacto</h4>
+                      <h4 className="text-sm font-semibold text-white mb-2">8. Contacto</h4>
                       <p className="text-sm leading-relaxed">
                         Para consultas sobre privacidad, contáctenos en:
                       </p>
@@ -332,26 +332,28 @@ export default function TermsPrivacyModal({ isOpen, onAccept, onReject }: TermsP
           <Separator className="bg-gray-700" />
 
           {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-between items-center">
-            <div className="flex items-center gap-2 text-gray-400 text-sm">
-              <Info className="h-4 w-4" />
-              <span>Debe aceptar ambos documentos para continuar</span>
+          <div className="flex flex-col gap-3">
+            <div className="text-center text-gray-400 text-xs">
+              <Info className="h-3 w-3 inline mr-1" />
+              <span>Debe aceptar ambos documentos</span>
             </div>
             
-            <div className="flex gap-3">
+            <div className="flex gap-2 justify-center">
               <Button
                 variant="outline"
                 onClick={handleReject}
+                size="sm"
                 className="border-red-500/30 text-red-300 hover:bg-red-500/10"
                 data-testid="button-reject"
               >
-                <X className="h-4 w-4 mr-2" />
-                Rechazar y Salir
+                <X className="h-3 w-3 mr-1" />
+                Rechazar
               </Button>
               
               <Button
                 onClick={handleAccept}
                 disabled={!canProceed}
+                size="sm"
                 className={`${
                   canProceed 
                     ? 'bg-green-600 hover:bg-green-700 text-white' 
@@ -359,8 +361,8 @@ export default function TermsPrivacyModal({ isOpen, onAccept, onReject }: TermsP
                 }`}
                 data-testid="button-accept"
               >
-                <CheckCircle className="h-4 w-4 mr-2" />
-                {canProceed ? 'Aceptar y Continuar' : 'Debe Aceptar Ambos'}
+                <CheckCircle className="h-3 w-3 mr-1" />
+                {canProceed ? 'Aceptar' : 'Marcar ambos'}
               </Button>
             </div>
           </div>

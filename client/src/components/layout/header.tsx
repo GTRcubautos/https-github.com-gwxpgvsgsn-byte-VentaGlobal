@@ -70,10 +70,7 @@ export default function Header() {
 
           {/* Right side with Logo + Navigation + Search + Cart */}
           <div className="flex items-center space-x-6">
-            {/* Logo moved to right side */}
-            <Link href="/" className="text-white text-4xl font-bold font-display hover:text-red-400 transition-colors duration-300" data-testid="logo">
-              GTR CUBAUTO
-            </Link>
+            {/* Logo space removed */}
             {/* Right Navigation */}
             <nav className="flex items-center space-x-8" data-testid="right-navigation">
               {navigation.slice(4).map((item) => (
@@ -149,9 +146,8 @@ export default function Header() {
         {/* Mobile Header */}
         <div className="lg:hidden">
           <div className="flex items-center justify-between">
-            <Link href="/" className="text-white text-2xl font-bold font-display" data-testid="mobile-logo">
-              GTR CUBAUTO
-            </Link>
+            {/* Mobile logo removed */}
+            <div></div>
             <div className="flex items-center space-x-2">
               <Button
                 variant="ghost"
