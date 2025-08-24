@@ -37,9 +37,9 @@ export default function Products() {
   };
 
   return (
-    <div className="py-16 bg-white dark:bg-black" data-testid="products-page">
+    <div className="py-16 bg-white" data-testid="products-page">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center text-black dark:text-white mb-2">
+        <h2 className="text-4xl font-bold text-center text-black mb-2">
           Productos Electrónicos
         </h2>
         <div className="w-20 h-1 bg-red-600 mx-auto mb-12"></div>
@@ -52,14 +52,14 @@ export default function Products() {
             className="mb-4"
           />
           {currentSearch && (
-            <div className="text-center bg-gray-100 dark:bg-gray-800 p-4 rounded-xl border border-gray-200 dark:border-gray-700">
-              <p className="text-gray-800 dark:text-gray-200 mb-2">
+            <div className="text-center bg-gray-100 p-4 rounded-xl border border-gray-200">
+              <p className="text-gray-800 mb-2">
                 Resultados para: "{currentSearch}"
               </p>
               <Button
                 variant="outline"
                 onClick={clearSearch}
-                className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+                className="border-gray-300 text-gray-700 hover:bg-gray-50 bg-red-600 hover:bg-red-700 text-white border-red-600"
                 data-testid="clear-search"
               >
                 Limpiar búsqueda

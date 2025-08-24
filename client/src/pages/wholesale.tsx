@@ -35,12 +35,12 @@ export default function Wholesale() {
   };
 
   return (
-    <div className="py-16 bg-accent" data-testid="wholesale-page">
+    <div className="py-16 bg-white" data-testid="wholesale-page">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center text-secondary mb-2">
+        <h2 className="text-4xl font-bold text-center text-black mb-2">
           Portal Mayoristas
         </h2>
-        <div className="w-20 h-1 bg-primary mx-auto mb-12"></div>
+        <div className="w-20 h-1 bg-red-600 mx-auto mb-12"></div>
         
         {!isAuthenticated ? (
           <div className="text-center mb-8" data-testid="wholesale-access">
@@ -49,7 +49,7 @@ export default function Wholesale() {
             </p>
             <Button
               onClick={openWholesaleModal}
-              className="bg-primary hover:bg-primary/90 text-white px-8 py-3 font-semibold"
+              className="bg-red-600 hover:bg-red-700 text-white px-8 py-3 font-semibold"
               data-testid="wholesale-access-button"
             >
               Acceder con Código

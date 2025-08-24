@@ -154,10 +154,10 @@ export default function Profile() {
   const availableDiscount = (userPoints * 0.01).toFixed(2);
 
   return (
-    <div className="min-h-screen bg-background py-16" data-testid="profile-page">
+    <div className="min-h-screen bg-white py-16" data-testid="profile-page">
       <div className="container mx-auto px-6">
         {/* Header */}
-        <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 text-white py-8 rounded-t-lg">
+        <div className="bg-gray-800 text-white py-8 rounded-t-lg">
           <div className="flex items-center justify-between px-6">
             <div className="flex items-center gap-6">
               <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center">
@@ -167,7 +167,7 @@ export default function Profile() {
                 <h1 className="text-3xl font-bold">
                   {user?.firstName || 'Cliente'} {user?.lastName || 'GTR'}
                 </h1>
-                <p className="text-blue-100">
+                <p className="text-gray-300">
                   {user?.email || 'cliente@gtrcubauto.com'}
                 </p>
                 <div className={`inline-flex items-center px-3 py-1 rounded-full bg-gradient-to-r ${vipStatus.color} text-white font-bold text-sm mt-2`}>
@@ -178,9 +178,9 @@ export default function Profile() {
             </div>
             <div className="text-right">
               <div className="text-3xl font-bold">{userPoints.toLocaleString()}</div>
-              <div className="text-blue-100">Puntos GTR</div>
+              <div className="text-gray-300">Puntos GTR</div>
               <div className="text-lg font-semibold">${availableDiscount}</div>
-              <div className="text-blue-100 text-sm">En descuentos</div>
+              <div className="text-gray-300 text-sm">En descuentos</div>
             </div>
           </div>
         </div>

@@ -60,7 +60,7 @@ export default function Motorcycles() {
   ).slice(0, 3);
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black" data-testid="motorcycles-page">
+    <div className="min-h-screen bg-white" data-testid="motorcycles-page">
       {/* Hero Section */}
       <section className="relative py-24 overflow-hidden" data-testid="motorcycles-hero-section">
         {/* Background Image or Video */}

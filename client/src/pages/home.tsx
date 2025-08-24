@@ -103,7 +103,7 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground" data-testid="home-page">
+    <div className="min-h-screen bg-white text-black" data-testid="home-page">
       {/* Hero Section */}
       <section className="relative py-24 overflow-hidden" data-testid="hero-section">
         {/* Background Image or Video */}
@@ -145,10 +145,10 @@ export default function Home() {
                 {siteConfig.hero_description || 'Todo para tu vehículo en un solo lugar. Encuentra los mejores repuestos y accesorios con garantía de calidad y los precios más competitivos del mercado.'}
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="text-lg px-10 py-4 bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 shadow-red" data-testid="hero-cta">
+                <Button size="lg" className="text-lg px-10 py-4 bg-red-600 hover:bg-red-700 text-white" data-testid="hero-cta">
                   Ver Ofertas de la Semana
                 </Button>
-                <Button size="lg" variant="outline" className="text-lg px-10 py-4 border-yellow-500 text-yellow-400 hover:bg-yellow-500 hover:text-black" asChild data-testid="vip-cta">
+                <Button size="lg" variant="outline" className="text-lg px-10 py-4 border-gray-400 text-white hover:bg-gray-700 hover:text-white" asChild data-testid="vip-cta">
                   <Link href="/vip">
                     <Crown className="h-5 w-5 mr-2" />
                     Hacerse VIP
@@ -161,7 +161,7 @@ export default function Home() {
       </section>
 
       {/* Promociones Banner */}
-      <section className="py-4 bg-automotive-red text-white shadow-medium" data-testid="promo-banner">
+      <section className="py-4 bg-red-600 text-white" data-testid="promo-banner">
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-center space-x-8 text-sm font-semibold uppercase tracking-wide">
             <span>ENVÍO GRATIS +$500</span>
@@ -176,18 +176,18 @@ export default function Home() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 bg-gray-50" data-testid="stats-section">
+      <section className="py-16 bg-gray-100" data-testid="stats-section">
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => {
               const StatIcon = stat.icon;
               return (
                 <div key={index} className="text-center group" data-testid={`stat-${index}`}>
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white mb-4 group-hover:bg-automotive-red group-hover:text-white transition-all duration-300 shadow-medium border border-gray-200">
-                    <StatIcon className="h-7 w-7 text-automotive-gray group-hover:text-white" />
+                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white mb-4 group-hover:bg-red-600 group-hover:text-white transition-all duration-300 border border-gray-200">
+                    <StatIcon className="h-7 w-7 text-gray-600 group-hover:text-white" />
                   </div>
-                  <div className="text-3xl md:text-4xl font-bold text-automotive-black mb-1">{stat.value}</div>
-                  <div className="text-sm text-automotive-gray uppercase tracking-wider font-semibold">{stat.label}</div>
+                  <div className="text-3xl md:text-4xl font-bold text-black mb-1">{stat.value}</div>
+                  <div className="text-sm text-gray-600 uppercase tracking-wider font-semibold">{stat.label}</div>
                 </div>
               );
             })}

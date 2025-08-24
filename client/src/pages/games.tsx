@@ -183,14 +183,14 @@ export default function Games() {
   const availableDiscount = (userPoints * 0.01).toFixed(2);
 
   return (
-    <div className="py-16 bg-black dark:bg-white text-white dark:text-black" data-testid="games-page">
+    <div className="py-16 bg-white text-black" data-testid="games-page">
       <div className="container mx-auto px-4">
         <h2 className="text-4xl font-bold text-center mb-2">Centro de Juegos</h2>
         <div className="w-20 h-1 bg-red-600 mx-auto mb-8"></div>
         
         {/* Daily Bible Verse */}
         <div 
-          className="bg-gray-900 dark:bg-gray-100 bg-opacity-80 rounded-lg p-6 mb-12 text-center max-w-2xl mx-auto"
+          className="bg-gray-100 rounded-lg p-6 mb-12 text-center max-w-2xl mx-auto border border-gray-200"
           data-testid="daily-verse"
         >
           <h3 className="text-red-600 text-xl font-bold mb-4">Versículo del Día</h3>
@@ -205,9 +205,9 @@ export default function Games() {
         {/* VIP Status & Rewards Overview */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
           {/* VIP Status */}
-          <Card className="bg-gray-900 dark:bg-gray-100 border-gray-700 dark:border-gray-300">
+          <Card className="bg-white border-gray-200">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-white">
+              <CardTitle className="flex items-center gap-2 text-black">
                 <Crown className="h-6 w-6 text-yellow-400" />
                 Estado VIP
               </CardTitle>
@@ -217,11 +217,11 @@ export default function Games() {
                 <div className="inline-flex items-center px-4 py-2 rounded-full bg-red-600 text-white font-bold">
                   {vipStatus.level}
                 </div>
-                <div className="text-white">
+                <div className="text-black">
                   <div className="text-3xl font-bold" data-testid="total-points">
                     {userPoints.toLocaleString()}
                   </div>
-                  <div className="text-sm text-gray-300">Puntos Totales</div>
+                  <div className="text-sm text-gray-600">Puntos Totales</div>
                 </div>
                 <div className="text-red-600 font-bold text-xl" data-testid="available-discount">
                   ${availableDiscount} en descuentos
