@@ -216,54 +216,173 @@ export default function Admin() {
 
       <div className="container mx-auto px-6 py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-6 lg:grid-cols-12 mb-8 bg-white shadow-sm">
-            <TabsTrigger value="dashboard" className="flex items-center gap-2" data-testid="tab-dashboard">
-              <Home className="h-4 w-4" />
-              <span className="hidden sm:inline">Dashboard</span>
+          <TabsList className="grid w-full grid-cols-6 lg:grid-cols-12 mb-8 bg-gray-900 border-gray-700 p-2 gap-1">
+            <TabsTrigger 
+              value="dashboard" 
+              className="group relative flex flex-col items-center gap-2 p-4 rounded-lg bg-gray-800 hover:bg-gray-700 data-[state=active]:bg-red-600 data-[state=active]:text-white transition-all duration-300 border-0" 
+              data-testid="tab-dashboard"
+            >
+              <div className="relative">
+                <Home className="h-8 w-8 transition-transform duration-300 group-hover:scale-110" />
+                <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+              </div>
+              <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute top-16 bg-black/80 text-white px-2 py-1 rounded whitespace-nowrap">
+                Panel Principal
+              </span>
             </TabsTrigger>
-            <TabsTrigger value="crm" className="flex items-center gap-2" data-testid="tab-crm">
-              <Users className="h-4 w-4" />
-              <span className="hidden sm:inline">CRM</span>
+            
+            <TabsTrigger 
+              value="crm" 
+              className="group relative flex flex-col items-center gap-2 p-4 rounded-lg bg-gray-800 hover:bg-gray-700 data-[state=active]:bg-red-600 data-[state=active]:text-white transition-all duration-300 border-0" 
+              data-testid="tab-crm"
+            >
+              <div className="relative">
+                <Users className="h-8 w-8 transition-transform duration-300 group-hover:scale-110" />
+                <div className="absolute -top-1 -right-1 w-3 h-3 bg-blue-500 rounded-full"></div>
+              </div>
+              <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute top-16 bg-black/80 text-white px-2 py-1 rounded whitespace-nowrap">
+                Gestión Clientes
+              </span>
             </TabsTrigger>
-            <TabsTrigger value="inventory" className="flex items-center gap-2" data-testid="tab-inventory">
-              <Package className="h-4 w-4" />
-              <span className="hidden sm:inline">Inventario</span>
+            
+            <TabsTrigger 
+              value="inventory" 
+              className="group relative flex flex-col items-center gap-2 p-4 rounded-lg bg-gray-800 hover:bg-gray-700 data-[state=active]:bg-red-600 data-[state=active]:text-white transition-all duration-300 border-0" 
+              data-testid="tab-inventory"
+            >
+              <div className="relative">
+                <Package className="h-8 w-8 transition-transform duration-300 group-hover:scale-110" />
+                <div className="absolute -top-1 -right-1 w-3 h-3 bg-orange-500 rounded-full"></div>
+              </div>
+              <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute top-16 bg-black/80 text-white px-2 py-1 rounded whitespace-nowrap">
+                Control Inventario
+              </span>
             </TabsTrigger>
-            <TabsTrigger value="wholesale" className="flex items-center gap-2" data-testid="tab-wholesale">
-              <Tag className="h-4 w-4" />
-              <span className="hidden sm:inline">Mayorista</span>
+            
+            <TabsTrigger 
+              value="wholesale" 
+              className="group relative flex flex-col items-center gap-2 p-4 rounded-lg bg-gray-800 hover:bg-gray-700 data-[state=active]:bg-red-600 data-[state=active]:text-white transition-all duration-300 border-0" 
+              data-testid="tab-wholesale"
+            >
+              <div className="relative">
+                <Tag className="h-8 w-8 transition-transform duration-300 group-hover:scale-110" />
+                <div className="absolute -top-1 -right-1 w-3 h-3 bg-purple-500 rounded-full"></div>
+              </div>
+              <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute top-16 bg-black/80 text-white px-2 py-1 rounded whitespace-nowrap">
+                Códigos Mayorista
+              </span>
             </TabsTrigger>
-            <TabsTrigger value="sales" className="flex items-center gap-2" data-testid="tab-sales">
-              <BarChart3 className="h-4 w-4" />
-              <span className="hidden sm:inline">Ventas</span>
+            
+            <TabsTrigger 
+              value="sales" 
+              className="group relative flex flex-col items-center gap-2 p-4 rounded-lg bg-gray-800 hover:bg-gray-700 data-[state=active]:bg-red-600 data-[state=active]:text-white transition-all duration-300 border-0" 
+              data-testid="tab-sales"
+            >
+              <div className="relative">
+                <BarChart3 className="h-8 w-8 transition-transform duration-300 group-hover:scale-110" />
+                <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+              </div>
+              <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute top-16 bg-black/80 text-white px-2 py-1 rounded whitespace-nowrap">
+                Análisis Ventas
+              </span>
             </TabsTrigger>
-            <TabsTrigger value="campaigns" className="flex items-center gap-2" data-testid="tab-campaigns">
-              <Target className="h-4 w-4" />
-              <span className="hidden sm:inline">Campañas</span>
+            
+            <TabsTrigger 
+              value="campaigns" 
+              className="group relative flex flex-col items-center gap-2 p-4 rounded-lg bg-gray-800 hover:bg-gray-700 data-[state=active]:bg-red-600 data-[state=active]:text-white transition-all duration-300 border-0" 
+              data-testid="tab-campaigns"
+            >
+              <div className="relative">
+                <Target className="h-8 w-8 transition-transform duration-300 group-hover:scale-110" />
+                <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></div>
+              </div>
+              <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute top-16 bg-black/80 text-white px-2 py-1 rounded whitespace-nowrap">
+                Campañas Marketing
+              </span>
             </TabsTrigger>
-            <TabsTrigger value="social" className="flex items-center gap-2" data-testid="tab-social">
-              <Globe className="h-4 w-4" />
-              <span className="hidden sm:inline">Redes</span>
+            
+            <TabsTrigger 
+              value="social" 
+              className="group relative flex flex-col items-center gap-2 p-4 rounded-lg bg-gray-800 hover:bg-gray-700 data-[state=active]:bg-red-600 data-[state=active]:text-white transition-all duration-300 border-0" 
+              data-testid="tab-social"
+            >
+              <div className="relative">
+                <Globe className="h-8 w-8 transition-transform duration-300 group-hover:scale-110" />
+                <div className="absolute -top-1 -right-1 w-3 h-3 bg-cyan-500 rounded-full"></div>
+              </div>
+              <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute top-16 bg-black/80 text-white px-2 py-1 rounded whitespace-nowrap">
+                Redes Sociales
+              </span>
             </TabsTrigger>
-            <TabsTrigger value="analytics" className="flex items-center gap-2" data-testid="tab-analytics">
-              <PieChart className="h-4 w-4" />
-              <span className="hidden sm:inline">Analítica</span>
+            
+            <TabsTrigger 
+              value="analytics" 
+              className="group relative flex flex-col items-center gap-2 p-4 rounded-lg bg-gray-800 hover:bg-gray-700 data-[state=active]:bg-red-600 data-[state=active]:text-white transition-all duration-300 border-0" 
+              data-testid="tab-analytics"
+            >
+              <div className="relative">
+                <PieChart className="h-8 w-8 transition-transform duration-300 group-hover:scale-110" />
+                <div className="absolute -top-1 -right-1 w-3 h-3 bg-yellow-500 rounded-full"></div>
+              </div>
+              <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute top-16 bg-black/80 text-white px-2 py-1 rounded whitespace-nowrap">
+                Analítica Avanzada
+              </span>
             </TabsTrigger>
-            <TabsTrigger value="automation" className="flex items-center gap-2" data-testid="tab-automation">
-              <Bot className="h-4 w-4" />
-              <span className="hidden sm:inline">Automatización</span>
+            
+            <TabsTrigger 
+              value="automation" 
+              className="group relative flex flex-col items-center gap-2 p-4 rounded-lg bg-gray-800 hover:bg-gray-700 data-[state=active]:bg-red-600 data-[state=active]:text-white transition-all duration-300 border-0" 
+              data-testid="tab-automation"
+            >
+              <div className="relative">
+                <Bot className="h-8 w-8 transition-transform duration-300 group-hover:scale-110" />
+                <div className="absolute -top-1 -right-1 w-3 h-3 bg-indigo-500 rounded-full animate-pulse"></div>
+              </div>
+              <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute top-16 bg-black/80 text-white px-2 py-1 rounded whitespace-nowrap">
+                Automatización IA
+              </span>
             </TabsTrigger>
-            <TabsTrigger value="discounts" className="flex items-center gap-2" data-testid="tab-discounts">
-              <Percent className="h-4 w-4" />
-              <span className="hidden sm:inline">Descuentos</span>
+            
+            <TabsTrigger 
+              value="discounts" 
+              className="group relative flex flex-col items-center gap-2 p-4 rounded-lg bg-gray-800 hover:bg-gray-700 data-[state=active]:bg-red-600 data-[state=active]:text-white transition-all duration-300 border-0" 
+              data-testid="tab-discounts"
+            >
+              <div className="relative">
+                <Percent className="h-8 w-8 transition-transform duration-300 group-hover:scale-110" />
+                <div className="absolute -top-1 -right-1 w-3 h-3 bg-pink-500 rounded-full"></div>
+              </div>
+              <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute top-16 bg-black/80 text-white px-2 py-1 rounded whitespace-nowrap">
+                Descuentos & Ofertas
+              </span>
             </TabsTrigger>
-            <TabsTrigger value="site-config" className="flex items-center gap-2" data-testid="tab-site-config">
-              <Globe className="h-4 w-4" />
-              <span className="hidden sm:inline">Sitio</span>
+            
+            <TabsTrigger 
+              value="site-config" 
+              className="group relative flex flex-col items-center gap-2 p-4 rounded-lg bg-gray-800 hover:bg-gray-700 data-[state=active]:bg-red-600 data-[state=active]:text-white transition-all duration-300 border-0" 
+              data-testid="tab-site-config"
+            >
+              <div className="relative">
+                <Building className="h-8 w-8 transition-transform duration-300 group-hover:scale-110" />
+                <div className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-500 rounded-full"></div>
+              </div>
+              <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute top-16 bg-black/80 text-white px-2 py-1 rounded whitespace-nowrap">
+                Configuración Sitio
+              </span>
             </TabsTrigger>
-            <TabsTrigger value="settings" className="flex items-center gap-2" data-testid="tab-settings">
-              <Settings className="h-4 w-4" />
-              <span className="hidden sm:inline">Config</span>
+            
+            <TabsTrigger 
+              value="settings" 
+              className="group relative flex flex-col items-center gap-2 p-4 rounded-lg bg-gray-800 hover:bg-gray-700 data-[state=active]:bg-red-600 data-[state=active]:text-white transition-all duration-300 border-0" 
+              data-testid="tab-settings"
+            >
+              <div className="relative">
+                <Settings className="h-8 w-8 transition-transform duration-300 group-hover:scale-110" />
+                <div className="absolute -top-1 -right-1 w-3 h-3 bg-gray-500 rounded-full"></div>
+              </div>
+              <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute top-16 bg-black/80 text-white px-2 py-1 rounded whitespace-nowrap">
+                Configuración General
+              </span>
             </TabsTrigger>
           </TabsList>
 
