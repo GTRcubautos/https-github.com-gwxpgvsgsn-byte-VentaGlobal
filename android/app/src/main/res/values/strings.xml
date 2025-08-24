@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GTR CUBAUTO</string>
+    <string name="app_description">Repuestos Automotrices de Calidad</string>
+    
+    <!-- Títulos de actividades -->
+    <string name="main_activity_title">GTR CUBAUTO</string>
+    <string name="splash_activity_title">Cargando GTR CUBAUTO</string>
+    
+    <!-- Mensajes -->
+    <string name="loading">Cargando...</string>
+    <string name="error_network">Error de conexión. Verifica tu conexión a internet.</string>
+    <string name="error_generic">Ha ocurrido un error. Inténtalo de nuevo.</string>
+    <string name="retry">Reintentar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="ok">OK</string>
+    <string name="yes">Sí</string>
+    <string name="no">No</string>
+    
+    <!-- Menú -->
+    <string name="menu_home">Inicio</string>
+    <string name="menu_refresh">Actualizar</string>
+    <string name="menu_share">Compartir</string>
+    
+    <!-- Permisos -->
+    <string name="permission_camera_title">Permiso de Cámara</string>
+    <string name="permission_camera_message">Esta aplicación necesita acceso a la cámara para tomar fotos de repuestos automotrices.</string>
+    <string name="permission_location_title">Permiso de Ubicación</string>
+    <string name="permission_location_message">Esta aplicación necesita acceso a la ubicación para encontrar tiendas de repuestos cercanas.</string>
+    <string name="permission_storage_title">Permiso de Almacenamiento</string>
+    <string name="permission_storage_message">Esta aplicación necesita acceso al almacenamiento para guardar imágenes de repuestos.</string>
+    
+    <!-- Compartir -->
+    <string name="share_text">¡Descarga GTR CUBAUTO! La mejor app para repuestos automotrices</string>
+    <string name="share_subject">GTR CUBAUTO - Repuestos Automotrices</string>
+    <string name="share_chooser_title">Compartir GTR CUBAUTO</string>
+    
+    <!-- WebView -->
+    <string name="webview_error_title">Error de Carga</string>
+    <string name="webview_error_message">No se pudo cargar la aplicación. Verifica tu conexión a internet e inténtalo de nuevo.</string>
+    <string name="webview_no_internet">Sin conexión a internet</string>
+    <string name="webview_no_internet_message">No hay conexión a Internet. Verifique su conexión y vuelva a intentar.</string>
+</resources>
