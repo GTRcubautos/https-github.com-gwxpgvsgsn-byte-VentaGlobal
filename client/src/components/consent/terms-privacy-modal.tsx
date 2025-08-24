@@ -338,12 +338,12 @@ export default function TermsPrivacyModal({ isOpen, onAccept, onReject }: TermsP
               <span>Debe aceptar ambos documentos</span>
             </div>
             
-            <div className="flex gap-2 justify-center">
+            <div className="grid grid-cols-2 gap-4 w-full">
               <Button
                 variant="outline"
                 onClick={handleReject}
                 size="sm"
-                className="border-red-500/30 text-red-300 hover:bg-red-500/10"
+                className="border-red-500/30 text-red-300 hover:bg-red-500/10 w-full"
                 data-testid="button-reject"
               >
                 <X className="h-3 w-3 mr-1" />
@@ -354,7 +354,7 @@ export default function TermsPrivacyModal({ isOpen, onAccept, onReject }: TermsP
                 onClick={handleAccept}
                 disabled={!canProceed}
                 size="sm"
-                className={`${
+                className={`w-full ${
                   canProceed 
                     ? 'bg-green-600 hover:bg-green-700 text-white' 
                     : 'bg-gray-600 text-gray-400 cursor-not-allowed'
