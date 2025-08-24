@@ -488,7 +488,7 @@ export default function Admin() {
           {/* CRM Tab */}
           <TabsContent value="crm" className="space-y-8">
             <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold">Gestión de Clientes (CRM)</h2>
+              <h2 className="text-2xl font-bold text-gray-700">Gestión de Clientes (CRM)</h2>
               <div className="flex gap-2">
                 <Button variant="outline" size="sm">
                   <Filter className="h-4 w-4 mr-2" />
@@ -594,7 +594,7 @@ export default function Admin() {
           {/* Sales Tab */}
           <TabsContent value="sales" className="space-y-8">
             <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold">Análisis de Ventas Avanzado</h2>
+              <h2 className="text-2xl font-bold text-gray-700">Análisis de Ventas Avanzado</h2>
               <div className="flex gap-2">
                 <Select defaultValue="30d">
                   <SelectTrigger className="w-40">
@@ -889,7 +889,7 @@ export default function Admin() {
           {/* Campaigns Tab */}
           <TabsContent value="campaigns" className="space-y-8">
             <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold">Gestión de Campañas Automáticas</h2>
+              <h2 className="text-2xl font-bold text-gray-700">Gestión de Campañas Automáticas</h2>
               <div className="flex gap-2">
                 <Button variant="outline" size="sm">
                   <Bot className="h-4 w-4 mr-2" />
@@ -1206,7 +1206,7 @@ export default function Admin() {
           {/* Analytics Tab */}
           <TabsContent value="analytics" className="space-y-8">
             <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold">Analítica Web</h2>
+              <h2 className="text-2xl font-bold text-gray-700">Analítica Web</h2>
               <Select defaultValue="30d">
                 <SelectTrigger className="w-40">
                   <SelectValue />
@@ -1333,7 +1333,7 @@ export default function Admin() {
           {/* Discounts Tab */}
           <TabsContent value="discounts" className="space-y-8">
             <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold">Configuración de Descuentos</h2>
+              <h2 className="text-2xl font-bold text-gray-700">Configuración de Descuentos</h2>
               <Button size="sm">
                 <Plus className="h-4 w-4 mr-2" />
                 Nuevo Descuento
@@ -1472,7 +1472,7 @@ export default function Admin() {
           {/* Settings Tab */}
           <TabsContent value="settings" className="space-y-8">
             <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold">Configuración del Sistema</h2>
+              <h2 className="text-2xl font-bold text-gray-700">Configuración del Sistema</h2>
               <Button variant="outline" size="sm">
                 <Download className="h-4 w-4 mr-2" />
                 Exportar Configuración
