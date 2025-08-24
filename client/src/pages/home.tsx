@@ -18,6 +18,10 @@ export default function Home() {
     queryKey: ["/api/products"],
   });
 
+  const { data: siteConfig = {}, isLoading: configLoading } = useQuery({
+    queryKey: ["/api/site-config"],
+  });
+
   const filteredProducts = products.filter(product =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     (product.description && product.description.toLowerCase().includes(searchTerm.toLowerCase())) ||
@@ -90,7 +94,7 @@ export default function Home() {
     { icon: Star, value: "4.8", label: "Calificación" },
   ];
 
-  if (isLoading) {
+  if (isLoading || configLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background" data-testid="home-loading">
         <div className="animate-spin w-12 h-12 border-4 border-primary border-t-transparent rounded-full" />
@@ -101,24 +105,44 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background text-foreground" data-testid="home-page">
       {/* Hero Section */}
-      <section className="relative py-24 overflow-hidden" data-testid="hero-section" style={{
-        backgroundImage: `url(${heroImage})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat'
-      }}>
-        <div className="absolute inset-0 automotive-gradient-overlay"></div>
+      <section className="relative py-24 overflow-hidden" data-testid="hero-section">
+        {/* Background Image or Video */}
+        {siteConfig.enable_video_hero && siteConfig.hero_video_url ? (
+          <video 
+            autoPlay 
+            muted 
+            loop 
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{ filter: 'brightness(0.4)' }}
+          >
+            <source src={siteConfig.hero_video_url} type="video/mp4" />
+          </video>
+        ) : (
+          <div 
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `url(${siteConfig.hero_image_url || heroImage})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              filter: 'brightness(0.4)'
+            }}
+          />
+        )}
+        
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60"></div>
+        
         <div className="relative container mx-auto px-6">
           <div className="max-w-6xl mx-auto text-center">
             <div className="mb-12">
               <h1 className="text-6xl md:text-8xl font-bold mb-6 tracking-tight text-white font-display" data-testid="hero-title">
-                GTR CUBAUTO
+                {siteConfig.hero_title || 'GTR CUBAUTO'}
               </h1>
               <h2 className="text-2xl md:text-4xl font-semibold mb-8 text-red-200 tracking-wide" data-testid="hero-subtitle">
-                REPUESTOS DE CALIDAD PARA AUTOS Y MOTOS
+                {siteConfig.hero_subtitle || 'REPUESTOS DE CALIDAD PARA AUTOS Y MOTOS'}
               </h2>
               <p className="text-lg md:text-xl text-gray-100 mb-12 leading-relaxed max-w-4xl mx-auto" data-testid="hero-description">
-                Todo para tu vehículo en un solo lugar. Encuentra los mejores repuestos y accesorios con garantía de calidad y los precios más competitivos del mercado.
+                {siteConfig.hero_description || 'Todo para tu vehículo en un solo lugar. Encuentra los mejores repuestos y accesorios con garantía de calidad y los precios más competitivos del mercado.'}
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button size="lg" className="text-lg px-10 py-4 bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 shadow-red" data-testid="hero-cta">
@@ -170,6 +194,81 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Promotional Content Section */}
+      {((siteConfig.promotional_images && siteConfig.promotional_images.length > 0) || 
+        (siteConfig.promotional_videos && siteConfig.promotional_videos.length > 0)) && (
+        <section className="py-20 bg-gradient-to-br from-gray-900 via-black to-gray-900" data-testid="promotional-section">
+          <div className="container mx-auto px-6">
+            <div className="text-center mb-16">
+              <Badge className="mb-6 bg-red-600 text-white px-8 py-3 text-lg font-semibold">
+                OFERTAS ESPECIALES
+              </Badge>
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                Promociones Exclusivas
+              </h2>
+              <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                No te pierdas estas increíbles ofertas limitadas
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+              {/* Promotional Images */}
+              {siteConfig.promotional_images && siteConfig.promotional_images.map((imageUrl, index) => (
+                imageUrl && (
+                  <div key={`promo-img-${index}`} className="group relative overflow-hidden rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-500 hover:scale-105">
+                    <div className="aspect-video overflow-hidden">
+                      <img 
+                        src={imageUrl}
+                        alt={`Promoción ${index + 1}`}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = 'https://via.placeholder.com/600x400?text=Promoción';
+                        }}
+                      />
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="absolute bottom-4 left-4 right-4">
+                        <div className="flex items-center justify-between">
+                          <Badge className="bg-red-600 text-white">Oferta Limitada</Badge>
+                          <Button size="sm" className="bg-white text-black hover:bg-gray-200">
+                            Ver Detalles
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )
+              ))}
+              
+              {/* Promotional Videos */}
+              {siteConfig.promotional_videos && siteConfig.promotional_videos.map((videoUrl, index) => (
+                videoUrl && (
+                  <div key={`promo-vid-${index}`} className="group relative overflow-hidden rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-500 hover:scale-105">
+                    <div className="aspect-video overflow-hidden">
+                      <video 
+                        className="w-full h-full object-cover"
+                        controls
+                        preload="metadata"
+                        poster="https://via.placeholder.com/600x400?text=Video+Promocional"
+                      >
+                        <source src={videoUrl} type="video/mp4" />
+                        Tu navegador no soporta videos
+                      </video>
+                    </div>
+                    <div className="absolute top-4 left-4">
+                      <Badge className="bg-purple-600 text-white flex items-center gap-1">
+                        <Play className="h-3 w-3" />
+                        Video
+                      </Badge>
+                    </div>
+                  </div>
+                )
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Categories Section */}
       <section className="py-20 bg-white" data-testid="categories-section">

@@ -373,6 +373,38 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Site Configuration API
+  app.get("/api/site-config", async (req, res) => {
+    try {
+      const config = await storage.getAllSiteConfig();
+      res.json(config);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch site configuration" });
+    }
+  });
+
+  app.get("/api/site-config/:key", async (req, res) => {
+    try {
+      const value = await storage.getSiteConfig(req.params.key);
+      if (value === undefined) {
+        return res.status(404).json({ error: "Configuration key not found" });
+      }
+      res.json({ key: req.params.key, value });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch configuration" });
+    }
+  });
+
+  app.post("/api/site-config", async (req, res) => {
+    try {
+      const { key, value, category } = req.body;
+      await storage.setSiteConfig(key, value, category);
+      res.json({ success: true, key, value });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to update configuration" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

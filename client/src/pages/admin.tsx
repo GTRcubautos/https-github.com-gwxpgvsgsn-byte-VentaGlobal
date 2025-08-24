@@ -30,6 +30,7 @@ import {
   BarChart, Bar, PieChart as RechartsPie, Pie, Cell, Legend, AreaChart, Area
 } from 'recharts';
 import type { User, Order, RewardsConfig, CampaignConfig } from '@shared/schema';
+import SiteConfigPanel from '@/components/admin/site-config';
 
 const rewardsConfigSchema = z.object({
   pointsPerVisit: z.number().min(0).max(1000),
@@ -194,7 +195,7 @@ export default function Admin() {
 
       <div className="container mx-auto px-6 py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-5 lg:grid-cols-10 mb-8 bg-white shadow-sm">
+          <TabsList className="grid w-full grid-cols-5 lg:grid-cols-11 mb-8 bg-white shadow-sm">
             <TabsTrigger value="dashboard" className="flex items-center gap-2" data-testid="tab-dashboard">
               <Home className="h-4 w-4" />
               <span className="hidden sm:inline">Dashboard</span>
@@ -230,6 +231,10 @@ export default function Admin() {
             <TabsTrigger value="discounts" className="flex items-center gap-2" data-testid="tab-discounts">
               <Percent className="h-4 w-4" />
               <span className="hidden sm:inline">Descuentos</span>
+            </TabsTrigger>
+            <TabsTrigger value="site-config" className="flex items-center gap-2" data-testid="tab-site-config">
+              <Globe className="h-4 w-4" />
+              <span className="hidden sm:inline">Sitio</span>
             </TabsTrigger>
             <TabsTrigger value="settings" className="flex items-center gap-2" data-testid="tab-settings">
               <Settings className="h-4 w-4" />
@@ -1741,6 +1746,11 @@ export default function Admin() {
                 </CardContent>
               </Card>
             </div>
+          </TabsContent>
+
+          {/* Site Configuration Tab */}
+          <TabsContent value="site-config" className="space-y-6">
+            <SiteConfigPanel />
           </TabsContent>
         </Tabs>
       </div>

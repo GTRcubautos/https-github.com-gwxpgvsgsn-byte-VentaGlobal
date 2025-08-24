@@ -57,6 +57,11 @@ export interface IStorage {
   getContentTemplate(id: string): Promise<ContentTemplate | undefined>;
   createContentTemplate(template: InsertContentTemplate): Promise<ContentTemplate>;
   updateContentTemplate(id: string, updates: Partial<ContentTemplate>): Promise<ContentTemplate | undefined>;
+
+  // Site Configuration
+  getSiteConfig(key: string): Promise<any>;
+  setSiteConfig(key: string, value: any, category?: string): Promise<void>;
+  getAllSiteConfig(): Promise<Record<string, any>>;
 }
 
 export class MemStorage implements IStorage {
@@ -68,6 +73,7 @@ export class MemStorage implements IStorage {
   private campaigns: Map<string, CampaignConfig> = new Map();
   private socialPosts: Map<string, SocialPost> = new Map();
   private contentTemplates: Map<string, ContentTemplate> = new Map();
+  private siteConfig: Map<string, any> = new Map();
 
   constructor() {
     this.initializeData();
@@ -203,6 +209,16 @@ export class MemStorage implements IStorage {
     for (const template of sampleTemplates) {
       this.createContentTemplate(template);
     }
+
+    // Initialize default site configuration
+    this.siteConfig.set('hero_title', 'GTR CUBAUTO');
+    this.siteConfig.set('hero_subtitle', 'REPUESTOS DE CALIDAD PARA AUTOS Y MOTOS');
+    this.siteConfig.set('hero_description', 'Todo para tu vehículo en un solo lugar. Encuentra los mejores repuestos y accesorios con garantía de calidad y los precios más competitivos del mercado.');
+    this.siteConfig.set('hero_image_url', '');
+    this.siteConfig.set('hero_video_url', '');
+    this.siteConfig.set('enable_video_hero', false);
+    this.siteConfig.set('promotional_images', []);
+    this.siteConfig.set('promotional_videos', []);
   }
 
   // User methods
@@ -454,6 +470,23 @@ export class MemStorage implements IStorage {
     const updatedTemplate = { ...template, ...updates, updatedAt: new Date() };
     this.contentTemplates.set(id, updatedTemplate);
     return updatedTemplate;
+  }
+
+  // Site Configuration methods
+  async getSiteConfig(key: string): Promise<any> {
+    return this.siteConfig.get(key);
+  }
+
+  async setSiteConfig(key: string, value: any, category?: string): Promise<void> {
+    this.siteConfig.set(key, value);
+  }
+
+  async getAllSiteConfig(): Promise<Record<string, any>> {
+    const config: Record<string, any> = {};
+    this.siteConfig.forEach((value, key) => {
+      config[key] = value;
+    });
+    return config;
   }
 }
 
