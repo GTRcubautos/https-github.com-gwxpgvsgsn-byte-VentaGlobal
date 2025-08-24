@@ -214,7 +214,7 @@ export default function Admin() {
                 }}
                 variant="outline"
                 size="sm"
-                className="border-red-300 text-red-600 hover:bg-red-50 h-7 px-1.5 text-xs"
+                className="border-blue-300 text-blue-600 hover:bg-blue-50 h-7 px-1.5 text-xs"
                 data-testid="admin-logout-button"
               >
                 <LogOut className="h-3 w-3" />

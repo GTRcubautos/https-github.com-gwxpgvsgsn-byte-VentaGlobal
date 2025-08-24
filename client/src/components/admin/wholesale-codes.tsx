@@ -149,7 +149,7 @@ export default function WholesaleCodes() {
         </div>
         <Button
           onClick={() => setShowCreateForm(true)}
-          className="bg-red-600 hover:bg-red-700 text-gray-700"
+          className="bg-blue-600 hover:bg-blue-700 text-white"
           data-testid="create-wholesale-code-button"
         >
           <Plus className="h-4 w-4 mr-2" />
@@ -245,7 +245,7 @@ export default function WholesaleCodes() {
               <Button
                 onClick={handleCreate}
                 disabled={createMutation.isPending}
-                className="bg-red-600 hover:bg-red-700 text-gray-700"
+                className="bg-blue-600 hover:bg-blue-700 text-white"
                 data-testid="save-wholesale-code-button"
               >
                 <Save className="h-4 w-4 mr-2" />
@@ -364,7 +364,7 @@ export default function WholesaleCodes() {
             <p className="text-gray-400 mb-6">Crea el primer código mayorista para comenzar</p>
             <Button
               onClick={() => setShowCreateForm(true)}
-              className="bg-red-600 hover:bg-red-700 text-gray-700"
+              className="bg-blue-600 hover:bg-blue-700 text-white"
             >
               <Plus className="h-4 w-4 mr-2" />
               Crear Primer Código

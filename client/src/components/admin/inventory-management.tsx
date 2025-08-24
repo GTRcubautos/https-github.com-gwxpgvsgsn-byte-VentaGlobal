@@ -187,7 +187,7 @@ export default function InventoryManagement() {
   });
 
   const getStockStatus = (item: InventoryItem) => {
-    if (item.stock <= 0) return { status: 'out', color: 'bg-red-600', text: 'Sin Stock' };
+    if (item.stock <= 0) return { status: 'out', color: 'bg-blue-600', text: 'Sin Stock' };
     if (item.stock <= item.minStock) return { status: 'low', color: 'bg-yellow-600', text: 'Stock Bajo' };
     return { status: 'good', color: 'bg-green-600', text: 'En Stock' };
   };
@@ -211,7 +211,7 @@ export default function InventoryManagement() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center p-8" data-testid="inventory-loading">
-        <div className="animate-spin w-8 h-8 border-4 border-red-600 border-t-transparent rounded-full" />
+        <div className="animate-spin w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full" />
       </div>
     );
   }
@@ -221,8 +221,8 @@ export default function InventoryManagement() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-gray-700">Gestión de Inventario</h2>
-          <p className="text-gray-400">Administra productos antes de publicarlos</p>
+          <h2 className="text-2xl font-bold text-white">Gestión de Inventario</h2>
+          <p className="text-white">Administra productos antes de publicarlos</p>
         </div>
         <div className="flex gap-2">
           {selectedItems.length > 0 && (
@@ -238,7 +238,7 @@ export default function InventoryManagement() {
           )}
           <Button
             onClick={() => setShowCreateForm(true)}
-            className="bg-red-600 hover:bg-red-700 text-gray-700"
+            className="bg-blue-600 hover:bg-blue-700 text-white"
             data-testid="create-inventory-item-button"
           >
             <Plus className="h-4 w-4 mr-2" />
@@ -256,12 +256,12 @@ export default function InventoryManagement() {
             placeholder="Buscar productos o SKU..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 bg-gray-700 border-gray-600 text-gray-700"
+            className="pl-10 bg-gray-700 border-gray-600 text-white"
             data-testid="search-inventory"
           />
         </div>
         <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-          <SelectTrigger className="w-48 bg-gray-700 border-gray-600 text-gray-700">
+          <SelectTrigger className="w-48 bg-gray-700 border-gray-600 text-white">
             <Filter className="h-4 w-4 mr-2" />
             <SelectValue />
           </SelectTrigger>
@@ -286,31 +286,31 @@ export default function InventoryManagement() {
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="name" className="text-gray-300">Nombre del Producto *</Label>
+                <Label htmlFor="name" className="text-white">Nombre del Producto *</Label>
                 <Input
                   id="name"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder="Filtro de aceite premium"
-                  className="bg-gray-700 border-gray-600 text-gray-700"
+                  className="bg-gray-700 border-gray-600 text-white"
                   data-testid="input-name"
                 />
               </div>
               <div>
-                <Label htmlFor="sku" className="text-gray-300">SKU</Label>
+                <Label htmlFor="sku" className="text-white">SKU</Label>
                 <Input
                   id="sku"
                   value={formData.sku}
                   onChange={(e) => setFormData({ ...formData, sku: e.target.value.toUpperCase() })}
                   placeholder="FO-001"
-                  className="bg-gray-700 border-gray-600 text-gray-700"
+                  className="bg-gray-700 border-gray-600 text-white"
                   data-testid="input-sku"
                 />
               </div>
             </div>
 
             <div>
-              <Label htmlFor="description" className="text-gray-300">Descripción</Label>
+              <Label htmlFor="description" className="text-white">Descripción</Label>
               <Textarea
                 id="description"
                 value={formData.description}
@@ -344,7 +344,7 @@ export default function InventoryManagement() {
                   value={formData.costPrice}
                   onChange={(e) => setFormData({ ...formData, costPrice: e.target.value })}
                   placeholder="10.00"
-                  className="bg-gray-700 border-gray-600 text-gray-700"
+                  className="bg-gray-700 border-gray-600 text-white"
                   data-testid="input-cost-price"
                 />
               </div>
@@ -357,7 +357,7 @@ export default function InventoryManagement() {
                   value={formData.retailPrice}
                   onChange={(e) => setFormData({ ...formData, retailPrice: e.target.value })}
                   placeholder="25.99"
-                  className="bg-gray-700 border-gray-600 text-gray-700"
+                  className="bg-gray-700 border-gray-600 text-white"
                   data-testid="input-retail-price"
                 />
               </div>
@@ -370,7 +370,7 @@ export default function InventoryManagement() {
                   value={formData.wholesalePrice}
                   onChange={(e) => setFormData({ ...formData, wholesalePrice: e.target.value })}
                   placeholder="18.99"
-                  className="bg-gray-700 border-gray-600 text-gray-700"
+                  className="bg-gray-700 border-gray-600 text-white"
                   data-testid="input-wholesale-price"
                 />
               </div>
@@ -378,38 +378,38 @@ export default function InventoryManagement() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
-                <Label htmlFor="stock" className="text-gray-300">Stock Actual</Label>
+                <Label htmlFor="stock" className="text-white">Stock Actual</Label>
                 <Input
                   id="stock"
                   type="number"
                   value={formData.stock}
                   onChange={(e) => setFormData({ ...formData, stock: parseInt(e.target.value) || 0 })}
                   placeholder="100"
-                  className="bg-gray-700 border-gray-600 text-gray-700"
+                  className="bg-gray-700 border-gray-600 text-white"
                   data-testid="input-stock"
                 />
               </div>
               <div>
-                <Label htmlFor="minStock" className="text-gray-300">Stock Mínimo</Label>
+                <Label htmlFor="minStock" className="text-white">Stock Mínimo</Label>
                 <Input
                   id="minStock"
                   type="number"
                   value={formData.minStock}
                   onChange={(e) => setFormData({ ...formData, minStock: parseInt(e.target.value) || 0 })}
                   placeholder="5"
-                  className="bg-gray-700 border-gray-600 text-gray-700"
+                  className="bg-gray-700 border-gray-600 text-white"
                   data-testid="input-min-stock"
                 />
               </div>
               <div>
-                <Label htmlFor="imageUrl" className="text-gray-300">URL de Imagen</Label>
+                <Label htmlFor="imageUrl" className="text-white">URL de Imagen</Label>
                 <Input
                   id="imageUrl"
                   type="url"
                   value={formData.imageUrl}
                   onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
                   placeholder="https://..."
-                  className="bg-gray-700 border-gray-600 text-gray-700"
+                  className="bg-gray-700 border-gray-600 text-white"
                   data-testid="input-image-url"
                 />
               </div>
@@ -419,7 +419,7 @@ export default function InventoryManagement() {
               <Button
                 onClick={handleCreate}
                 disabled={createMutation.isPending}
-                className="bg-red-600 hover:bg-red-700 text-gray-700"
+                className="bg-blue-600 hover:bg-blue-700 text-white"
                 data-testid="save-inventory-item-button"
               >
                 <Save className="h-4 w-4 mr-2" />
@@ -447,7 +447,7 @@ export default function InventoryManagement() {
         <Card className="bg-gray-800 border-gray-700">
           <CardHeader>
             <div className="flex items-center justify-between">
-              <CardTitle className="text-gray-700 flex items-center gap-2">
+              <CardTitle className="text-white flex items-center gap-2">
                 <BarChart className="h-5 w-5" />
                 Inventario ({filteredInventory.length} productos)
               </CardTitle>
@@ -457,7 +457,7 @@ export default function InventoryManagement() {
                   onCheckedChange={handleSelectAll}
                   data-testid="select-all-checkbox"
                 />
-                <Label className="text-gray-300">Seleccionar todos</Label>
+                <Label className="text-white">Seleccionar todos</Label>
               </div>
             </div>
           </CardHeader>
@@ -469,7 +469,7 @@ export default function InventoryManagement() {
                 const categoryColor = getCategoryColor(item.category);
                 
                 return (
-                  <Card key={item.id} className="bg-gray-700 border-gray-600 hover:border-red-500 transition-colors" data-testid={`inventory-item-card-${item.id}`}>
+                  <Card key={item.id} className="bg-gray-700 border-gray-600 hover:border-blue-500 transition-colors" data-testid={`inventory-item-card-${item.id}`}>
                     <CardContent className="p-4">
                       <div className="flex items-start justify-between mb-3">
                         <div className="flex items-center gap-2">
@@ -497,11 +497,11 @@ export default function InventoryManagement() {
                       <div className="grid grid-cols-2 gap-2 mb-3 text-sm">
                         <div>
                           <span className="text-gray-400">Stock:</span>
-                          <span className="text-gray-700 ml-1">{item.stock}</span>
+                          <span className="text-white ml-1">{item.stock}</span>
                         </div>
                         <div>
                           <span className="text-gray-400">Mín:</span>
-                          <span className="text-gray-700 ml-1">{item.minStock}</span>
+                          <span className="text-white ml-1">{item.minStock}</span>
                         </div>
                         <div>
                           <span className="text-gray-400">Retail:</span>
@@ -515,7 +515,7 @@ export default function InventoryManagement() {
 
                       <div className="flex gap-2">
                         {item.isPublished ? (
-                          <Badge className="flex-1 bg-green-600 text-gray-700 justify-center">
+                          <Badge className="flex-1 bg-green-600 text-white justify-center">
                             <CheckCircle className="h-3 w-3 mr-1" />
                             Publicado
                           </Badge>
@@ -524,7 +524,7 @@ export default function InventoryManagement() {
                             onClick={() => handlePublish(item.id)}
                             disabled={publishMutation.isPending}
                             size="sm"
-                            className="flex-1 bg-red-600 hover:bg-red-700 text-gray-700"
+                            className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
                             data-testid={`publish-button-${item.id}`}
                           >
                             <ArrowUpCircle className="h-4 w-4 mr-1" />
@@ -545,10 +545,10 @@ export default function InventoryManagement() {
         <Card className="bg-gray-800 border-gray-700">
           <CardContent className="text-center py-12">
             <Package className="h-16 w-16 text-gray-600 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-gray-700 mb-2">
+            <h3 className="text-xl font-semibold text-white mb-2">
               {searchTerm || categoryFilter !== 'all' ? 'No se encontraron productos' : 'Inventario vacío'}
             </h3>
-            <p className="text-gray-400 mb-6">
+            <p className="text-white mb-6">
               {searchTerm || categoryFilter !== 'all' 
                 ? 'Intenta con otros términos de búsqueda o filtros'
                 : 'Agrega el primer producto al inventario'
@@ -557,7 +557,7 @@ export default function InventoryManagement() {
             {!searchTerm && categoryFilter === 'all' && (
               <Button
                 onClick={() => setShowCreateForm(true)}
-                className="bg-red-600 hover:bg-red-700 text-gray-700"
+                className="bg-blue-600 hover:bg-blue-700 text-white"
               >
                 <Plus className="h-4 w-4 mr-2" />
                 Agregar Primer Producto

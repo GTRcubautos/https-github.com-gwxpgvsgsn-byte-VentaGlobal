@@ -5,19 +5,19 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
         default: "btn-automotive",
         destructive:
-          "bg-red-600 text-white hover:bg-red-700 shadow-medium",
+          "bg-blue-600 text-white hover:bg-blue-700 shadow-medium",
         outline:
-          "border-2 border-red-500 bg-transparent text-red-600 hover:bg-red-50 hover:text-red-700",
+          "border-2 border-blue-500 bg-transparent text-blue-600 hover:bg-blue-50 hover:text-blue-700",
         secondary:
           "bg-gray-100 text-gray-900 hover:bg-gray-200",
         ghost: "text-gray-700 hover:bg-gray-100 hover:text-gray-900",
-        link: "text-red-600 underline-offset-4 hover:underline hover:text-red-700",
+        link: "text-blue-600 underline-offset-4 hover:underline hover:text-blue-700",
       },
       size: {
         default: "h-10 px-6 py-2",

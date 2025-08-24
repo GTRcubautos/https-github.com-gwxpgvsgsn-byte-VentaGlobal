@@ -228,7 +228,7 @@ export default function Checkout() {
               Agrega algunos productos antes de proceder al checkout
             </p>
             <Link href="/">
-              <Button className="bg-red-600 hover:bg-red-700 text-white">
+              <Button className="bg-blue-600 hover:bg-blue-700 text-white">
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Continuar comprando
               </Button>
@@ -249,7 +249,7 @@ export default function Checkout() {
               <h1 className="text-2xl font-bold mb-1">GTR CUBAUTO</h1>
               <p className="text-gray-300 text-sm">Pago automatizado</p>
             </div>
-            <Badge className="bg-red-600 text-white px-2 py-1 text-xs">
+            <Badge className="bg-blue-600 text-white px-2 py-1 text-xs">
               <Shield className="h-3 w-3 mr-1" />
               Seguro
             </Badge>
@@ -299,7 +299,7 @@ export default function Checkout() {
                       variant="ghost" 
                       size="sm"
                       onClick={() => removeFromCart(item.id)}
-                      className="text-red-600 hover:text-red-700"
+                      className="text-blue-600 hover:text-blue-700"
                     >
                       <X className="h-4 w-4" />
                     </Button>
@@ -342,7 +342,7 @@ export default function Checkout() {
                     key={method.id}
                     className={`cursor-pointer transition-all duration-200 border-2 rounded-lg p-4 ${
                       selectedPayment === method.id
-                        ? 'border-red-600 bg-red-50 shadow-md'
+                        ? 'border-blue-600 bg-blue-50 shadow-md'
                         : 'border-gray-300 hover:border-gray-500 hover:bg-white bg-white'
                     }`}
                     onClick={() => setSelectedPayment(method.id)}
@@ -360,7 +360,7 @@ export default function Checkout() {
                           Rápido
                         </Badge>
                       )}
-                      <Badge className="bg-red-100 text-red-800 text-xs px-2 py-1">
+                      <Badge className="bg-blue-100 text-blue-800 text-xs px-2 py-1">
                         <Shield className="h-2 w-2 mr-1" />
                         Auto
                       </Badge>
@@ -394,11 +394,11 @@ export default function Checkout() {
                         id="name"
                         {...form.register("name")}
                         placeholder="Tu nombre completo"
-                        className="border-gray-300 focus:border-red-600"
+                        className="border-gray-300 focus:border-blue-600"
                         data-testid="input-name"
                       />
                       {form.formState.errors.name && (
-                        <p className="text-red-600 text-sm mt-1">
+                        <p className="text-blue-600 text-sm mt-1">
                           {form.formState.errors.name.message}
                         </p>
                       )}
@@ -413,11 +413,11 @@ export default function Checkout() {
                         id="phone"
                         {...form.register("phone")}
                         placeholder="+53 5555-5555"
-                        className="border-gray-300 focus:border-red-600"
+                        className="border-gray-300 focus:border-blue-600"
                         data-testid="input-phone"
                       />
                       {form.formState.errors.phone && (
-                        <p className="text-red-600 text-sm mt-1">
+                        <p className="text-blue-600 text-sm mt-1">
                           {form.formState.errors.phone.message}
                         </p>
                       )}
@@ -455,11 +455,11 @@ export default function Checkout() {
                         id="address"
                         {...form.register("address")}
                         placeholder="Calle, número, apartamento"
-                        className="border-gray-300 focus:border-red-600"
+                        className="border-gray-300 focus:border-blue-600"
                         data-testid="input-address"
                       />
                       {form.formState.errors.address && (
-                        <p className="text-red-600 text-sm mt-1">
+                        <p className="text-blue-600 text-sm mt-1">
                           {form.formState.errors.address.message}
                         </p>
                       )}
@@ -474,11 +474,11 @@ export default function Checkout() {
                         id="city"
                         {...form.register("city")}
                         placeholder="La Habana"
-                        className="border-gray-300 focus:border-red-600"
+                        className="border-gray-300 focus:border-blue-600"
                         data-testid="input-city"
                       />
                       {form.formState.errors.city && (
-                        <p className="text-red-600 text-sm mt-1">
+                        <p className="text-blue-600 text-sm mt-1">
                           {form.formState.errors.city.message}
                         </p>
                       )}
@@ -487,12 +487,12 @@ export default function Checkout() {
 
                   {/* Payment Method Specific Fields */}
                   {selectedPayment === "credit_card" && (
-                    <div className="space-y-4 p-6 bg-red-50 rounded-lg border border-red-200">
-                      <h3 className="font-bold text-red-800 flex items-center gap-2">
+                    <div className="space-y-4 p-6 bg-blue-50 rounded-lg border border-blue-200">
+                      <h3 className="font-bold text-blue-800 flex items-center gap-2">
                         <CreditCard className="h-5 w-5" />
                         Procesamiento automático con tarjeta
                       </h3>
-                      <p className="text-sm text-red-700">
+                      <p className="text-sm text-blue-700">
                         Tu tarjeta será procesada automáticamente y de forma segura a través de nuestro sistema integrado.
                       </p>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -502,7 +502,7 @@ export default function Checkout() {
                             id="cardNumber"
                             {...form.register("cardNumber")}
                             placeholder="1234 5678 9012 3456"
-                            className="border-red-300 focus:border-red-600"
+                            className="border-blue-300 focus:border-blue-600"
                             maxLength={19}
                           />
                         </div>
@@ -512,7 +512,7 @@ export default function Checkout() {
                             id="cardExpiry"
                             {...form.register("cardExpiry")}
                             placeholder="MM/AA"
-                            className="border-red-300 focus:border-red-600"
+                            className="border-blue-300 focus:border-blue-600"
                             maxLength={5}
                           />
                         </div>
@@ -522,7 +522,7 @@ export default function Checkout() {
                             id="cardCvv"
                             {...form.register("cardCvv")}
                             placeholder="123"
-                            className="border-red-300 focus:border-red-600"
+                            className="border-blue-300 focus:border-blue-600"
                             maxLength={4}
                           />
                         </div>
@@ -546,7 +546,7 @@ export default function Checkout() {
                             id="zelleEmail"
                             {...form.register("zelleEmail")}
                             placeholder="tu@email.com"
-                            className="border-gray-300 focus:border-red-600"
+                            className="border-gray-300 focus:border-blue-600"
                           />
                         </div>
                         <div className="bg-black text-white p-4 rounded border">
@@ -609,7 +609,7 @@ export default function Checkout() {
                               id="bankName"
                               {...form.register("bankName")}
                               placeholder="Banco Popular"
-                              className="border-gray-300 focus:border-red-600"
+                              className="border-gray-300 focus:border-blue-600"
                             />
                           </div>
                           <div>
@@ -618,7 +618,7 @@ export default function Checkout() {
                               id="bankAccount"
                               {...form.register("bankAccount")}
                               placeholder="1234567890"
-                              className="border-gray-300 focus:border-red-600"
+                              className="border-gray-300 focus:border-blue-600"
                             />
                           </div>
                         </div>
@@ -656,8 +656,8 @@ export default function Checkout() {
                   )}
 
                   {selectedPayment === "cash_on_delivery" && (
-                    <div className="space-y-4 p-6 bg-red-50 rounded-lg border border-red-200">
-                      <h3 className="font-bold text-red-800 flex items-center gap-2">
+                    <div className="space-y-4 p-6 bg-blue-50 rounded-lg border border-blue-200">
+                      <h3 className="font-bold text-blue-800 flex items-center gap-2">
                         <Truck className="h-5 w-5" />
                         Pago Contra Entrega
                       </h3>

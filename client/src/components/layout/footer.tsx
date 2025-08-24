@@ -8,7 +8,7 @@ export default function Footer() {
           <div>
             <h3 className="text-automotive-red text-2xl font-bold mb-6 font-display">GTR CUBAUTO</h3>
             <p className="text-gray-300 leading-relaxed">
-              Tu tienda de confianza para repuestos automotrices de calidad. Servicio profesional desde 2020.
+              Tu tienda de confianza para <span className="text-xs">repuestos de calidad</span>. Servicio profesional desde 2020.
             </p>
           </div>
           
