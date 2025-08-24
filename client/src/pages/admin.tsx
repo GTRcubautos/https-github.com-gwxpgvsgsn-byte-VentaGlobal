@@ -732,27 +732,27 @@ export default function Admin() {
                         <Line 
                           type="monotone" 
                           dataKey="actual" 
-                          stroke="hsl(var(--chart-1))" 
+                          stroke="#ea580c" 
                           strokeWidth={3}
-                          dot={{ fill: 'hsl(var(--chart-1))', strokeWidth: 2, r: 6 }}
+                          dot={{ fill: '#ea580c', strokeWidth: 2, r: 6 }}
                           name="Ventas Actuales"
                         />
                         <Line 
                           type="monotone" 
                           dataKey="anterior" 
-                          stroke="hsl(var(--chart-2))" 
+                          stroke="#f97316" 
                           strokeWidth={2}
                           strokeDasharray="5 5"
-                          dot={{ fill: 'hsl(var(--chart-2))', strokeWidth: 2, r: 4 }}
+                          dot={{ fill: '#f97316', strokeWidth: 2, r: 4 }}
                           name="Año Anterior"
                         />
                         <Line 
                           type="monotone" 
                           dataKey="meta" 
-                          stroke="hsl(var(--chart-3))" 
+                          stroke="#fb923c" 
                           strokeWidth={2}
                           strokeDasharray="2 2"
-                          dot={{ fill: 'hsl(var(--chart-3))', strokeWidth: 2, r: 4 }}
+                          dot={{ fill: '#fb923c', strokeWidth: 2, r: 4 }}
                           name="Meta"
                         />
                       </LineChart>
@@ -816,11 +816,11 @@ export default function Admin() {
                     <ResponsiveContainer width="100%" height="100%">
                       <BarChart 
                         data={[
-                          { product: 'Filtro Aceite', ventas: 245, ingresos: 4900 },
-                          { product: 'Bujías', ventas: 189, ingresos: 3780 },
-                          { product: 'Pastillas Freno', ventas: 156, ingresos: 4680 },
-                          { product: 'Aceite Motor', ventas: 134, ingresos: 6700 },
-                          { product: 'Neumáticos', ventas: 98, ingresos: 7840 }
+                          { product: 'Filtro Aceite', ventas: 245, ingresos: 4900, color: '#3b82f6' },
+                          { product: 'Bujías', ventas: 189, ingresos: 3780, color: '#8b5cf6' },
+                          { product: 'Pastillas Freno', ventas: 156, ingresos: 4680, color: '#10b981' },
+                          { product: 'Aceite Motor', ventas: 134, ingresos: 6700, color: '#f59e0b' },
+                          { product: 'Neumáticos', ventas: 98, ingresos: 7840, color: '#ef4444' }
                         ]}
                         layout="vertical"
                       >
@@ -837,10 +837,19 @@ export default function Admin() {
                         />
                         <Bar 
                           dataKey="ventas" 
-                          fill="hsl(var(--chart-1))"
                           radius={[0, 8, 8, 0]}
                           name="Unidades Vendidas"
-                        />
+                        >
+                          {[
+                            { product: 'Filtro Aceite', ventas: 245, ingresos: 4900, color: '#3b82f6' },
+                            { product: 'Bujías', ventas: 189, ingresos: 3780, color: '#8b5cf6' },
+                            { product: 'Pastillas Freno', ventas: 156, ingresos: 4680, color: '#10b981' },
+                            { product: 'Aceite Motor', ventas: 134, ingresos: 6700, color: '#f59e0b' },
+                            { product: 'Neumáticos', ventas: 98, ingresos: 7840, color: '#ef4444' }
+                          ].map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={entry.color} />
+                          ))}
+                        </Bar>
                       </BarChart>
                     </ResponsiveContainer>
                   </div>
@@ -875,8 +884,8 @@ export default function Admin() {
                           type="monotone"
                           dataKey="mensual"
                           stackId="1"
-                          stroke="hsl(var(--chart-2))"
-                          fill="hsl(var(--chart-2))"
+                          stroke="#16a34a"
+                          fill="#16a34a"
                           fillOpacity={0.6}
                           name="Meta Mensual"
                         />
@@ -884,8 +893,8 @@ export default function Admin() {
                           type="monotone"
                           dataKey="semanal"
                           stackId="2"
-                          stroke="hsl(var(--chart-1))"
-                          fill="hsl(var(--chart-1))"
+                          stroke="#22c55e"
+                          fill="#22c55e"
                           fillOpacity={0.8}
                           name="Ventas Semanales"
                         />
