@@ -216,8 +216,8 @@ export function CreatePostDialog({ open, onOpenChange }: CreatePostDialogProps) 
                               key={platform.id}
                               type="button"
                               variant={isSelected ? "default" : "outline"}
-                              className={`h-16 flex-col gap-2 ${
-                                isSelected ? `${platform.color} text-white hover:opacity-90` : ''
+                              className={`h-16 flex-col gap-2 border-gray-300 ${
+                                isSelected ? 'bg-gray-800 text-white hover:bg-gray-700' : 'text-gray-700 hover:bg-gray-50'
                               }`}
                               onClick={() => {
                                 const newValue = isSelected 

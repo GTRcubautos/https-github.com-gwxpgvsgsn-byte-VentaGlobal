@@ -15,6 +15,8 @@ import { useToast } from "@/hooks/use-toast";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { CreatePostDialog } from "@/components/CreatePostDialog";
+import { CreateTemplateDialog } from "@/components/CreateTemplateDialog";
+import { CreateCampaignDialog } from "@/components/CreateCampaignDialog";
 import { 
   Facebook, 
   Instagram, 
@@ -232,23 +234,34 @@ export function SocialAutomation() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 bg-gray-50 min-h-screen p-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between bg-white p-6 rounded-lg shadow-sm border border-gray-200">
         <div>
-          <h2 className="text-2xl font-bold text-foreground">Automatización Social Avanzada</h2>
-          <p className="text-muted-foreground">Gestiona, programa y automatiza tus campañas multicanal</p>
+          <h2 className="text-2xl font-bold text-gray-900">Automatización Social Avanzada</h2>
+          <p className="text-gray-600">Gestiona, programa y automatiza tus campañas multicanal con inteligencia artificial</p>
         </div>
-        <div className="flex gap-2">
-          <Button onClick={() => setIsCreatingTemplate(true)} variant="outline">
+        <div className="flex gap-3">
+          <Button 
+            onClick={() => setIsCreatingTemplate(true)} 
+            variant="outline"
+            className="border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400"
+          >
             <FileText className="h-4 w-4 mr-2" />
             Nueva Plantilla
           </Button>
-          <Button onClick={() => setIsCreatingCampaign(true)} variant="outline">
+          <Button 
+            onClick={() => setIsCreatingCampaign(true)} 
+            variant="outline"
+            className="border-gray-800 text-gray-800 hover:bg-gray-50 hover:border-black"
+          >
             <Zap className="h-4 w-4 mr-2" />
             Campaña Automática
           </Button>
-          <Button onClick={() => setIsCreatingPost(true)}>
+          <Button 
+            onClick={() => setIsCreatingPost(true)}
+            className="bg-black hover:bg-gray-800 text-white"
+          >
             <Plus className="h-4 w-4 mr-2" />
             Nuevo Post
           </Button>
@@ -257,93 +270,104 @@ export function SocialAutomation() {
 
       {/* Quick Actions & Stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card className="bg-gradient-to-r from-blue-500 to-blue-600 text-white">
-          <CardContent className="p-4">
+        <Card className="bg-gradient-to-br from-gray-900 to-black text-white shadow-lg border-0">
+          <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-blue-100 text-sm">Posts Programados</p>
-                <p className="text-2xl font-bold">
+                <p className="text-gray-300 text-sm font-medium">Posts Programados</p>
+                <p className="text-3xl font-bold mt-1">
                   {posts.filter(p => p.status === 'scheduled').length}
                 </p>
               </div>
-              <Clock className="h-8 w-8 text-blue-200" />
+              <div className="bg-white/10 p-3 rounded-full">
+                <Clock className="h-6 w-6 text-white" />
+              </div>
             </div>
           </CardContent>
         </Card>
         
-        <Card className="bg-gradient-to-r from-green-500 to-green-600 text-white">
-          <CardContent className="p-4">
+        <Card className="bg-gradient-to-br from-gray-800 to-gray-900 text-white shadow-lg border-0">
+          <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-green-100 text-sm">Campañas Activas</p>
-                <p className="text-2xl font-bold">
+                <p className="text-gray-300 text-sm font-medium">Campañas Activas</p>
+                <p className="text-3xl font-bold mt-1">
                   {campaigns.filter(c => c.status === 'active').length}
                 </p>
               </div>
-              <Bot className="h-8 w-8 text-green-200" />
-            </div>
-          </CardContent>
-        </Card>
-        
-        <Card className="bg-gradient-to-r from-purple-500 to-purple-600 text-white">
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-purple-100 text-sm">Plantillas</p>
-                <p className="text-2xl font-bold">{templates.length}</p>
+              <div className="bg-white/10 p-3 rounded-full">
+                <Bot className="h-6 w-6 text-white" />
               </div>
-              <Sparkles className="h-8 w-8 text-purple-200" />
             </div>
           </CardContent>
         </Card>
         
-        <Card className="bg-gradient-to-r from-orange-500 to-orange-600 text-white">
-          <CardContent className="p-4">
+        <Card className="bg-gradient-to-br from-gray-700 to-gray-800 text-white shadow-lg border-0">
+          <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-orange-100 text-sm">Auto-Posts Hoy</p>
-                <p className="text-2xl font-bold">
+                <p className="text-gray-300 text-sm font-medium">Plantillas</p>
+                <p className="text-3xl font-bold mt-1">{templates.length}</p>
+              </div>
+              <div className="bg-white/10 p-3 rounded-full">
+                <Sparkles className="h-6 w-6 text-white" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        
+        <Card className="bg-gradient-to-br from-gray-600 to-gray-700 text-white shadow-lg border-0">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-gray-300 text-sm font-medium">Auto-Posts Hoy</p>
+                <p className="text-3xl font-bold mt-1">
                   {posts.filter(p => p.postType === 'automated' && 
                     new Date(p.scheduledAt || '').toDateString() === new Date().toDateString()).length}
                 </p>
               </div>
-              <RefreshCw className="h-8 w-8 text-orange-200" />
+              <div className="bg-white/10 p-3 rounded-full">
+                <RefreshCw className="h-6 w-6 text-white" />
+              </div>
             </div>
           </CardContent>
         </Card>
       </div>
 
-      <Tabs defaultValue="dashboard" className="space-y-4">
-        <TabsList className="grid w-full grid-cols-6">
-          <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
-          <TabsTrigger value="calendar">Calendario</TabsTrigger>
-          <TabsTrigger value="posts">Publicaciones</TabsTrigger>
-          <TabsTrigger value="campaigns">Campañas</TabsTrigger>
-          <TabsTrigger value="templates">Plantillas</TabsTrigger>
-          <TabsTrigger value="automation">Automatización</TabsTrigger>
+      <Tabs defaultValue="dashboard" className="space-y-6 bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+        <TabsList className="grid w-full grid-cols-6 bg-gray-100 border-0 rounded-none p-1">
+          <TabsTrigger value="dashboard" className="data-[state=active]:bg-white data-[state=active]:text-gray-900 text-gray-600">Dashboard</TabsTrigger>
+          <TabsTrigger value="calendar" className="data-[state=active]:bg-white data-[state=active]:text-gray-900 text-gray-600">Calendario</TabsTrigger>
+          <TabsTrigger value="posts" className="data-[state=active]:bg-white data-[state=active]:text-gray-900 text-gray-600">Publicaciones</TabsTrigger>
+          <TabsTrigger value="campaigns" className="data-[state=active]:bg-white data-[state=active]:text-gray-900 text-gray-600">Campañas</TabsTrigger>
+          <TabsTrigger value="templates" className="data-[state=active]:bg-white data-[state=active]:text-gray-900 text-gray-600">Plantillas</TabsTrigger>
+          <TabsTrigger value="automation" className="data-[state=active]:bg-white data-[state=active]:text-gray-900 text-gray-600">Automatización</TabsTrigger>
         </TabsList>
 
         {/* Dashboard Tab */}
-        <TabsContent value="dashboard" className="space-y-6">
+        <TabsContent value="dashboard" className="space-y-6 p-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Quick Create */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Zap className="h-5 w-5 text-primary" />
+            <Card className="border-gray-200 shadow-sm">
+              <CardHeader className="border-b border-gray-100">
+                <CardTitle className="flex items-center gap-2 text-gray-900">
+                  <Zap className="h-5 w-5 text-gray-700" />
                   Creación Rápida
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-4 p-6">
                 <div className="grid grid-cols-2 gap-3">
-                  <Button onClick={() => setIsCreatingPost(true)} className="h-20 flex-col bg-black hover:bg-gray-800 text-white">
+                  <Button 
+                    onClick={() => setIsCreatingPost(true)} 
+                    className="h-20 flex-col bg-black hover:bg-gray-800 text-white shadow-sm"
+                  >
                     <Send className="h-6 w-6 mb-2" />
                     Post Manual
                   </Button>
                   <Button 
-                    onClick={() => setAutomationMode('automated')} 
+                    onClick={() => setIsCreatingCampaign(true)} 
                     variant="outline" 
-                    className="h-20 flex-col"
+                    className="h-20 flex-col border-gray-300 text-gray-700 hover:bg-gray-50"
                   >
                     <Bot className="h-6 w-6 mb-2" />
                     Auto-Post
@@ -352,7 +376,7 @@ export function SocialAutomation() {
                 
                 {/* Platform Selection */}
                 <div>
-                  <Label className="text-sm font-medium">Plataformas de Destino</Label>
+                  <Label className="text-sm font-medium text-gray-700">Plataformas de Destino</Label>
                   <div className="grid grid-cols-3 gap-2 mt-2">
                     {platforms.map((platform) => {
                       const PlatformIcon = platform.icon;
@@ -369,7 +393,9 @@ export function SocialAutomation() {
                                 : [...prev, platform.id]
                             );
                           }}
-                          className="flex-col h-16"
+                          className={`flex-col h-16 border-gray-300 ${
+                            isSelected ? 'bg-gray-800 text-white hover:bg-gray-700' : 'text-gray-700 hover:bg-gray-50'
+                          }`}
                         >
                           <PlatformIcon className="h-4 w-4 mb-1" />
                           <span className="text-xs">{platform.name}</span>
@@ -380,15 +406,15 @@ export function SocialAutomation() {
                 </div>
 
                 {/* Quick Template Actions */}
-                <div className="border-t pt-4">
-                  <Label className="text-sm font-medium mb-2 block">Plantillas Rápidas</Label>
+                <div className="border-t border-gray-200 pt-4">
+                  <Label className="text-sm font-medium mb-2 block text-gray-700">Plantillas Rápidas</Label>
                   <div className="space-y-2">
                     {templates.slice(0, 3).map((template) => (
                       <Button
                         key={template.id}
                         variant="ghost"
                         size="sm"
-                        className="w-full justify-start"
+                        className="w-full justify-start text-gray-700 hover:bg-gray-100"
                         onClick={() => generateAutomatedContentMutation.mutate({
                           templateId: template.id,
                           platforms: selectedPlatforms.length > 0 ? selectedPlatforms : ['facebook', 'instagram']
@@ -939,6 +965,14 @@ export function SocialAutomation() {
       <CreatePostDialog 
         open={isCreatingPost} 
         onOpenChange={setIsCreatingPost}
+      />
+      <CreateTemplateDialog 
+        open={isCreatingTemplate} 
+        onOpenChange={setIsCreatingTemplate}
+      />
+      <CreateCampaignDialog 
+        open={isCreatingCampaign} 
+        onOpenChange={setIsCreatingCampaign}
       />
     </div>
   );
