@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           <div>
-            <h3 className="text-automotive-red text-2xl font-bold mb-6 font-display">🏎️ GTR CUBAUTO</h3>
+            <h3 className="text-automotive-red text-2xl font-bold mb-6 font-display">GTR CUBAUTO</h3>
             <p className="text-gray-300 leading-relaxed">
               Tu tienda de confianza para repuestos automotrices de calidad. Servicio profesional desde 2020.
             </p>
@@ -21,7 +21,7 @@ export default function Footer() {
                   className="automotive-link text-gray-300"
                   data-testid="footer-link-cars"
                 >
-                  🚗 Repuestos para Autos
+                  Repuestos para Autos
                 </Link>
               </li>
               <li>
@@ -30,7 +30,7 @@ export default function Footer() {
                   className="automotive-link text-gray-300"
                   data-testid="footer-link-motorcycles"
                 >
-                  🏍️ Repuestos para Motos
+                  Repuestos para Motos
                 </Link>
               </li>
               <li>
@@ -39,7 +39,7 @@ export default function Footer() {
                   className="automotive-link text-gray-300"
                   data-testid="footer-link-electronics"
                 >
-                  🔧 Accesorios
+                  Accesorios
                 </Link>
               </li>
               <li>
@@ -48,7 +48,7 @@ export default function Footer() {
                   className="automotive-link text-gray-300"
                   data-testid="footer-link-ofertas"
                 >
-                  🏷️ Ofertas
+                  Ofertas
                 </Link>
               </li>
             </ul>

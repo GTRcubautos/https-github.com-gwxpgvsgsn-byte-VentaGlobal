@@ -1,0 +1,49 @@
+📌 Descripción general de lo que aparece en las imágenes:
+1. Interfaz de administración con menús laterales y secciones de gestión.
+2. Gestión de inventario: listado de productos con precios (ej: "Aceite Motor Sintético SW-30", "$94.50").
+3. Dashboard de ventas: métricas, tendencias, órdenes recientes y comparativas con periodos anteriores.
+4. Gestión de campañas publicitarias: creación y configuración de campañas, presupuestos, segmentación.
+5. Métricas y analytics: ingresos, ventas, productos más vendidos, clientes potenciales.
+6. Gestión de empleados o usuarios: horarios, rendimiento, contactos.
+7. Configuración de notificaciones: alertas por stock bajo, nuevas órdenes, notificaciones por email/SMS.
+8. Información del sistema: versión, base de datos, última actualización, estado.
+
+🎨 Características del diseño:
+* Estilo: Interfaz moderna tipo SaaS (Software as a Service) con colores oscuros (modo oscuro) o claros según la sección.
+* Estructura: Barra lateral con menú desplegable, header con hora y ubicación ("Ciudad Darío"), tarjetas de métricas y tablas de datos.
+* Enfoque: Herramienta de gestión empresarial para autopartes, con énfasis en inventario, ventas y marketing.
+
+🚀 Prompt para recrear este dashboard:
+Crea un dashboard de administración para una empresa de repuestos automotrices llamada "GTR CUBAUTO".
+El diseño debe incluir:
+1. Barra lateral izquierda con menú desplegable con opciones como:
+    * Dashboard
+    * Inventario
+    * Ventas
+    * CRM
+    * Redes Sociales
+    * Analytics
+    * Automatización
+    * Configuración de descuentos
+    * Configuración general
+2. Header superior con:
+    * Nombre de la ciudad ("Ciudad Darío")
+    * Fecha y hora actual ("Today 1:12 PM")
+3. Sección principal con tarjetas de métricas y datos en tiempo real:
+    * Gestión de inventario (productos, precios, stock)
+    * Ventas recientes y tendencias (gráficos comparativos)
+    * Productos más vendidos
+    * Gestión de campañas publicitarias (creación, presupuesto, segmentación)
+    * Notificaciones del sistema (alertas de stock, nuevas órdenes)
+    * Información del sistema (versión, estado, última actualización)
+4. Estilo visual:
+    * Diseño moderno y minimalista
+    * Esquema de colores oscuro o claro (preferiblemente oscuro con acentos en azul, verde o rojo)
+    * Tipografía limpia y legible
+    * Iconos intuitivos para cada sección
+5. Funcionalidades clave:
+    * Tarjetas con métricas resumidas (ventas hoy, vs semana anterior, etc.)
+    * Tablas de datos (inventario, órdenes recientes)
+    * Formularios para crear campañas publicitarias
+    * Alertas y notificaciones visibles
+6. Responsive: Que se adapte a desktop y tablet.

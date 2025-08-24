@@ -46,7 +46,7 @@ export default function Header() {
         <div className="flex flex-col lg:flex-row items-center justify-between">
           <div className="flex items-center justify-between w-full lg:w-auto mb-4 lg:mb-0">
             <Link href="/" className="text-automotive-black text-3xl font-bold font-display" data-testid="logo">
-              🏎️ GTR CUBAUTO
+              GTR CUBAUTO
             </Link>
             <Button
               variant="ghost"
@@ -81,7 +81,7 @@ export default function Header() {
             <form onSubmit={handleSearch} className="flex flex-1 lg:flex-none">
               <Input
                 type="text"
-                placeholder="🔍 Buscar repuestos..."
+                placeholder="Buscar repuestos..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="automotive-input rounded-r-none flex-1 lg:w-64"

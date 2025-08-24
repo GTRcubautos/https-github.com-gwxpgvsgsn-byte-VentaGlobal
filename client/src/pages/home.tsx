@@ -132,13 +132,13 @@ export default function Home() {
       <section className="py-4 bg-automotive-red text-white shadow-medium" data-testid="promo-banner">
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-center space-x-8 text-sm font-semibold uppercase tracking-wide">
-            <span>🚚 ENVÍO GRATIS +$500</span>
+            <span>ENVÍO GRATIS +$500</span>
             <span>•</span>
-            <span>⚡ FINANCIAMIENTO 0%</span>
+            <span>FINANCIAMIENTO 0%</span>
             <span>•</span>
-            <span>🔧 GARANTÍA EXTENDIDA</span>
+            <span>GARANTÍA EXTENDIDA</span>
             <span>•</span>
-            <span>🎯 ATENCIÓN 24/7</span>
+            <span>ATENCIÓN 24/7</span>
           </div>
         </div>
       </section>
@@ -170,9 +170,11 @@ export default function Home() {
             <Badge className="mb-6 bg-automotive-red text-white px-8 py-3 text-lg font-semibold">
               CATEGORÍAS DE REPUESTOS
             </Badge>
-            <h2 className="text-4xl md:text-6xl font-bold mb-6 text-automotive-black font-display">
-              Repuestos de Calidad
-            </h2>
+            <div className="flex justify-center mb-6">
+              <Button size="lg" className="text-3xl md:text-5xl font-bold px-12 py-6 h-auto">
+                Repuestos de Calidad
+              </Button>
+            </div>
             <p className="text-xl text-automotive-gray max-w-3xl mx-auto leading-relaxed">
               Encuentra todo lo que necesitas para mantener tu vehículo en perfectas condiciones
             </p>
@@ -219,10 +221,14 @@ export default function Home() {
       <section className="py-20" data-testid="featured-products-section">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4 text-foreground">Productos Destacados</h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Selección premium de vehículos y tecnología
-            </p>
+            <div className="flex flex-col items-center gap-4">
+              <Button size="lg" className="text-2xl font-bold px-8 py-4">
+                Productos Destacados
+              </Button>
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                Selección premium de repuestos y accesorios automotrices
+              </p>
+            </div>
           </div>
           
           {featuredProducts.length === 0 ? (

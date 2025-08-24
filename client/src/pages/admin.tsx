@@ -116,11 +116,12 @@ export default function Admin() {
 
   // Mock inventory data
   const inventoryData = [
-    { id: 1, name: 'Filtro de Aceite', category: 'Filtros', stock: 45, minStock: 10, price: 25.99, status: 'En Stock' },
-    { id: 2, name: 'Pastillas de Freno', category: 'Frenos', stock: 8, minStock: 15, price: 89.99, status: 'Stock Bajo' },
-    { id: 3, name: 'Aceite Motor 5W30', category: 'Lubricantes', stock: 0, minStock: 20, price: 45.99, status: 'Agotado' },
-    { id: 4, name: 'Llanta Michelin', category: 'Llantas', stock: 22, minStock: 5, price: 199.99, status: 'En Stock' },
-    { id: 5, name: 'Batería 12V', category: 'Eléctricos', stock: 12, minStock: 8, price: 129.99, status: 'En Stock' },
+    { id: 1, name: 'Aceite Motor Sintético 5W-30', category: 'Lubricantes', stock: 45, minStock: 10, price: 94.50, status: 'En Stock' },
+    { id: 2, name: 'Pastillas de Freno Cerámicas', category: 'Frenos', stock: 8, minStock: 15, price: 156.99, status: 'Stock Bajo' },
+    { id: 3, name: 'Filtro de Aire K&N', category: 'Filtros', stock: 0, minStock: 20, price: 78.99, status: 'Agotado' },
+    { id: 4, name: 'Llanta Michelin Pilot Sport', category: 'Llantas', stock: 22, minStock: 5, price: 299.99, status: 'En Stock' },
+    { id: 5, name: 'Batería AGM 12V 75Ah', category: 'Eléctricos', stock: 12, minStock: 8, price: 189.99, status: 'En Stock' },
+    { id: 6, name: 'Amortiguador Monroe', category: 'Suspensión', stock: 18, minStock: 12, price: 225.50, status: 'En Stock' },
   ];
 
   // Mock sales data for charts
@@ -166,12 +167,17 @@ export default function Admin() {
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-automotive-black">Panel de Administrador GTR</h1>
-              <p className="text-automotive-gray">Gestión completa de la plataforma</p>
+              <h1 className="text-3xl font-bold text-automotive-black">GTR CUBAUTO Admin</h1>
+              <p className="text-automotive-gray">Ciudad Darío • Today {new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })}</p>
             </div>
             <div className="flex items-center space-x-4">
+              <div className="text-right text-sm">
+                <p className="font-medium text-automotive-black">Sistema v2.4.1</p>
+                <p className="text-automotive-gray">Última actualización: Hoy</p>
+              </div>
               <Badge className="bg-green-100 text-green-800">
-                Sistema Activo
+                <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+                Online
               </Badge>
               <Button variant="outline" size="sm">
                 <Download className="h-4 w-4 mr-2" />
