@@ -73,8 +73,8 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* Right side controls */}
-          <div className="flex items-center space-x-4 ml-8">
+          {/* Right side controls - moved to far right corner */}
+          <div className="flex items-center space-x-6 ml-auto">
 
             {/* Retractable Search */}
             <div className="flex items-center">
@@ -101,7 +101,7 @@ export default function Header() {
               <Button
                 variant="ghost"
                 size="sm"
-                className="text-white hover:text-red-400 hover:bg-gray-900 ml-2"
+                className="text-white hover:text-red-400 hover:bg-gray-900 ml-3"
                 onClick={() => setIsSearchExpanded(!isSearchExpanded)}
                 data-testid="search-toggle"
               >
@@ -137,7 +137,8 @@ export default function Header() {
             <Link href="/" data-testid="mobile-logo-link">
               <GTRLogo size="sm" variant="full" className="hover:scale-105 transition-transform duration-200" />
             </Link>
-            <div className="flex items-center space-x-2">
+            {/* Mobile controls - positioned in top right corner */}
+            <div className="flex items-center space-x-3 ml-auto">
               <Button
                 variant="ghost"
                 size="sm"
