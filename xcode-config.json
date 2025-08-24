@@ -1,0 +1,205 @@
+{
+  "project_name": "GTR CUBAUTO",
+  "bundle_identifier": "com.gtrcubauto.mobile",
+  "version": "1.0.0",
+  "build_number": "1",
+  "deployment_target": {
+    "ios": "14.0",
+    "android": "21"
+  },
+  "app_configuration": {
+    "display_name": "GTR CUBAUTO",
+    "short_name": "GTR",
+    "description": "Tienda automotriz profesional con repuestos y accesorios",
+    "category": "Business",
+    "app_store_category": "Shopping",
+    "keywords": ["automotriz", "repuestos", "auto", "carro", "shopping"],
+    "website": "https://gtrcubauto.com",
+    "support_url": "https://gtrcubauto.com/soporte",
+    "privacy_policy": "https://gtrcubauto.com/privacidad"
+  },
+  "features": {
+    "push_notifications": true,
+    "location_services": false,
+    "camera_access": true,
+    "photo_library": true,
+    "biometric_auth": true,
+    "background_refresh": true,
+    "universal_links": true,
+    "app_clips": true
+  },
+  "capabilities": [
+    "In-App Purchase",
+    "Apple Pay",
+    "Push Notifications",
+    "Background Processing",
+    "Network Extensions"
+  ],
+  "frameworks": {
+    "required": [
+      "UIKit",
+      "Foundation",
+      "WebKit",
+      "StoreKit",
+      "PassKit",
+      "UserNotifications",
+      "LocalAuthentication",
+      "AVFoundation"
+    ],
+    "optional": [
+      "CoreLocation",
+      "MapKit",
+      "CoreNFC",
+      "ARKit"
+    ]
+  },
+  "app_transport_security": {
+    "allow_arbitrary_loads": false,
+    "exception_domains": {
+      "gtrcubauto.com": {
+        "exception_allows_insecure_http_loads": false,
+        "exception_minimum_tls_version": "TLSv1.2"
+      }
+    }
+  },
+  "info_plist_additions": {
+    "NSCameraUsageDescription": "GTR CUBAUTO necesita acceso a la cámara para escanear códigos de productos y tomar fotos",
+    "NSPhotoLibraryUsageDescription": "GTR CUBAUTO necesita acceso a la galería para seleccionar imágenes de productos",
+    "NSFaceIDUsageDescription": "GTR CUBAUTO usa Face ID para autenticación segura",
+    "NSLocationWhenInUseUsageDescription": "GTR CUBAUTO puede usar tu ubicación para encontrar tiendas cercanas",
+    "ITSAppUsesNonExemptEncryption": false
+  },
+  "entitlements": {
+    "com.apple.developer.in-app-payments": [
+      "merchant.com.gtrcubauto.mobile"
+    ],
+    "com.apple.developer.associated-domains": [
+      "applinks:gtrcubauto.com",
+      "applinks:*.gtrcubauto.com"
+    ],
+    "aps-environment": "production",
+    "com.apple.security.application-groups": [
+      "group.com.gtrcubauto.mobile"
+    ]
+  },
+  "build_settings": {
+    "code_signing": {
+      "development_team": "CHANGE_THIS_TEAM_ID",
+      "code_sign_identity": "iPhone Distribution",
+      "provisioning_profile": "GTR CUBAUTO Distribution"
+    },
+    "compiler_flags": {
+      "swift_version": "5.9",
+      "deployment_target": "14.0",
+      "enable_bitcode": false,
+      "enable_modules": true
+    },
+    "security": {
+      "enable_app_transport_security": true,
+      "require_https": true,
+      "certificate_pinning": true
+    }
+  },
+  "app_store_connect": {
+    "app_review_information": {
+      "contact_email": "dev@gtrcubauto.com",
+      "contact_phone": "+1-555-GTR-AUTO",
+      "review_notes": "Aplicación de e-commerce automotriz con pagos integrados"
+    },
+    "age_rating": {
+      "rating": "4+",
+      "content_warnings": []
+    },
+    "pricing": {
+      "price_tier": "Free",
+      "countries": ["US", "CU", "MX", "ES"]
+    }
+  },
+  "android_config": {
+    "package_name": "com.gtrcubauto.mobile",
+    "compile_sdk_version": 34,
+    "min_sdk_version": 21,
+    "target_sdk_version": 34,
+    "permissions": [
+      "android.permission.INTERNET",
+      "android.permission.CAMERA",
+      "android.permission.READ_EXTERNAL_STORAGE",
+      "android.permission.WRITE_EXTERNAL_STORAGE",
+      "android.permission.USE_FINGERPRINT",
+      "android.permission.USE_BIOMETRIC",
+      "com.android.vending.BILLING"
+    ],
+    "gradle_config": {
+      "enable_proguard": true,
+      "enable_r8": true,
+      "min_sdk_version": 21,
+      "compile_sdk_version": 34
+    }
+  },
+  "development": {
+    "debug_mode": true,
+    "logging_enabled": true,
+    "crash_reporting": true,
+    "analytics": true,
+    "performance_monitoring": true
+  },
+  "production": {
+    "debug_mode": false,
+    "logging_enabled": false,
+    "minify_code": true,
+    "obfuscate_code": true,
+    "remove_logs": true
+  },
+  "third_party_services": {
+    "payment_processors": [
+      "Stripe",
+      "Apple Pay",
+      "Google Pay",
+      "Zelle"
+    ],
+    "analytics": [
+      "Firebase Analytics",
+      "Google Analytics"
+    ],
+    "crash_reporting": [
+      "Firebase Crashlytics"
+    ],
+    "push_notifications": [
+      "Firebase Cloud Messaging",
+      "Apple Push Notification Service"
+    ]
+  },
+  "security_checklist": {
+    "ssl_pinning": true,
+    "jailbreak_detection": true,
+    "anti_debugging": true,
+    "code_obfuscation": true,
+    "api_key_protection": true,
+    "biometric_authentication": true,
+    "secure_storage": true,
+    "network_security": true
+  },
+  "performance_optimization": {
+    "lazy_loading": true,
+    "image_compression": true,
+    "caching_strategy": "aggressive",
+    "offline_mode": true,
+    "background_sync": true
+  },
+  "accessibility": {
+    "voice_over": true,
+    "dynamic_type": true,
+    "high_contrast": true,
+    "reduce_motion": true,
+    "assistive_touch": true
+  },
+  "localization": {
+    "base_language": "es",
+    "supported_languages": [
+      "es",
+      "en",
+      "fr"
+    ],
+    "rtl_support": false
+  }
+}

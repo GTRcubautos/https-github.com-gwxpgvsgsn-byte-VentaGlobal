@@ -5,6 +5,98 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Mobile Optimizations for GTR CUBAUTO */
+@layer base {
+  /* Mejoras para móviles */
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  body {
+    overscroll-behavior: none;
+    touch-action: manipulation;
+  }
+  
+  /* Mejorar tap targets en móviles */
+  button, [role="button"], input[type="submit"], input[type="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Scrollbars más delgados en móviles */
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: rgba(156, 163, 175, 0.5);
+    border-radius: 2px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(156, 163, 175, 0.8);
+  }
+}
+
+@layer utilities {
+  /* Clases utilitarias para móviles */
+  .mobile-safe-area {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+  
+  .mobile-container {
+    @apply px-4 mx-auto max-w-7xl;
+  }
+  
+  .mobile-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4;
+  }
+  
+  .mobile-card {
+    @apply bg-white rounded-lg shadow-sm border p-4 hover:shadow-md transition-shadow;
+  }
+  
+  .mobile-button {
+    @apply w-full sm:w-auto min-h-[44px] px-6 py-3 rounded-lg font-medium transition-all duration-200;
+  }
+  
+  .mobile-input {
+    @apply w-full min-h-[44px] px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+  }
+  
+  /* Navegación móvil */
+  .mobile-nav {
+    @apply fixed bottom-0 left-0 right-0 bg-white border-t z-50 mobile-safe-area;
+  }
+  
+  .mobile-nav-item {
+    @apply flex-1 flex flex-col items-center justify-center py-2 px-1 min-h-[60px] text-xs;
+  }
+  
+  /* Admin panel mobile optimizations */
+  .admin-mobile {
+    @apply px-2 sm:px-4 lg:px-6;
+  }
+  
+  .admin-tabs-mobile {
+    @apply overflow-x-auto scrollbar-hide;
+  }
+  
+  .admin-card-mobile {
+    @apply bg-white rounded-lg shadow-sm border p-3 sm:p-4 lg:p-6;
+  }
+}
+
 :root {
   /* Nuevo esquema: Negro/Gris/Blanco con botones rojos */
   --background: hsl(0 0% 8%);

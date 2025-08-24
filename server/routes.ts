@@ -1,6 +1,9 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
+import { insertProductSchema, insertUserSchema } from "@shared/schema";
+import { zelleService } from "./zelle-integration";
+import { securityService } from "./security-enhanced";
 import { insertOrderSchema, insertGameResultSchema, insertRewardsConfigSchema, insertCampaignConfigSchema, insertSocialPostSchema, insertContentTemplateSchema, insertUserConsentSchema, insertPrivacyPolicySchema, insertDataRequestSchema, insertUserPrivacySettingsSchema } from "@shared/schema";
 import Stripe from "stripe";
 
@@ -8,10 +11,26 @@ if (!process.env.STRIPE_SECRET_KEY) {
   throw new Error('Missing required Stripe secret: STRIPE_SECRET_KEY');
 }
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: "2023-10-16",
+  apiVersion: "2025-07-30.basil",
 });
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Initialize security and automatic transfers
+  zelleService.setupAutomaticTransfers(storage);
+  
+  // Security middleware for admin routes
+  app.use('/api/admin/*', async (req, res, next) => {
+    const isValid = await securityService.validateAdminAccess(
+      req.ip || 'unknown',
+      req.get('User-Agent') || 'unknown'
+    );
+    
+    if (!isValid) {
+      return res.status(401).json({ error: 'Access denied - Security validation failed' });
+    }
+    
+    next();
+  });
   // Products routes
   app.get("/api/products", async (req, res) => {
     try {
@@ -54,19 +73,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
       try {
         const templates = await storage.getAllContentTemplates();
         const productTemplate = templates.find(t => 
-          t.platforms.length > 0 && t.content.includes('{product_name}')
+          Array.isArray(t.platforms) && t.platforms.length > 0 && t.content.includes('{product_name}')
         );
         
         if (productTemplate) {
           // Generate automated post
           let content = productTemplate.content;
-          content = content.replace(/\{product_name\}/g, product.name);
-          content = content.replace(/\{product_price\}/g, `$${product.retailPrice}`);
-          content = content.replace(/\{product_description\}/g, product.description);
+          content = content.replace(/\{product_name\}/g, product.name || '');
+          content = content.replace(/\{product_price\}/g, `$${product.retailPrice || 0}`);
+          content = content.replace(/\{product_description\}/g, product.description || '');
           content = content.replace(/\{store_name\}/g, "GTR CUBAUTO");
 
           const postData = {
-            platforms: productTemplate.platforms,
+            platforms: productTemplate.platforms as string[],
             content,
             templateId: productTemplate.id,
             productId: product.id,
@@ -231,7 +250,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
           }
         };
         
-        await storage.addSalesRecord(salesEntry);
+        if ('addSalesRecord' in storage && typeof storage.addSalesRecord === 'function') {
+          await storage.addSalesRecord(salesEntry);
+        }
         
         // Award points to user if userId provided
         if (order.userId && order.pointsEarned > 0) {
@@ -367,7 +388,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Get sales records for management
   app.get("/api/sales", async (req, res) => {
     try {
-      const sales = await storage.getSalesRecords ? await storage.getSalesRecords() : [];
+      const sales = ('getSalesRecords' in storage && typeof storage.getSalesRecords === 'function') 
+        ? await storage.getSalesRecords() : [];
       res.json(sales);
     } catch (error) {
       res.status(500).json({ error: "Failed to fetch sales records" });
@@ -506,6 +528,108 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(config);
     } catch (error) {
       res.status(500).json({ error: "Failed to fetch site configuration" });
+    }
+  });
+
+  // Zelle Integration API Routes
+  app.get("/api/zelle/config", async (req, res) => {
+    try {
+      const config = zelleService.getConfig();
+      // No enviar información sensible al frontend
+      const safeConfig = {
+        bankName: config.bankName,
+        accountHolderName: config.accountHolderName,
+        minimumTransferAmount: config.minimumTransferAmount,
+        transferSchedule: config.transferSchedule,
+        autoTransferEnabled: config.autoTransferEnabled,
+      };
+      res.json(safeConfig);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch Zelle configuration" });
+    }
+  });
+
+  app.post("/api/zelle/transfer", async (req, res) => {
+    try {
+      const { amount, memo } = req.body;
+      
+      if (!amount || amount <= 0) {
+        return res.status(400).json({ error: "Invalid transfer amount" });
+      }
+
+      const transfer = await zelleService.initiateTransfer(amount, memo || "GTR CUBAUTO Transfer");
+      
+      // Log de seguridad para transferencias manuales
+      await storage.createSecurityLog({
+        action: 'zelle_transfer_initiated',
+        userId: 'admin',
+        ipAddress: req.ip || 'unknown',
+        userAgent: req.get('User-Agent') || 'unknown',
+        risk_level: 'high',
+        details: {
+          transferId: transfer.id,
+          amount: transfer.amount,
+          timestamp: new Date().toISOString()
+        }
+      });
+
+      res.json(transfer);
+    } catch (error) {
+      console.error("Zelle transfer error:", error);
+      res.status(500).json({ 
+        error: error instanceof Error ? error.message : "Failed to process transfer" 
+      });
+    }
+  });
+
+  app.post("/api/zelle/auto-transfer", async (req, res) => {
+    try {
+      const orders = await storage.getAllOrders();
+      const transfer = await zelleService.processAutomaticTransfer(orders);
+      
+      if (!transfer) {
+        return res.json({ 
+          message: "No automatic transfer needed", 
+          reason: "Insufficient earnings or auto-transfer disabled" 
+        });
+      }
+
+      // Log de seguridad
+      await storage.createSecurityLog({
+        action: 'auto_transfer_completed',
+        userId: 'system',
+        ipAddress: req.ip || 'system',
+        userAgent: 'GTR-AutoTransfer/1.0',
+        risk_level: 'medium',
+        details: {
+          transferId: transfer.id,
+          amount: transfer.amount,
+          earnings: await zelleService.calculateDailyEarnings(orders)
+        }
+      });
+
+      res.json(transfer);
+    } catch (error) {
+      console.error("Auto transfer error:", error);
+      res.status(500).json({ 
+        error: error instanceof Error ? error.message : "Failed to process automatic transfer" 
+      });
+    }
+  });
+
+  app.get("/api/zelle/earnings", async (req, res) => {
+    try {
+      const orders = await storage.getAllOrders();
+      const dailyEarnings = await zelleService.calculateDailyEarnings(orders);
+      
+      res.json({
+        dailyEarnings,
+        minimumTransfer: zelleService.getConfig().minimumTransferAmount,
+        canTransfer: dailyEarnings >= zelleService.getConfig().minimumTransferAmount,
+        timestamp: new Date().toISOString()
+      });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to calculate earnings" });
     }
   });
 
@@ -759,7 +883,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         ipAddress: req.ip,
         userAgent: req.get('User-Agent'),
         details: { consentType: consentData.consentType, granted: consentData.granted },
-        riskLevel: "low"
+        risk_level: "low"
       });
       
       res.json(consent);
@@ -819,7 +943,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         ipAddress: req.ip,
         userAgent: req.get('User-Agent'),
         details: settingsData,
-        riskLevel: "low"
+        risk_level: "low"
       });
       
       res.json(settings);
@@ -842,7 +966,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         ipAddress: req.ip,
         userAgent: req.get('User-Agent'),
         details: { requestType: requestData.requestType },
-        riskLevel: "medium"
+        risk_level: "medium"
       });
       
       res.json(dataRequest);
@@ -984,7 +1108,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Log backup creation
       await storage.createSecurityLog({
-        eventType: 'admin_action',
+        action: 'admin_action',
         severity: 'medium',
         userId: 'admin',
         ipAddress: req.ip || 'unknown',
@@ -1049,7 +1173,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Log backup download
       await storage.createSecurityLog({
-        eventType: 'admin_action',
+        action: 'admin_action',
         severity: 'medium',
         userId: 'admin',
         ipAddress: req.ip || 'unknown',

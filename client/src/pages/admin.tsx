@@ -40,6 +40,7 @@ import FinancialSecurityPanel from '@/components/security/financial-security-pan
 import { CreateCampaignDialog } from '@/components/CreateCampaignDialog';
 import { CreatePostDialog } from '@/components/CreatePostDialog';
 import { CreateUserDialog } from '@/components/CreateUserDialog';
+import ZellePanel from '@/components/admin/zelle-panel';
 import { SocialAutomation } from '@/components/admin/social-automation';
 
 const rewardsConfigSchema = z.object({
@@ -1645,6 +1646,11 @@ export default function Admin() {
           {/* Data Backup Tab */}
           <TabsContent value="backup" className="space-y-8">
             <DataBackupPanel />
+          </TabsContent>
+
+          {/* Zelle Integration Tab */}
+          <TabsContent value="zelle" className="space-y-8">
+            <ZellePanel />
           </TabsContent>
 
           {/* Financial Security Tab */}
