@@ -288,8 +288,7 @@ export default function DataBackupPanel() {
                         disabled={downloadBackupMutation.isPending}
                         data-testid={`button-download-${backup.id}`}
                       >
-                        <Download className="h-4 w-4 mr-1" />
-                        Descargar
+                        <Download className="h-4 w-4" />
                       </Button>
                     )}
                   </div>

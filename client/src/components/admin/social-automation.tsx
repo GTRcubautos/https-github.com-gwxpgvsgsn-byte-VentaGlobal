@@ -242,22 +242,24 @@ export function SocialAutomation() {
           <h2 className="text-2xl font-bold text-gray-900">Automatización Social Avanzada</h2>
           <p className="text-gray-600">Gestiona, programa y automatiza tus campañas multicanal con inteligencia artificial</p>
         </div>
-        <div className="flex gap-3">
+        <div className="flex gap-2">
           <Button 
             onClick={() => setIsCreatingTemplate(true)} 
             variant="outline"
-            className="border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400"
+            size="sm"
+            className="border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400 px-3"
           >
-            <FileText className="h-4 w-4 mr-2" />
-            Nueva Plantilla
+            <FileText className="h-4 w-4 mr-1" />
+            <span className="text-xs">Nueva Plantilla</span>
           </Button>
           <Button 
             onClick={() => setIsCreatingCampaign(true)} 
             variant="outline"
-            className="border-gray-800 text-gray-800 hover:bg-gray-50 hover:border-black"
+            size="sm"
+            className="border-gray-800 text-gray-800 hover:bg-gray-50 hover:border-black px-3"
           >
-            <Zap className="h-4 w-4 mr-2" />
-            Campaña Automática
+            <Zap className="h-4 w-4 mr-1" />
+            <span className="text-xs">Campaña Automática</span>
           </Button>
         </div>
       </div>

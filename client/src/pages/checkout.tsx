@@ -686,7 +686,7 @@ export default function Checkout() {
                   <Button 
                     type="submit" 
                     disabled={isProcessing}
-                    className="w-full bg-red-600 hover:bg-red-700 text-white text-lg py-6 shadow-xl hover:shadow-2xl transition-all duration-300"
+                    className="w-full bg-red-600 hover:bg-red-700 text-white text-base py-4 shadow-xl hover:shadow-2xl transition-all duration-300"
                     data-testid="submit-order"
                   >
                     {isProcessing ? (
@@ -695,7 +695,7 @@ export default function Checkout() {
                         <span>
                           {selectedPayment === "cash_on_delivery" 
                             ? "Confirmando pedido..." 
-                            : "Procesando pago automático..."
+                            : "Procesando pago..."
                           }
                         </span>
                       </div>
@@ -709,7 +709,7 @@ export default function Checkout() {
                         ) : (
                           <>
                             <Lock className="h-6 w-6" />
-                            <span>🤖 PROCESAR PAGO AUTOMÁTICO - ${finalTotal.toFixed(2)}</span>
+                            <span className="text-sm">🤖 PROCESAR PAGO - ${finalTotal.toFixed(2)}</span>
                           </>
                         )}
                       </div>

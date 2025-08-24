@@ -906,9 +906,9 @@ export default function Admin() {
                   <Bot className="h-4 w-4 mr-2" />
                   Auto-Optimizar
                 </Button>
-                <Button size="sm" onClick={() => setShowCreateCampaign(true)}>
-                  <Plus className="h-4 w-4 mr-2" />
-                  Nueva Campaña
+                <Button size="sm" onClick={() => setShowCreateCampaign(true)} className="px-3 py-2">
+                  <Plus className="h-4 w-4 mr-1" />
+                  <span className="text-xs">Nueva Campaña</span>
                 </Button>
               </div>
             </div>

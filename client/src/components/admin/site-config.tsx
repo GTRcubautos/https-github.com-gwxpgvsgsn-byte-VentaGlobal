@@ -136,8 +136,8 @@ export default function SiteConfigPanel() {
           <TabsTrigger value="hero" className="data-[state=active]:bg-red-600">Inicio</TabsTrigger>
           <TabsTrigger value="cars" className="data-[state=active]:bg-red-600">Autos</TabsTrigger>
           <TabsTrigger value="motorcycles" className="data-[state=active]:bg-red-600">Motos</TabsTrigger>
-          <TabsTrigger value="promotional" className="data-[state=active]:bg-red-600">Promocional</TabsTrigger>
-          <TabsTrigger value="preview" className="data-[state=active]:bg-red-600">Vista Previa</TabsTrigger>
+          <TabsTrigger value="promotional" className="data-[state=active]:bg-red-600">Promo</TabsTrigger>
+          <TabsTrigger value="preview" className="data-[state=active]:bg-red-600">Vista P</TabsTrigger>
         </TabsList>
 
         <TabsContent value="hero" className="space-y-6">
