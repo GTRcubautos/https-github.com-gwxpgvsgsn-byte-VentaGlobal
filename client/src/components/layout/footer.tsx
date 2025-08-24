@@ -67,6 +67,40 @@ export default function Footer() {
                 <i className="fas fa-map-marker-alt mr-2"></i>123 Calle Principal
               </li>
             </ul>
+            
+            {/* Enlaces Legales - Movidos hacia arriba */}
+            <div className="mt-6">
+              <h4 className="text-automotive-red text-lg font-semibold mb-4">Información Legal</h4>
+              <ul className="space-y-3">
+                <li>
+                  <Link 
+                    href="/politica-privacidad" 
+                    className="automotive-link text-gray-300 hover:text-automotive-red transition-colors"
+                    data-testid="footer-link-privacy-policy"
+                  >
+                    📄 Política de Privacidad
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    href="/terminos-condiciones" 
+                    className="automotive-link text-gray-300 hover:text-automotive-red transition-colors"
+                    data-testid="footer-link-terms"
+                  >
+                    📋 Términos y Condiciones
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    href="/configuracion-privacidad" 
+                    className="automotive-link text-gray-300 hover:text-automotive-red transition-colors font-medium"
+                    data-testid="footer-link-privacy-settings"
+                  >
+                    ⚙️ Configurar Privacidad
+                  </Link>
+                </li>
+              </ul>
+            </div>
           </div>
           
           <div>
@@ -112,27 +146,7 @@ export default function Footer() {
               </p>
             </div>
             <div className="flex flex-wrap justify-center md:justify-end gap-6 text-sm">
-              <Link 
-                href="/politica-privacidad" 
-                className="automotive-link text-gray-300"
-                data-testid="footer-link-privacy-policy"
-              >
-                Política de Privacidad
-              </Link>
-              <Link 
-                href="/terminos-condiciones" 
-                className="automotive-link text-gray-300"
-                data-testid="footer-link-terms"
-              >
-                Términos y Condiciones
-              </Link>
-              <Link 
-                href="/configuracion-privacidad" 
-                className="automotive-link text-gray-300 font-medium"
-                data-testid="footer-link-privacy-settings"
-              >
-                ⚙️ Mi Privacidad
-              </Link>
+              <span className="text-gray-400">GTR CUBAUTO - Repuestos de Calidad</span>
             </div>
           </div>
         </div>
