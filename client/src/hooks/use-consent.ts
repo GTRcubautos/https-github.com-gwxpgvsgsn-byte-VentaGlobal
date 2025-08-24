@@ -5,22 +5,25 @@ export function useConsent() {
 
   // Verificar si el usuario ya dio su consentimiento
   useEffect(() => {
-    const hasGivenConsent = localStorage.getItem('gtr-consent-given');
+    const hasGivenConsent = localStorage.getItem('gtr-terms-privacy-consent');
     const consentDate = localStorage.getItem('gtr-consent-date');
     
-    // Si no ha dado consentimiento o fue hace más de 1 año, mostrar modal
+    // Si no ha dado consentimiento o fue hace más de 1 año, mostrar modal inmediatamente
     if (!hasGivenConsent || (consentDate && isConsentExpired(consentDate))) {
-      // Esperar un poco para que la página cargue
-      const timer = setTimeout(() => {
-        setShowConsentModal(true);
-      }, 2000);
-      
-      return () => clearTimeout(timer);
+      setShowConsentModal(true);
     }
   }, []);
 
-  const closeConsentModal = () => {
+  const acceptConsent = () => {
+    localStorage.setItem('gtr-terms-privacy-consent', 'true');
+    localStorage.setItem('gtr-consent-date', new Date().toISOString());
     setShowConsentModal(false);
+  };
+
+  const rejectConsent = () => {
+    // Si rechaza, mostrar mensaje y redirigir
+    alert('Para utilizar GTR CUBAUTO debe aceptar nuestros términos y política de privacidad. Será redirigido.');
+    window.location.href = 'https://www.google.com';
   };
 
   const hasConsent = (consentType: string): boolean => {
@@ -31,7 +34,8 @@ export function useConsent() {
 
   return {
     showConsentModal,
-    closeConsentModal,
+    acceptConsent,
+    rejectConsent,
     hasConsent,
   };
 }

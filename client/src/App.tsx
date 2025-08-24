@@ -28,7 +28,7 @@ import CheckoutSuccess from "@/pages/checkout-success";
 import PrivacyPolicy from "@/pages/privacy-policy";
 import TermsConditions from "@/pages/terms-conditions";
 import UserPrivacySettings from "@/pages/user-privacy-settings";
-import PrivacyConsentModal from "@/components/consent/privacy-consent-modal";
+import TermsPrivacyModal from "@/components/consent/terms-privacy-modal";
 import { useConsent } from "@/hooks/use-consent";
 
 function Router() {
@@ -64,7 +64,7 @@ function Router() {
 }
 
 function App() {
-  const { showConsentModal, closeConsentModal } = useConsent();
+  const { showConsentModal, acceptConsent, rejectConsent } = useConsent();
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -83,9 +83,10 @@ function App() {
           <CartModal />
           <GameModal />
           <WholesaleModal />
-          <PrivacyConsentModal 
-            isOpen={showConsentModal}
-            onClose={closeConsentModal}
+          <TermsPrivacyModal 
+            isOpen={showConsentModal} 
+            onAccept={acceptConsent} 
+            onReject={rejectConsent} 
           />
           
           <Toaster />
