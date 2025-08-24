@@ -63,15 +63,15 @@ export default function Cars() {
           <div className="text-center mb-12">
             <Badge className="mb-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0 px-6 py-3 text-sm font-medium">
               <Car className="h-4 w-4 mr-2" />
-              GTR CUBAUTOS - AUTOS PREMIUM
+              GTR CUBAUTOS - MULTISERVICIO AUTOMOTRIZ
             </Badge>
             <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-gray-900 via-blue-700 to-purple-700 bg-clip-text text-transparent">
-              Deportivos de Élite
+              Autos Clásicos & Repuestos
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-8">
-              Descubre la próxima generación de vehículos deportivos y de lujo. 
+              Tu centro automotriz completo: autos clásicos, piezas, repuestos y servicios especializados. 
               <br className="hidden md:block" />
-              Performance, diseño y tecnología en cada modelo.
+              Calidad, experiencia y confianza en cada producto.
             </p>
             
             {/* Featured Cars Preview */}
@@ -101,7 +101,7 @@ export default function Cars() {
             <div className="flex flex-col md:flex-row gap-4 items-center">
               <div className="flex-1 w-full">
                 <SearchBar
-                  placeholder="Buscar autos deportivos, SUVs, sedanes, GTR..."
+                  placeholder="Buscar autos clásicos, piezas, repuestos, frenos, motores..."
                   onSearch={handleSearch}
                   className="w-full"
                 />
@@ -139,22 +139,22 @@ export default function Cars() {
           <Card className="p-6 text-center bg-gradient-to-br from-blue-500/10 to-blue-600/20 border-blue-200/50 hover:scale-105 transition-transform duration-300">
             <Car className="h-10 w-10 mx-auto mb-3 text-blue-600" />
             <div className="text-3xl font-bold text-blue-700 mb-1">{cars.length}</div>
-            <div className="text-sm text-blue-600 uppercase tracking-wider">Modelos GTR</div>
+            <div className="text-sm text-blue-600 uppercase tracking-wider">Autos Clásicos</div>
           </Card>
           <Card className="p-6 text-center bg-gradient-to-br from-purple-500/10 to-purple-600/20 border-purple-200/50 hover:scale-105 transition-transform duration-300">
             <Zap className="h-10 w-10 mx-auto mb-3 text-purple-600" />
-            <div className="text-3xl font-bold text-purple-700 mb-1">24h</div>
-            <div className="text-sm text-purple-600 uppercase tracking-wider">Entrega Express</div>
+            <div className="text-3xl font-bold text-purple-700 mb-1">1000+</div>
+            <div className="text-sm text-purple-600 uppercase tracking-wider">Piezas Disponibles</div>
           </Card>
           <Card className="p-6 text-center bg-gradient-to-br from-cyan-500/10 to-cyan-600/20 border-cyan-200/50 hover:scale-105 transition-transform duration-300">
             <Star className="h-10 w-10 mx-auto mb-3 text-cyan-600" />
-            <div className="text-3xl font-bold text-cyan-700 mb-1">5⭐</div>
-            <div className="text-sm text-cyan-600 uppercase tracking-wider">Calificación</div>
+            <div className="text-3xl font-bold text-cyan-700 mb-1">15+</div>
+            <div className="text-sm text-cyan-600 uppercase tracking-wider">Años Experiencia</div>
           </Card>
           <Card className="p-6 text-center bg-gradient-to-br from-green-500/10 to-green-600/20 border-green-200/50 hover:scale-105 transition-transform duration-300">
             <Shield className="h-10 w-10 mx-auto mb-3 text-green-600" />
-            <div className="text-2xl font-bold text-green-700 mb-1">🚚</div>
-            <div className="text-sm text-green-600 uppercase tracking-wider">Envío Gratis +$500</div>
+            <div className="text-2xl font-bold text-green-700 mb-1">🔧</div>
+            <div className="text-sm text-green-600 uppercase tracking-wider">Servicio Técnico</div>
           </Card>
         </div>
 
@@ -164,11 +164,11 @@ export default function Cars() {
             <div className="absolute inset-0 bg-black/20"></div>
             <div className="relative flex flex-col md:flex-row items-center justify-between">
               <div className="mb-4 md:mb-0">
-                <h3 className="text-2xl font-bold mb-2">🚗 Ofertas GTR Exclusivas</h3>
-                <p className="text-blue-100">Financiamiento 0% hasta 36 meses • Garantía extendida hasta 5 años</p>
+                <h3 className="text-2xl font-bold mb-2">🚗 Multiservicio Automotriz Completo</h3>
+                <p className="text-blue-100">Autos clásicos • Piezas originales • Repuestos • Servicios especializados</p>
               </div>
               <Badge className="bg-white/20 text-white backdrop-blur-sm px-4 py-2 text-lg font-bold">
-                OFERTA LIMITADA
+                SERVICIO GARANTIZADO
               </Badge>
             </div>
           </Card>

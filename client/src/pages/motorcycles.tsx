@@ -63,15 +63,15 @@ export default function Motorcycles() {
           <div className="text-center mb-12">
             <Badge className="mb-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white border-0 px-6 py-3 text-sm font-medium">
               <Bike className="h-4 w-4 mr-2" />
-              GTR CUBAUTOS - MOTOCICLETAS PREMIUM
+              GTR CUBAUTOS - MULTISERVICIO MOTOCICLETAS
             </Badge>
             <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-gray-900 via-purple-700 to-pink-700 bg-clip-text text-transparent">
-              Superbikes de Velocidad
+              Suzuki & Yamaha + Repuestos
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-8">
-              Experimenta la adrenalina pura con nuestras motocicletas de alta performance. 
+              Especialistas en motocicletas Suzuki y Yamaha, piezas originales y servicios técnicos. 
               <br className="hidden md:block" />
-              Velocidad, estilo y tecnología en cada modelo.
+              Calidad, confianza y experiencia en cada servicio.
             </p>
             
             {/* Featured Bikes Preview */}
@@ -101,7 +101,7 @@ export default function Motorcycles() {
             <div className="flex flex-col md:flex-row gap-4 items-center">
               <div className="flex-1 w-full">
                 <SearchBar
-                  placeholder="Buscar motocicletas deportivas, cruiser, touring..."
+                  placeholder="Buscar Suzuki, Yamaha, piezas, repuestos, filtros, cadenas..."
                   onSearch={handleSearch}
                   className="w-full"
                 />
@@ -139,22 +139,22 @@ export default function Motorcycles() {
           <Card className="p-6 text-center bg-gradient-to-br from-purple-500/10 to-purple-600/20 border-purple-200/50 hover:scale-105 transition-transform duration-300">
             <Bike className="h-10 w-10 mx-auto mb-3 text-purple-600" />
             <div className="text-3xl font-bold text-purple-700 mb-1">{motorcycles.length}</div>
-            <div className="text-sm text-purple-600 uppercase tracking-wider">Superbikes</div>
+            <div className="text-sm text-purple-600 uppercase tracking-wider">Suzuki & Yamaha</div>
           </Card>
           <Card className="p-6 text-center bg-gradient-to-br from-pink-500/10 to-pink-600/20 border-pink-200/50 hover:scale-105 transition-transform duration-300">
             <Wind className="h-10 w-10 mx-auto mb-3 text-pink-600" />
-            <div className="text-3xl font-bold text-pink-700 mb-1">300+</div>
-            <div className="text-sm text-pink-600 uppercase tracking-wider">KM/H Máx</div>
+            <div className="text-3xl font-bold text-pink-700 mb-1">500+</div>
+            <div className="text-sm text-pink-600 uppercase tracking-wider">Piezas Disponibles</div>
           </Card>
           <Card className="p-6 text-center bg-gradient-to-br from-orange-500/10 to-orange-600/20 border-orange-200/50 hover:scale-105 transition-transform duration-300">
             <Star className="h-10 w-10 mx-auto mb-3 text-orange-600" />
-            <div className="text-3xl font-bold text-orange-700 mb-1">5⭐</div>
-            <div className="text-sm text-orange-600 uppercase tracking-wider">Calificación</div>
+            <div className="text-3xl font-bold text-orange-700 mb-1">10+</div>
+            <div className="text-sm text-orange-600 uppercase tracking-wider">Años Experiencia</div>
           </Card>
           <Card className="p-6 text-center bg-gradient-to-br from-green-500/10 to-green-600/20 border-green-200/50 hover:scale-105 transition-transform duration-300">
             <Shield className="h-10 w-10 mx-auto mb-3 text-green-600" />
-            <div className="text-2xl font-bold text-green-700 mb-1">🏍️</div>
-            <div className="text-sm text-green-600 uppercase tracking-wider">Financiamiento 0%</div>
+            <div className="text-2xl font-bold text-green-700 mb-1">🔧</div>
+            <div className="text-sm text-green-600 uppercase tracking-wider">Taller Especializado</div>
           </Card>
         </div>
 
@@ -164,11 +164,11 @@ export default function Motorcycles() {
             <div className="absolute inset-0 bg-black/20"></div>
             <div className="relative flex flex-col md:flex-row items-center justify-between">
               <div className="mb-4 md:mb-0">
-                <h3 className="text-2xl font-bold mb-2">🏍️ Ofertas Extremas en Motocicletas</h3>
-                <p className="text-purple-100">Financiamiento 0% hasta 24 meses • Casco y equipo de regalo</p>
+                <h3 className="text-2xl font-bold mb-2">🏍️ Especialistas Suzuki & Yamaha</h3>
+                <p className="text-purple-100">Piezas originales • Repuestos garantizados • Taller especializado • Servicio técnico</p>
               </div>
               <Badge className="bg-white/20 text-white backdrop-blur-sm px-4 py-2 text-lg font-bold">
-                VELOCIDAD MÁXIMA
+                SERVICIO GARANTIZADO
               </Badge>
             </div>
           </Card>
@@ -242,12 +242,12 @@ export default function Motorcycles() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                     <div className="absolute top-4 left-4">
                       <Badge className="bg-gradient-to-r from-purple-600 to-pink-600 text-white border-0">
-                        GTR SUPERBIKE
+                        SUZUKI | YAMAHA
                       </Badge>
                     </div>
                     <div className="absolute top-4 right-4">
                       <Badge className="bg-white/20 text-white backdrop-blur-sm border-white/30">
-                        ⚡ FINANCIAMIENTO 0%
+                        🔧 SERVICIO TÉCNICO
                       </Badge>
                     </div>
                     <div className="absolute bottom-4 left-4 right-4">
