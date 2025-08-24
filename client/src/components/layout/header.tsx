@@ -65,13 +65,15 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* Center Logo */}
-          <Link href="/" className="text-white text-4xl font-bold font-display hover:text-red-400 transition-colors duration-300" data-testid="logo">
-            GTR CUBAUTO
-          </Link>
+          {/* Center spacer */}
+          <div className="flex-1"></div>
 
-          {/* Right Navigation + Search + Cart */}
+          {/* Right side with Logo + Navigation + Search + Cart */}
           <div className="flex items-center space-x-6">
+            {/* Logo moved to right side */}
+            <Link href="/" className="text-white text-4xl font-bold font-display hover:text-red-400 transition-colors duration-300" data-testid="logo">
+              GTR CUBAUTO
+            </Link>
             {/* Right Navigation */}
             <nav className="flex items-center space-x-8" data-testid="right-navigation">
               {navigation.slice(4).map((item) => (
