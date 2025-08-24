@@ -28,33 +28,33 @@ export default function Home() {
   const categories = [
     {
       id: "cars",
-      name: "Autos GTR",
+      name: "Repuestos para Autos",
       icon: Car,
       count: products.filter(p => p.category === "cars").length,
-      description: "Deportivos de alta performance y lujo",
+      description: "Frenos, suspensión, motor y más",
       path: "/cars",
-      gradient: "from-blue-600 via-blue-700 to-blue-800",
+      gradient: "from-red-600 via-red-700 to-red-800",
       offer: "ENVÍO GRATIS"
     },
     {
       id: "motorcycles", 
-      name: "Motocicletas",
+      name: "Repuestos para Motos",
       icon: Bike,
       count: products.filter(p => p.category === "motorcycles").length,
-      description: "Superbikes y motos eléctricas",
+      description: "Cadenas, llantas, carrocería",
       path: "/motorcycles",
-      gradient: "from-purple-600 via-purple-700 to-purple-800",
-      offer: "FINANCIAMIENTO 0%"
+      gradient: "from-gray-700 via-gray-800 to-gray-900",
+      offer: "DESCUENTOS"
     },
     {
       id: "electronics",
-      name: "Auto Tech",
+      name: "Accesorios",
       icon: Smartphone,
       count: products.filter(p => p.category === "electronics").length,
-      description: "Tecnología automotriz avanzada",
+      description: "Audio, navegación, alarmas",
       path: "/electronics",
-      gradient: "from-cyan-600 via-cyan-700 to-cyan-800",
-      offer: "HASTA 50% OFF"
+      gradient: "from-gray-600 via-gray-700 to-gray-800",
+      offer: "NUEVOS"
     },
   ];
 
@@ -83,10 +83,10 @@ export default function Home() {
   ];
 
   const stats = [
-    { icon: Users, value: "25K+", label: "Clientes GTR" },
-    { icon: Car, value: "5K+", label: "Vehículos Vendidos" },
-    { icon: TrendingUp, value: "99%", label: "Satisfacción" },
-    { icon: Star, value: "4.9", label: "Calificación" },
+    { icon: Users, value: "15K+", label: "Clientes Satisfechos" },
+    { icon: ShoppingBag, value: "50K+", label: "Repuestos Vendidos" },
+    { icon: TrendingUp, value: "98%", label: "Calidad Garantizada" },
+    { icon: Star, value: "4.8", label: "Calificación" },
   ];
 
   if (isLoading) {
@@ -98,60 +98,58 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white scanline-effect" data-testid="home-page">
+    <div className="min-h-screen bg-background text-foreground" data-testid="home-page">
       {/* Hero Section */}
-      <section className="relative py-32 overflow-hidden cyber-grid" data-testid="hero-section">
-        <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900/50 to-black"></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-green-500/5 via-transparent to-blue-500/5"></div>
+      <section className="relative py-24 overflow-hidden hero-pattern" data-testid="hero-section">
+        <div className="absolute inset-0 automotive-gradient-overlay"></div>
         <div className="relative container mx-auto px-6">
-          <div className="max-w-5xl mx-auto text-center">
-            <Badge className="mb-8 text-lg px-8 py-4 bg-green-500/20 text-green-400 border border-green-500/30 rounded-full neon-glow backdrop-blur-sm" data-testid="hero-badge">
-              🚗 ENVÍO GRATIS en compras +$500 • TECNOLOGÍA DEL FUTURO
-            </Badge>
-            <h1 className="text-7xl md:text-9xl font-bold mb-8 tracking-tight font-display" data-testid="hero-title">
-              <span className="neon-text neon-pulse">GTR</span>
-              <span className="text-white"> CUBAUTOS</span>
-            </h1>
-            <p className="text-xl md:text-3xl text-gray-300 mb-12 leading-relaxed max-w-4xl mx-auto" data-testid="hero-subtitle">
-              🏎️ Vehículos premium y tecnología de vanguardia. 
-              <br className="hidden md:block" />
-              <span className="text-green-400">El futuro del automovilismo está aquí.</span>
-            </p>
-            <div className="max-w-lg mx-auto mb-12">
-              <SearchBar onSearch={setSearchTerm} />
+          <div className="max-w-6xl mx-auto text-center">
+            <div className="mb-12">
+              <h1 className="text-6xl md:text-8xl font-bold mb-6 tracking-tight text-white font-display" data-testid="hero-title">
+                GTR CUBAUTO
+              </h1>
+              <h2 className="text-2xl md:text-4xl font-semibold mb-8 text-red-200 tracking-wide" data-testid="hero-subtitle">
+                REPUESTOS DE CALIDAD PARA AUTOS Y MOTOS
+              </h2>
+              <p className="text-lg md:text-xl text-gray-100 mb-12 leading-relaxed max-w-4xl mx-auto" data-testid="hero-description">
+                Todo para tu vehículo en un solo lugar. Encuentra los mejores repuestos y accesorios con garantía de calidad y los precios más competitivos del mercado.
+              </p>
+              <Button size="lg" className="text-lg px-10 py-4 shadow-red" data-testid="hero-cta">
+                Ver Ofertas de la Semana
+              </Button>
             </div>
           </div>
         </div>
       </section>
 
       {/* Promociones Banner */}
-      <section className="py-6 bg-gradient-to-r from-green-600 via-cyan-500 to-blue-600 text-black border-y border-green-500/30 shadow-neon" data-testid="promo-banner">
+      <section className="py-4 bg-automotive-red text-white shadow-medium" data-testid="promo-banner">
         <div className="container mx-auto px-6">
-          <div className="flex items-center justify-center space-x-8 text-sm font-bold uppercase tracking-wider neon-pulse">
+          <div className="flex items-center justify-center space-x-8 text-sm font-semibold uppercase tracking-wide">
             <span>🚚 ENVÍO GRATIS +$500</span>
-            <span className="text-green-900">•</span>
+            <span>•</span>
             <span>⚡ FINANCIAMIENTO 0%</span>
-            <span className="text-green-900">•</span>
-            <span>🎯 OFERTAS LIMITADAS</span>
-            <span className="text-green-900">•</span>
+            <span>•</span>
             <span>🔧 GARANTÍA EXTENDIDA</span>
+            <span>•</span>
+            <span>🎯 ATENCIÓN 24/7</span>
           </div>
         </div>
       </section>
 
       {/* Stats Section */}
-      <section className="py-20 bg-gradient-to-b from-black to-gray-900/50 cyber-grid" data-testid="stats-section">
+      <section className="py-16 bg-gray-50" data-testid="stats-section">
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => {
               const StatIcon = stat.icon;
               return (
                 <div key={index} className="text-center group" data-testid={`stat-${index}`}>
-                  <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-r from-green-500/20 to-cyan-500/20 mb-6 group-hover:from-green-500 group-hover:to-cyan-500 group-hover:text-black transition-all duration-500 backdrop-blur-sm border border-green-500/30 neon-glow">
-                    <StatIcon className="h-8 w-8 text-green-400 group-hover:text-black" />
+                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white mb-4 group-hover:bg-automotive-red group-hover:text-white transition-all duration-300 shadow-medium border border-gray-200">
+                    <StatIcon className="h-7 w-7 text-automotive-gray group-hover:text-white" />
                   </div>
-                  <div className="text-4xl md:text-5xl font-bold neon-text font-display mb-2">{stat.value}</div>
-                  <div className="text-sm text-gray-400 uppercase tracking-wider font-semibold">{stat.label}</div>
+                  <div className="text-3xl md:text-4xl font-bold text-automotive-black mb-1">{stat.value}</div>
+                  <div className="text-sm text-automotive-gray uppercase tracking-wider font-semibold">{stat.label}</div>
                 </div>
               );
             })}
@@ -160,50 +158,46 @@ export default function Home() {
       </section>
 
       {/* Categories Section */}
-      <section className="py-24 relative overflow-hidden bg-gradient-to-br from-black via-gray-900 to-black" data-testid="categories-section">
-        <div className="absolute inset-0 cyber-grid opacity-30"></div>
-        <div className="relative container mx-auto px-6">
-          <div className="text-center mb-20">
-            <Badge className="mb-6 bg-green-500/20 text-green-400 border border-green-500/30 neon-glow px-8 py-3 text-lg">
-              CATEGORÍAS PREMIUM GTR
+      <section className="py-20 bg-white" data-testid="categories-section">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-16">
+            <Badge className="mb-6 bg-automotive-red text-white px-8 py-3 text-lg font-semibold">
+              CATEGORÍAS DE REPUESTOS
             </Badge>
-            <h2 className="text-5xl md:text-7xl font-bold mb-6 font-display">
-              <span className="neon-text">Vehículos</span>
-              <span className="text-white"> de Élite</span>
+            <h2 className="text-4xl md:text-6xl font-bold mb-6 text-automotive-black font-display">
+              Repuestos de Calidad
             </h2>
-            <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-              🏎️ Desde deportivos de alta gama hasta <span className="text-green-400">tecnología automotriz de vanguardia</span>
+            <p className="text-xl text-automotive-gray max-w-3xl mx-auto leading-relaxed">
+              Encuentra todo lo que necesitas para mantener tu vehículo en perfectas condiciones
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {categories.map((category) => {
               const IconComponent = category.icon;
               return (
                 <Link key={category.id} href={category.path}>
-                  <Card className="cyber-card group cursor-pointer transition-all duration-700 hover:scale-105 hover:shadow-neon overflow-hidden bg-gradient-to-br from-black/80 to-gray-900/80 backdrop-blur-lg" data-testid={`category-${category.id}`}>
-                    <div className={`h-48 bg-gradient-to-br ${category.gradient} relative overflow-hidden`}>
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                      <div className="absolute inset-0 cyber-grid opacity-20"></div>
-                      <div className="absolute top-6 right-6">
-                        <Badge className="bg-green-500/80 text-black border-green-400 backdrop-blur-sm font-bold px-4 py-2 neon-glow">
+                  <Card className="professional-card group cursor-pointer transition-all duration-300 hover:scale-105 overflow-hidden" data-testid={`category-${category.id}`}>
+                    <div className={`h-40 bg-gradient-to-br ${category.gradient} relative overflow-hidden`}>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+                      <div className="absolute top-4 right-4">
+                        <Badge className="bg-white/90 text-automotive-black font-bold px-3 py-1">
                           {category.offer}
                         </Badge>
                       </div>
-                      <div className="absolute bottom-6 left-6">
-                        <IconComponent className="h-12 w-12 text-green-400 drop-shadow-2xl neon-glow" />
+                      <div className="absolute bottom-4 left-6">
+                        <IconComponent className="h-10 w-10 text-white drop-shadow-lg" />
                       </div>
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-green-500/10 to-transparent group-hover:via-green-500/20 transition-all duration-700"></div>
                     </div>
-                    <CardContent className="p-8 bg-gradient-to-b from-black/90 to-gray-900/90">
-                      <h3 className="text-2xl font-bold mb-3 text-white group-hover:text-green-400 transition-colors font-display">{category.name}</h3>
-                      <p className="text-gray-300 mb-6 leading-relaxed">{category.description}</p>
+                    <CardContent className="p-6 bg-white">
+                      <h3 className="text-xl font-bold mb-2 text-automotive-black group-hover:text-automotive-red transition-colors">{category.name}</h3>
+                      <p className="text-automotive-gray mb-4 text-sm leading-relaxed">{category.description}</p>
                       <div className="flex items-center justify-between">
-                        <Badge className="bg-green-500/20 text-green-400 border border-green-500/30 px-4 py-2 font-semibold">
-                          {category.count} modelos
+                        <Badge className="bg-gray-100 text-automotive-gray border-0 text-xs px-3 py-1">
+                          {category.count} productos
                         </Badge>
-                        <div className="flex items-center text-green-400 group-hover:text-green-300 transition-colors">
-                          <span className="font-semibold mr-2 uppercase tracking-wider">Explorar</span>
-                          <ArrowRight className="h-5 w-5 group-hover:translate-x-2 transition-all duration-300" />
+                        <div className="flex items-center text-automotive-red group-hover:text-automotive-red transition-colors">
+                          <span className="text-sm font-semibold mr-1">Ver más</span>
+                          <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-all duration-300" />
                         </div>
                       </div>
                     </CardContent>

@@ -1,87 +1,87 @@
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Roboto:wght@300;400;500;700;900&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  /* Tema oscuro futurista por defecto */
-  --background: hsl(0 0% 4%);
-  --foreground: hsl(0 0% 98%);
-  --card: hsl(0 0% 8%);
-  --card-foreground: hsl(0 0% 98%);
-  --popover: hsl(0 0% 4%);
-  --popover-foreground: hsl(0 0% 98%);
-  --primary: hsl(0 0% 98%);
-  --primary-foreground: hsl(0 0% 4%);
-  --secondary: hsl(0 0% 12%);
-  --secondary-foreground: hsl(0 0% 98%);
-  --muted: hsl(0 0% 12%);
-  --muted-foreground: hsl(0 0% 70%);
-  --accent: hsl(0 0% 12%);
-  --accent-foreground: hsl(0 0% 98%);
+  /* Tema profesional automotriz */
+  --background: hsl(0 0% 98%);
+  --foreground: hsl(0 0% 15%);
+  --card: hsl(0 0% 100%);
+  --card-foreground: hsl(0 0% 15%);
+  --popover: hsl(0 0% 100%);
+  --popover-foreground: hsl(0 0% 15%);
+  --primary: hsl(0 84% 60%);
+  --primary-foreground: hsl(0 0% 98%);
+  --secondary: hsl(0 0% 96%);
+  --secondary-foreground: hsl(0 0% 15%);
+  --muted: hsl(0 0% 96%);
+  --muted-foreground: hsl(0 0% 45%);
+  --accent: hsl(0 0% 96%);
+  --accent-foreground: hsl(0 0% 15%);
   --destructive: hsl(0 84% 60%);
   --destructive-foreground: hsl(0 0% 98%);
-  --border: hsl(0 0% 20%);
-  --input: hsl(0 0% 12%);
-  --ring: hsl(142 76% 50%);
+  --border: hsl(0 0% 90%);
+  --input: hsl(0 0% 100%);
+  --ring: hsl(0 84% 60%);
   
-  /* Colores verdes neón */
-  --neon-green: hsl(142 76% 50%);
-  --neon-green-bright: hsl(142 86% 60%);
-  --neon-green-dark: hsl(142 66% 40%);
-  --neon-green-glow: hsl(142 76% 50% / 0.3);
+  /* Colores automotrices */
+  --automotive-red: hsl(0 84% 60%);
+  --automotive-red-dark: hsl(0 84% 50%);
+  --automotive-red-light: hsl(0 84% 70%);
+  --automotive-black: hsl(0 0% 8%);
+  --automotive-gray: hsl(0 0% 35%);
+  --automotive-gray-light: hsl(0 0% 85%);
   
-  /* Charts con tema oscuro */
-  --chart-1: hsl(142 76% 50%);
-  --chart-2: hsl(180 76% 50%);
-  --chart-3: hsl(220 76% 50%);
-  --chart-4: hsl(280 76% 50%);
-  --chart-5: hsl(60 76% 50%);
+  /* Charts con tema automotriz */
+  --chart-1: hsl(0 84% 60%);
+  --chart-2: hsl(0 0% 35%);
+  --chart-3: hsl(0 0% 60%);
+  --chart-4: hsl(0 84% 40%);
+  --chart-5: hsl(0 0% 20%);
   
   /* Sidebar */
-  --sidebar: hsl(0 0% 8%);
-  --sidebar-foreground: hsl(0 0% 98%);
-  --sidebar-primary: hsl(142 76% 50%);
-  --sidebar-primary-foreground: hsl(0 0% 4%);
-  --sidebar-accent: hsl(0 0% 12%);
-  --sidebar-accent-foreground: hsl(0 0% 98%);
-  --sidebar-border: hsl(0 0% 20%);
-  --sidebar-ring: hsl(142 76% 50%);
+  --sidebar: hsl(0 0% 98%);
+  --sidebar-foreground: hsl(0 0% 15%);
+  --sidebar-primary: hsl(0 84% 60%);
+  --sidebar-primary-foreground: hsl(0 0% 98%);
+  --sidebar-accent: hsl(0 0% 96%);
+  --sidebar-accent-foreground: hsl(0 0% 15%);
+  --sidebar-border: hsl(0 0% 90%);
+  --sidebar-ring: hsl(0 84% 60%);
   
-  /* Fuentes futuristas */
-  --font-sans: 'Exo 2', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-display: 'Orbitron', 'SF Pro Display', sans-serif;
-  --font-serif: 'Crimson Text', Georgia, serif;
-  --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+  /* Fuentes profesionales */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Roboto', 'Inter', sans-serif;
+  --font-serif: 'Georgia', serif;
+  --font-mono: 'Consolas', 'Monaco', monospace;
   
-  --radius: 0.75rem;
+  --radius: 0.5rem;
   --whatsapp-green: hsl(142 69% 58%);
   
-  /* Gradientes futuristas */
-  --gradient: linear-gradient(135deg, hsl(0 0% 0%) 0%, hsl(0 0% 8%) 50%, hsl(142 76% 10%) 100%);
-  --gradient-neon: linear-gradient(135deg, hsl(142 76% 50%) 0%, hsl(180 76% 50%) 50%, hsl(220 76% 50%) 100%);
-  --gradient-dark: linear-gradient(135deg, hsl(0 0% 4%) 0%, hsl(0 0% 12%) 100%);
+  /* Gradientes profesionales */
+  --gradient-red: linear-gradient(135deg, hsl(0 84% 60%) 0%, hsl(0 84% 50%) 100%);
+  --gradient-gray: linear-gradient(135deg, hsl(0 0% 20%) 0%, hsl(0 0% 35%) 100%);
+  --gradient-light: linear-gradient(135deg, hsl(0 0% 98%) 0%, hsl(0 0% 94%) 100%);
   
-  /* Sombras con glow neón */
-  --shadow-soft: 0 2px 8px -2px rgba(0, 0, 0, 0.4);
-  --shadow-medium: 0 4px 16px -4px rgba(0, 0, 0, 0.6);
-  --shadow-strong: 0 8px 24px -6px rgba(0, 0, 0, 0.8);
-  --shadow-neon: 0 0 20px var(--neon-green-glow), 0 0 40px var(--neon-green-glow);
-  --shadow-neon-small: 0 0 10px var(--neon-green-glow);
+  /* Sombras profesionales */
+  --shadow-soft: 0 2px 8px -2px rgba(0, 0, 0, 0.1);
+  --shadow-medium: 0 4px 16px -4px rgba(0, 0, 0, 0.15);
+  --shadow-strong: 0 8px 24px -6px rgba(0, 0, 0, 0.2);
+  --shadow-red: 0 4px 20px rgba(220, 38, 38, 0.3);
 }
 
 .dark {
-  /* Mantener mismos valores ya que el tema base ya es oscuro */
-  --background: hsl(0 0% 4%);
+  --background: hsl(0 0% 8%);
   --foreground: hsl(0 0% 98%);
-  --card: hsl(0 0% 8%);
+  --card: hsl(0 0% 12%);
   --card-foreground: hsl(0 0% 98%);
-  --popover: hsl(0 0% 4%);
+  --popover: hsl(0 0% 8%);
   --popover-foreground: hsl(0 0% 98%);
-  --primary: hsl(0 0% 98%);
-  --primary-foreground: hsl(0 0% 4%);
+  --primary: hsl(0 84% 60%);
+  --primary-foreground: hsl(0 0% 98%);
   --secondary: hsl(0 0% 12%);
   --secondary-foreground: hsl(0 0% 98%);
   --muted: hsl(0 0% 12%);
@@ -92,7 +92,7 @@
   --destructive-foreground: hsl(0 0% 98%);
   --border: hsl(0 0% 20%);
   --input: hsl(0 0% 12%);
-  --ring: hsl(142 76% 50%);
+  --ring: hsl(0 84% 60%);
 }
 
 @layer base {
@@ -101,14 +101,14 @@
   }
 
   html {
-    @apply dark;
+    /* Default light theme */
   }
 
   body {
     @apply font-sans antialiased bg-background text-foreground;
     font-family: var(--font-sans);
     letter-spacing: -0.025em;
-    background: var(--gradient);
+    background: var(--gradient-light);
     background-attachment: fixed;
     min-height: 100vh;
   }
@@ -127,44 +127,16 @@
     animation: pulse 2s infinite;
   }
 
-  .neon-glow {
-    box-shadow: var(--shadow-neon);
-    transition: all 0.3s ease;
+  .automotive-gradient-red {
+    background: var(--gradient-red);
   }
 
-  .neon-glow:hover {
-    box-shadow: var(--shadow-neon), 0 0 60px var(--neon-green-glow);
-    transform: translateY(-2px);
+  .automotive-gradient-gray {
+    background: var(--gradient-gray);
   }
 
-  .neon-text {
-    color: var(--neon-green);
-    text-shadow: 0 0 10px var(--neon-green-glow), 0 0 20px var(--neon-green-glow);
-  }
-
-  .gradient-bg {
-    background: var(--gradient);
-  }
-
-  .gradient-neon {
-    background: var(--gradient-neon);
-  }
-
-  .gradient-dark {
-    background: var(--gradient-dark);
-  }
-
-  .glass-effect {
-    backdrop-filter: blur(20px);
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(0, 255, 127, 0.2);
-  }
-
-  .cyber-grid {
-    background-image: 
-      linear-gradient(rgba(0, 255, 127, 0.1) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 255, 127, 0.1) 1px, transparent 1px);
-    background-size: 50px 50px;
+  .automotive-gradient-light {
+    background: var(--gradient-light);
   }
 
   .shadow-soft {
@@ -179,8 +151,85 @@
     box-shadow: var(--shadow-strong);
   }
 
-  .shadow-neon {
-    box-shadow: var(--shadow-neon);
+  .shadow-red {
+    box-shadow: var(--shadow-red);
+  }
+
+  .professional-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: all 0.3s ease;
+  }
+
+  .professional-card:hover {
+    box-shadow: var(--shadow-medium);
+    transform: translateY(-2px);
+  }
+
+  .btn-automotive {
+    background: var(--gradient-red);
+    color: white;
+    border: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-automotive:hover {
+    background: var(--automotive-red-dark);
+    box-shadow: var(--shadow-red);
+    transform: translateY(-1px);
+  }
+
+  .automotive-input {
+    background: white;
+    border: 2px solid var(--border);
+    color: var(--foreground);
+    transition: all 0.3s ease;
+  }
+
+  .automotive-input:focus {
+    border-color: var(--automotive-red);
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+  }
+
+  .automotive-link {
+    color: var(--foreground);
+    text-decoration: none;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+
+  .automotive-link:hover {
+    color: var(--automotive-red);
+  }
+
+  .text-automotive-red {
+    color: var(--automotive-red);
+  }
+
+  .text-automotive-gray {
+    color: var(--automotive-gray);
+  }
+
+  .bg-automotive-red {
+    background-color: var(--automotive-red);
+  }
+
+  .bg-automotive-black {
+    background-color: var(--automotive-black);
+  }
+
+  .bg-automotive-gray {
+    background-color: var(--automotive-gray);
+  }
+
+  .border-automotive-red {
+    border-color: var(--automotive-red);
   }
 }
 
@@ -201,38 +250,7 @@
   100% { transform: scale(1); }
 }
 
-@keyframes neonPulse {
-  0%, 100% { 
-    text-shadow: 0 0 10px var(--neon-green-glow), 0 0 20px var(--neon-green-glow);
-  }
-  50% { 
-    text-shadow: 0 0 20px var(--neon-green-glow), 0 0 30px var(--neon-green-glow), 0 0 40px var(--neon-green-glow);
-  }
-}
-
-@keyframes scanline {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(100vh); }
-}
-
-.neon-pulse {
-  animation: neonPulse 2s ease-in-out infinite;
-}
-
-.scanline-effect::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--neon-green), transparent);
-  animation: scanline 3s linear infinite;
-  z-index: 1000;
-  pointer-events: none;
-}
-
-/* Custom scrollbar futurista */
+/* Custom scrollbar profesional */
 ::-webkit-scrollbar {
   width: 12px;
 }
@@ -243,106 +261,21 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--neon-green-dark), var(--neon-green));
+  background: linear-gradient(180deg, var(--automotive-gray), var(--automotive-red));
   border-radius: 6px;
   border: 2px solid var(--background);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, var(--neon-green), var(--neon-green-bright));
-  box-shadow: var(--shadow-neon-small);
+  background: linear-gradient(180deg, var(--automotive-red), var(--automotive-red-dark));
 }
 
-/* Botones neón personalizados */
-.btn-neon {
-  background: linear-gradient(135deg, var(--neon-green-dark), var(--neon-green));
-  color: hsl(0 0% 4%);
-  border: 2px solid var(--neon-green);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
+/* Hero patterns */
+.hero-pattern {
+  background-image: radial-gradient(circle at 2px 2px, rgba(220, 38, 38, 0.1) 1px, transparent 0);
+  background-size: 40px 40px;
 }
 
-.btn-neon::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left 0.5s;
-}
-
-.btn-neon:hover::before {
-  left: 100%;
-}
-
-.btn-neon:hover {
-  background: linear-gradient(135deg, var(--neon-green), var(--neon-green-bright));
-  box-shadow: var(--shadow-neon);
-  transform: translateY(-2px);
-}
-
-/* Cards futuristas */
-.cyber-card {
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6));
-  border: 1px solid var(--neon-green);
-  border-radius: var(--radius);
-  position: relative;
-  overflow: hidden;
-}
-
-.cyber-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: var(--gradient-neon);
-}
-
-/* Inputs futuristas */
-.cyber-input {
-  background: rgba(0, 0, 0, 0.6);
-  border: 2px solid var(--border);
-  color: var(--foreground);
-  transition: all 0.3s ease;
-}
-
-.cyber-input:focus {
-  border-color: var(--neon-green);
-  box-shadow: var(--shadow-neon-small);
-  background: rgba(0, 0, 0, 0.8);
-}
-
-/* Efectos de hover para enlaces */
-.cyber-link {
-  color: var(--foreground);
-  text-decoration: none;
-  position: relative;
-  transition: all 0.3s ease;
-}
-
-.cyber-link::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: var(--neon-green);
-  transition: width 0.3s ease;
-}
-
-.cyber-link:hover {
-  color: var(--neon-green);
-}
-
-.cyber-link:hover::after {
-  width: 100%;
+.automotive-gradient-overlay {
+  background: linear-gradient(135deg, rgba(220, 38, 38, 0.9) 0%, rgba(20, 20, 20, 0.8) 100%);
 }

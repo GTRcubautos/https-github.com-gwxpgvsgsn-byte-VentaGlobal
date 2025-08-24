@@ -2,53 +2,53 @@ import { Link } from 'wouter';
 
 export default function Footer() {
   return (
-    <footer className="bg-black border-t border-green-500/30 text-white py-16 cyber-grid" data-testid="footer">
+    <footer className="bg-automotive-black text-white py-16" data-testid="footer">
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           <div>
-            <h3 className="neon-text text-2xl font-bold mb-6 font-display">🏎️ GTR CUBAUTOS</h3>
+            <h3 className="text-automotive-red text-2xl font-bold mb-6 font-display">🏎️ GTR CUBAUTO</h3>
             <p className="text-gray-300 leading-relaxed">
-              El futuro del automovilismo premium. Tecnología de vanguardia para conductores élite.
+              Tu tienda de confianza para repuestos automotrices de calidad. Servicio profesional desde 2020.
             </p>
           </div>
           
           <div>
-            <h4 className="text-green-400 text-lg font-semibold mb-6 uppercase tracking-wider">Enlaces Rápidos</h4>
+            <h4 className="text-automotive-red text-lg font-semibold mb-6">Categorías</h4>
             <ul className="space-y-3">
               <li>
                 <Link 
-                  href="/productos" 
-                  className="cyber-link text-gray-300"
-                  data-testid="footer-link-productos"
+                  href="/cars" 
+                  className="automotive-link text-gray-300"
+                  data-testid="footer-link-cars"
                 >
-                  🛒 Productos
+                  🚗 Repuestos para Autos
                 </Link>
               </li>
               <li>
                 <Link 
-                  href="/autos" 
-                  className="cyber-link text-gray-300"
-                  data-testid="footer-link-autos"
+                  href="/motorcycles" 
+                  className="automotive-link text-gray-300"
+                  data-testid="footer-link-motorcycles"
                 >
-                  🏎️ Autos GTR
+                  🏍️ Repuestos para Motos
                 </Link>
               </li>
               <li>
                 <Link 
-                  href="/motos" 
-                  className="cyber-link text-gray-300"
-                  data-testid="footer-link-motos"
+                  href="/electronics" 
+                  className="automotive-link text-gray-300"
+                  data-testid="footer-link-electronics"
                 >
-                  🏍️ Motocicletas
+                  🔧 Accesorios
                 </Link>
               </li>
               <li>
                 <Link 
-                  href="/juegos" 
-                  className="cyber-link text-gray-300"
-                  data-testid="footer-link-juegos"
+                  href="/ofertas" 
+                  className="automotive-link text-gray-300"
+                  data-testid="footer-link-ofertas"
                 >
-                  🎮 Juegos
+                  🏷️ Ofertas
                 </Link>
               </li>
             </ul>

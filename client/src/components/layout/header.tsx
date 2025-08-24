@@ -41,17 +41,17 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-black/80 backdrop-blur-lg border-b border-green-500/30 sticky top-0 z-50 shadow-lg cyber-grid" data-testid="header">
+    <header className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-medium" data-testid="header">
       <div className="container mx-auto px-4 py-4">
         <div className="flex flex-col lg:flex-row items-center justify-between">
           <div className="flex items-center justify-between w-full lg:w-auto mb-4 lg:mb-0">
-            <Link href="/" className="text-white text-3xl font-bold neon-text neon-pulse font-display" data-testid="logo">
-              🏎️ GTR CUBAUTOS
+            <Link href="/" className="text-automotive-black text-3xl font-bold font-display" data-testid="logo">
+              🏎️ GTR CUBAUTO
             </Link>
             <Button
               variant="ghost"
               size="sm"
-              className="lg:hidden text-green-400 hover:text-green-300 hover:bg-green-500/20"
+              className="lg:hidden text-gray-700 hover:text-red-600 hover:bg-gray-100"
               onClick={toggleMobileMenu}
               data-testid="mobile-menu-toggle"
             >
@@ -65,8 +65,8 @@ export default function Header() {
                 <li key={item.id}>
                   <Link
                     href={item.href}
-                    className={`cyber-link font-semibold block ${
-                      location === item.href ? 'text-green-400' : 'text-white'
+                    className={`automotive-link font-semibold block ${
+                      location === item.href ? 'text-automotive-red' : 'text-gray-700'
                     }`}
                     data-testid={`nav-${item.id}`}
                   >
@@ -81,15 +81,15 @@ export default function Header() {
             <form onSubmit={handleSearch} className="flex flex-1 lg:flex-none">
               <Input
                 type="text"
-                placeholder="🔍 Buscar productos futuristas..."
+                placeholder="🔍 Buscar repuestos..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="cyber-input rounded-r-none flex-1 lg:w-64 text-white placeholder:text-gray-400"
+                className="automotive-input rounded-r-none flex-1 lg:w-64"
                 data-testid="search-input"
               />
               <Button
                 type="submit"
-                className="btn-neon rounded-l-none px-6"
+                className="rounded-l-none px-6"
                 data-testid="search-button"
               >
                 <Search className="h-4 w-4" />
@@ -99,14 +99,14 @@ export default function Header() {
             <Button
               variant="ghost"
               size="sm"
-              className="relative text-green-400 hover:text-green-300 hover:bg-green-500/20 neon-glow"
+              className="relative text-gray-700 hover:text-red-600 hover:bg-gray-100"
               onClick={openCartModal}
               data-testid="cart-button"
             >
               <ShoppingCart className="h-5 w-5" />
               {cartItemCount > 0 && (
                 <span 
-                  className="absolute -top-2 -right-2 bg-green-500 text-black rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shadow-neon"
+                  className="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold"
                   data-testid="cart-count"
                 >
                   {cartItemCount}
