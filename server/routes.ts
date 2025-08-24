@@ -405,6 +405,180 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Wholesale Codes routes
+  app.get("/api/wholesale-codes", async (req, res) => {
+    try {
+      const codes = await storage.getAllWholesaleCodes();
+      res.json(codes);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch wholesale codes" });
+    }
+  });
+
+  app.post("/api/wholesale-codes", async (req, res) => {
+    try {
+      const codeData = req.body;
+      const newCode = await storage.createWholesaleCode(codeData);
+      res.json(newCode);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to create wholesale code" });
+    }
+  });
+
+  app.put("/api/wholesale-codes/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const updates = req.body;
+      const updatedCode = await storage.updateWholesaleCode(id, updates);
+      
+      if (!updatedCode) {
+        return res.status(404).json({ error: "Wholesale code not found" });
+      }
+      
+      res.json(updatedCode);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to update wholesale code" });
+    }
+  });
+
+  app.post("/api/wholesale-codes/validate", async (req, res) => {
+    try {
+      const { code } = req.body;
+      
+      if (!code) {
+        return res.status(400).json({ error: "Code is required" });
+      }
+      
+      const isValid = await storage.validateWholesaleCode(code);
+      const wholesaleCode = await storage.getWholesaleCode(code);
+      
+      res.json({ 
+        valid: isValid,
+        code: wholesaleCode 
+      });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to validate wholesale code" });
+    }
+  });
+
+  app.post("/api/wholesale-codes/use", async (req, res) => {
+    try {
+      const { code } = req.body;
+      
+      if (!code) {
+        return res.status(400).json({ error: "Code is required" });
+      }
+      
+      const success = await storage.useWholesaleCode(code);
+      
+      if (!success) {
+        return res.status(400).json({ error: "Invalid or expired code" });
+      }
+      
+      res.json({ success: true });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to use wholesale code" });
+    }
+  });
+
+  // Inventory Items routes
+  app.get("/api/inventory", async (req, res) => {
+    try {
+      const { category } = req.query;
+      
+      let items;
+      if (category) {
+        items = await storage.getInventoryItemsByCategory(category as string);
+      } else {
+        items = await storage.getAllInventoryItems();
+      }
+      
+      res.json(items);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch inventory items" });
+    }
+  });
+
+  app.get("/api/inventory/:id", async (req, res) => {
+    try {
+      const item = await storage.getInventoryItem(req.params.id);
+      
+      if (!item) {
+        return res.status(404).json({ error: "Inventory item not found" });
+      }
+      
+      res.json(item);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch inventory item" });
+    }
+  });
+
+  app.post("/api/inventory", async (req, res) => {
+    try {
+      const itemData = req.body;
+      const newItem = await storage.createInventoryItem(itemData);
+      res.json(newItem);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to create inventory item" });
+    }
+  });
+
+  app.put("/api/inventory/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const updates = req.body;
+      const updatedItem = await storage.updateInventoryItem(id, updates);
+      
+      if (!updatedItem) {
+        return res.status(404).json({ error: "Inventory item not found" });
+      }
+      
+      res.json(updatedItem);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to update inventory item" });
+    }
+  });
+
+  app.post("/api/inventory/:id/publish", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const product = await storage.publishInventoryItem(id);
+      
+      if (!product) {
+        return res.status(404).json({ error: "Inventory item not found" });
+      }
+      
+      res.json({ 
+        success: true, 
+        product,
+        message: "Product published successfully" 
+      });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to publish inventory item" });
+    }
+  });
+
+  app.post("/api/inventory/bulk-publish", async (req, res) => {
+    try {
+      const { ids, category } = req.body;
+      
+      if (!ids || !Array.isArray(ids)) {
+        return res.status(400).json({ error: "IDs array is required" });
+      }
+      
+      const products = await storage.bulkPublishInventoryItems(ids, category);
+      
+      res.json({ 
+        success: true, 
+        products,
+        published: products.length,
+        message: `${products.length} productos publicados exitosamente` 
+      });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to bulk publish inventory items" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

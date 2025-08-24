@@ -194,6 +194,38 @@ export const siteConfig = pgTable("site_config", {
   updatedAt: timestamp("updated_at").notNull().default(sql`now()`),
 });
 
+// Wholesale codes management
+export const wholesaleCodes = pgTable("wholesale_codes", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  code: varchar("code", { length: 50 }).notNull().unique(),
+  description: varchar("description", { length: 255 }),
+  isActive: boolean("is_active").default(true).notNull(),
+  expiresAt: timestamp("expires_at"),
+  maxUses: integer("max_uses"),
+  currentUses: integer("current_uses").default(0).notNull(),
+  discountPercent: integer("discount_percent").default(0).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+// Inventory management
+export const inventoryItems = pgTable("inventory_items", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: varchar("name", { length: 255 }).notNull(),
+  description: text("description"),
+  category: varchar("category", { length: 100 }).notNull(), // 'cars', 'motorcycles', 'electronics'
+  sku: varchar("sku", { length: 100 }).unique(),
+  costPrice: decimal("cost_price", { precision: 10, scale: 2 }).notNull(),
+  retailPrice: decimal("retail_price", { precision: 10, scale: 2 }).notNull(),
+  wholesalePrice: decimal("wholesale_price", { precision: 10, scale: 2 }).notNull(),
+  stock: integer("stock").default(0).notNull(),
+  minStock: integer("min_stock").default(0).notNull(),
+  imageUrl: varchar("image_url", { length: 500 }),
+  isPublished: boolean("is_published").default(false).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
 // Insert schemas
 export const insertUserSchema = createInsertSchema(users).omit({
   id: true,
@@ -265,6 +297,18 @@ export const insertSiteConfigSchema = createInsertSchema(siteConfig).omit({
   updatedAt: true,
 });
 
+export const insertWholesaleCodeSchema = createInsertSchema(wholesaleCodes).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertInventoryItemSchema = createInsertSchema(inventoryItems).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
 // Types
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
@@ -307,3 +351,9 @@ export type InsertSiteConfig = z.infer<typeof insertSiteConfigSchema>;
 
 export type ContentTemplate = typeof contentTemplates.$inferSelect;
 export type InsertContentTemplate = z.infer<typeof insertContentTemplateSchema>;
+
+export type WholesaleCode = typeof wholesaleCodes.$inferSelect;
+export type InsertWholesaleCode = z.infer<typeof insertWholesaleCodeSchema>;
+
+export type InventoryItem = typeof inventoryItems.$inferSelect;
+export type InsertInventoryItem = z.infer<typeof insertInventoryItemSchema>;

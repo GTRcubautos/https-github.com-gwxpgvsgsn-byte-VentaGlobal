@@ -31,6 +31,8 @@ import {
 } from 'recharts';
 import type { User, Order, RewardsConfig, CampaignConfig } from '@shared/schema';
 import SiteConfigPanel from '@/components/admin/site-config';
+import WholesaleCodes from '@/components/admin/wholesale-codes';
+import InventoryManagement from '@/components/admin/inventory-management';
 
 const rewardsConfigSchema = z.object({
   pointsPerVisit: z.number().min(0).max(1000),
@@ -195,7 +197,7 @@ export default function Admin() {
 
       <div className="container mx-auto px-6 py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-5 lg:grid-cols-11 mb-8 bg-white shadow-sm">
+          <TabsList className="grid w-full grid-cols-6 lg:grid-cols-12 mb-8 bg-white shadow-sm">
             <TabsTrigger value="dashboard" className="flex items-center gap-2" data-testid="tab-dashboard">
               <Home className="h-4 w-4" />
               <span className="hidden sm:inline">Dashboard</span>
@@ -207,6 +209,10 @@ export default function Admin() {
             <TabsTrigger value="inventory" className="flex items-center gap-2" data-testid="tab-inventory">
               <Package className="h-4 w-4" />
               <span className="hidden sm:inline">Inventario</span>
+            </TabsTrigger>
+            <TabsTrigger value="wholesale" className="flex items-center gap-2" data-testid="tab-wholesale">
+              <Tag className="h-4 w-4" />
+              <span className="hidden sm:inline">Mayorista</span>
             </TabsTrigger>
             <TabsTrigger value="sales" className="flex items-center gap-2" data-testid="tab-sales">
               <BarChart3 className="h-4 w-4" />
@@ -476,110 +482,12 @@ export default function Admin() {
 
           {/* Inventory Tab */}
           <TabsContent value="inventory" className="space-y-6">
-            <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold">Gestión de Inventario</h2>
-              <div className="flex gap-2">
-                <Button variant="outline" size="sm">
-                  <Upload className="h-4 w-4 mr-2" />
-                  Importar
-                </Button>
-                <Button size="sm">
-                  <Plus className="h-4 w-4 mr-2" />
-                  Nuevo Producto
-                </Button>
-              </div>
-            </div>
+            <InventoryManagement />
+          </TabsContent>
 
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
-              <Card>
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-2">
-                    <Package className="h-8 w-8 text-green-500" />
-                    <div>
-                      <p className="text-2xl font-bold">{inventoryData.filter(item => item.status === 'En Stock').length}</p>
-                      <p className="text-sm text-gray-500">En Stock</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-2">
-                    <AlertTriangle className="h-8 w-8 text-yellow-500" />
-                    <div>
-                      <p className="text-2xl font-bold">{inventoryData.filter(item => item.status === 'Stock Bajo').length}</p>
-                      <p className="text-sm text-gray-500">Stock Bajo</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-2">
-                    <Trash2 className="h-8 w-8 text-red-500" />
-                    <div>
-                      <p className="text-2xl font-bold">{inventoryData.filter(item => item.status === 'Agotado').length}</p>
-                      <p className="text-sm text-gray-500">Agotado</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-2">
-                    <DollarSign className="h-8 w-8 text-blue-500" />
-                    <div>
-                      <p className="text-2xl font-bold">${inventoryData.reduce((sum, item) => sum + (item.price * item.stock), 0).toFixed(0)}</p>
-                      <p className="text-sm text-gray-500">Valor Total</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Inventario de Productos</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {inventoryData.map((item) => (
-                    <div key={item.id} className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50">
-                      <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
-                          <Package className="h-6 w-6 text-gray-600" />
-                        </div>
-                        <div>
-                          <h4 className="font-medium">{item.name}</h4>
-                          <p className="text-sm text-gray-500">{item.category}</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-6">
-                        <div className="text-center">
-                          <p className="text-sm text-gray-500">Stock</p>
-                          <p className="font-medium">{item.stock}</p>
-                        </div>
-                        <div className="text-center">
-                          <p className="text-sm text-gray-500">Precio</p>
-                          <p className="font-medium">${item.price}</p>
-                        </div>
-                        <Badge 
-                          variant={
-                            item.status === 'En Stock' ? 'default' :
-                            item.status === 'Stock Bajo' ? 'secondary' : 'destructive'
-                          }
-                        >
-                          {item.status}
-                        </Badge>
-                        <Button variant="outline" size="sm">
-                          <Edit className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+          {/* Wholesale Codes Tab */}
+          <TabsContent value="wholesale" className="space-y-6">
+            <WholesaleCodes />
           </TabsContent>
 
           {/* Sales Tab */}

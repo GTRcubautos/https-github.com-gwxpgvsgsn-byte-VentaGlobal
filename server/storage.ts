@@ -6,7 +6,9 @@ import {
   type GameResult, type InsertGameResult,
   type CampaignConfig, type InsertCampaignConfig,
   type SocialPost, type InsertSocialPost,
-  type ContentTemplate, type InsertContentTemplate
+  type ContentTemplate, type InsertContentTemplate,
+  type WholesaleCode, type InsertWholesaleCode,
+  type InventoryItem, type InsertInventoryItem
 } from "@shared/schema";
 import { randomUUID } from "crypto";
 
@@ -62,6 +64,23 @@ export interface IStorage {
   getSiteConfig(key: string): Promise<any>;
   setSiteConfig(key: string, value: any, category?: string): Promise<void>;
   getAllSiteConfig(): Promise<Record<string, any>>;
+
+  // Wholesale Codes
+  getWholesaleCode(code: string): Promise<WholesaleCode | undefined>;
+  getAllWholesaleCodes(): Promise<WholesaleCode[]>;
+  createWholesaleCode(code: InsertWholesaleCode): Promise<WholesaleCode>;
+  updateWholesaleCode(id: string, updates: Partial<WholesaleCode>): Promise<WholesaleCode | undefined>;
+  validateWholesaleCode(code: string): Promise<boolean>;
+  useWholesaleCode(code: string): Promise<boolean>;
+
+  // Inventory Items
+  getInventoryItem(id: string): Promise<InventoryItem | undefined>;
+  getAllInventoryItems(): Promise<InventoryItem[]>;
+  getInventoryItemsByCategory(category: string): Promise<InventoryItem[]>;
+  createInventoryItem(item: InsertInventoryItem): Promise<InventoryItem>;
+  updateInventoryItem(id: string, updates: Partial<InventoryItem>): Promise<InventoryItem | undefined>;
+  publishInventoryItem(id: string): Promise<Product | undefined>;
+  bulkPublishInventoryItems(ids: string[], category?: string): Promise<Product[]>;
 }
 
 export class MemStorage implements IStorage {
@@ -74,6 +93,8 @@ export class MemStorage implements IStorage {
   private socialPosts: Map<string, SocialPost> = new Map();
   private contentTemplates: Map<string, ContentTemplate> = new Map();
   private siteConfig: Map<string, any> = new Map();
+  private wholesaleCodes: Map<string, WholesaleCode> = new Map();
+  private inventoryItems: Map<string, InventoryItem> = new Map();
 
   constructor() {
     this.initializeData();
@@ -99,7 +120,7 @@ export class MemStorage implements IStorage {
         retailPrice: "299.99",
         wholesalePrice: "249.99",
         imageUrl: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300",
-        specs: { brand: "TechBrand", storage: "128GB", ram: "8GB" },
+        specs: { brand: "TechBrand", storage: "128GB", ram: "8GB" } as any,
         isActive: true,
       },
       {
@@ -109,7 +130,7 @@ export class MemStorage implements IStorage {
         retailPrice: "899.99",
         wholesalePrice: "749.99",
         imageUrl: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300",
-        specs: { processor: "Intel i7", gpu: "RTX 3060", ram: "16GB" },
+        specs: { processor: "Intel i7", gpu: "RTX 3060", ram: "16GB" } as any,
         isActive: true,
       },
       {
@@ -119,7 +140,7 @@ export class MemStorage implements IStorage {
         retailPrice: "45999.00",
         wholesalePrice: "42999.00",
         imageUrl: "https://images.unsplash.com/photo-1583121274602-3e2820c69888?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&h=300",
-        specs: { engine: "V8", horsepower: "450HP", transmission: "Automatic" },
+        specs: { engine: "V8", horsepower: "450HP", transmission: "Automatic" } as any,
         isActive: true,
       },
       {
@@ -487,6 +508,125 @@ export class MemStorage implements IStorage {
       config[key] = value;
     });
     return config;
+  }
+
+  // Wholesale Codes methods
+  async getWholesaleCode(code: string): Promise<WholesaleCode | undefined> {
+    return Array.from(this.wholesaleCodes.values()).find(wc => wc.code === code);
+  }
+
+  async getAllWholesaleCodes(): Promise<WholesaleCode[]> {
+    return Array.from(this.wholesaleCodes.values());
+  }
+
+  async createWholesaleCode(code: InsertWholesaleCode): Promise<WholesaleCode> {
+    const newCode: WholesaleCode = {
+      id: randomUUID(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      ...code,
+    };
+    this.wholesaleCodes.set(newCode.id, newCode);
+    return newCode;
+  }
+
+  async updateWholesaleCode(id: string, updates: Partial<WholesaleCode>): Promise<WholesaleCode | undefined> {
+    const code = this.wholesaleCodes.get(id);
+    if (!code) return undefined;
+    
+    const updatedCode = { ...code, ...updates, updatedAt: new Date() };
+    this.wholesaleCodes.set(id, updatedCode);
+    return updatedCode;
+  }
+
+  async validateWholesaleCode(code: string): Promise<boolean> {
+    const wholesaleCode = await this.getWholesaleCode(code);
+    if (!wholesaleCode || !wholesaleCode.isActive) return false;
+    
+    if (wholesaleCode.expiresAt && new Date() > wholesaleCode.expiresAt) return false;
+    if (wholesaleCode.maxUses && wholesaleCode.currentUses >= wholesaleCode.maxUses) return false;
+    
+    return true;
+  }
+
+  async useWholesaleCode(code: string): Promise<boolean> {
+    const wholesaleCode = await this.getWholesaleCode(code);
+    if (!wholesaleCode || !(await this.validateWholesaleCode(code))) return false;
+    
+    await this.updateWholesaleCode(wholesaleCode.id, {
+      currentUses: wholesaleCode.currentUses + 1
+    });
+    
+    return true;
+  }
+
+  // Inventory Items methods
+  async getInventoryItem(id: string): Promise<InventoryItem | undefined> {
+    return this.inventoryItems.get(id);
+  }
+
+  async getAllInventoryItems(): Promise<InventoryItem[]> {
+    return Array.from(this.inventoryItems.values());
+  }
+
+  async getInventoryItemsByCategory(category: string): Promise<InventoryItem[]> {
+    return Array.from(this.inventoryItems.values()).filter(item => item.category === category);
+  }
+
+  async createInventoryItem(item: InsertInventoryItem): Promise<InventoryItem> {
+    const newItem: InventoryItem = {
+      id: randomUUID(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      ...item,
+    };
+    this.inventoryItems.set(newItem.id, newItem);
+    return newItem;
+  }
+
+  async updateInventoryItem(id: string, updates: Partial<InventoryItem>): Promise<InventoryItem | undefined> {
+    const item = this.inventoryItems.get(id);
+    if (!item) return undefined;
+    
+    const updatedItem = { ...item, ...updates, updatedAt: new Date() };
+    this.inventoryItems.set(id, updatedItem);
+    return updatedItem;
+  }
+
+  async publishInventoryItem(id: string): Promise<Product | undefined> {
+    const item = this.inventoryItems.get(id);
+    if (!item) return undefined;
+
+    const product: Product = {
+      id: randomUUID(),
+      name: item.name,
+      description: item.description || '',
+      category: item.category,
+      retailPrice: item.retailPrice,
+      wholesalePrice: item.wholesalePrice,
+      imageUrl: item.imageUrl || null,
+      specs: {} as any,
+      isActive: true,
+      createdAt: new Date(),
+    };
+
+    this.products.set(product.id, product);
+    await this.updateInventoryItem(id, { isPublished: true });
+    return product;
+  }
+
+  async bulkPublishInventoryItems(ids: string[], category?: string): Promise<Product[]> {
+    const publishedProducts: Product[] = [];
+    
+    for (const id of ids) {
+      const item = this.inventoryItems.get(id);
+      if (!item || (category && item.category !== category)) continue;
+      
+      const product = await this.publishInventoryItem(id);
+      if (product) publishedProducts.push(product);
+    }
+    
+    return publishedProducts;
   }
 }
 
