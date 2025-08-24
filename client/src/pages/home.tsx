@@ -326,7 +326,9 @@ export default function Home() {
                   <Card className="professional-card group cursor-pointer transition-all duration-300 hover:scale-105 overflow-hidden" data-testid={`category-${category.id}`}>
                     <div className={`h-40 bg-gradient-to-br ${category.gradient} relative overflow-hidden`}>
                       <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-                      <div className="absolute top-4 right-4">
+                      {/* Icon moved to top right corner */}
+                      <div className="absolute top-4 right-4 flex flex-col items-end gap-2">
+                        <IconComponent className="h-10 w-10 text-white drop-shadow-lg" />
                         {category.isAutomated && (
                           <Badge className="bg-green-600 text-white text-xs flex items-center gap-1">
                             <Zap className="h-3 w-3" />
@@ -344,26 +346,23 @@ export default function Home() {
                           </p>
                         )}
                       </div>
-                      <div className="absolute bottom-4 left-6">
-                        <IconComponent className="h-10 w-10 text-white drop-shadow-lg" />
-                      </div>
                     </div>
                     <CardContent className="p-6 bg-white">
-                      <h3 className="text-xl font-bold mb-2 text-automotive-black group-hover:text-automotive-red transition-colors">{category.name}</h3>
-                      <p className="text-automotive-gray mb-2 text-sm leading-relaxed">{category.description}</p>
+                      <h3 className="text-xl font-bold mb-2 text-automotive-black group-hover:text-red-600 transition-colors">{category.name}</h3>
+                      <p className="text-gray-600 mb-2 text-sm leading-relaxed group-hover:text-red-500 transition-colors">{category.description}</p>
                       <p className="text-green-600 mb-4 text-xs font-semibold leading-relaxed">
                         ✅ {category.automatedDescription}
                       </p>
                       <div className="flex items-center justify-between">
                         <div className="flex flex-col gap-1">
-                          <Badge className="bg-gray-100 text-automotive-gray border-0 text-xs px-3 py-1">
+                          <Badge className="bg-gray-100 text-gray-600 group-hover:text-red-500 border-0 text-xs px-3 py-1 transition-colors">
                             {category.count} productos total
                           </Badge>
                           <Badge className="bg-green-100 text-green-700 border-0 text-xs px-3 py-1">
                             {category.automatedCount} {category.offer.toLowerCase()}
                           </Badge>
                         </div>
-                        <div className="flex items-center text-automotive-red group-hover:text-automotive-red transition-colors">
+                        <div className="flex items-center text-red-600 group-hover:text-red-700 transition-colors">
                           <span className="text-sm font-semibold mr-1">Ver más</span>
                           <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-all duration-300" />
                         </div>
