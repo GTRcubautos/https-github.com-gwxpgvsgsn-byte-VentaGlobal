@@ -357,3 +357,159 @@ export type InsertWholesaleCode = z.infer<typeof insertWholesaleCodeSchema>;
 
 export type InventoryItem = typeof inventoryItems.$inferSelect;
 export type InsertInventoryItem = z.infer<typeof insertInventoryItemSchema>;
+
+// Sistema de Consentimientos y Políticas de Privacidad
+export const userConsents = pgTable("user_consents", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").references(() => users.id),
+  email: varchar("email"),
+  consentType: varchar("consent_type").notNull(), // privacy_policy, terms_service, cookies, marketing
+  consentVersion: varchar("consent_version").notNull(),
+  granted: boolean("granted").default(false),
+  ipAddress: varchar("ip_address"),
+  userAgent: varchar("user_agent"),
+  grantedAt: timestamp("granted_at").defaultNow(),
+  revokedAt: timestamp("revoked_at"),
+});
+
+// Respaldos de Datos
+export const dataBackups = pgTable("data_backups", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  backupType: varchar("backup_type").notNull(), // full, incremental, user_data
+  status: varchar("status").default("pending"), // pending, in_progress, completed, failed
+  filePath: varchar("file_path"),
+  fileSize: integer("file_size"),
+  checksum: varchar("checksum"),
+  createdAt: timestamp("created_at").defaultNow(),
+  completedAt: timestamp("completed_at"),
+  expiresAt: timestamp("expires_at"),
+});
+
+// Configuración de Privacidad del Usuario
+export const userPrivacySettings = pgTable("user_privacy_settings", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").unique().notNull().references(() => users.id),
+  allowMarketing: boolean("allow_marketing").default(false),
+  allowAnalytics: boolean("allow_analytics").default(true),
+  allowCookies: boolean("allow_cookies").default(true),
+  dataRetentionDays: integer("data_retention_days").default(365),
+  allowDataExport: boolean("allow_data_export").default(true),
+  allowDataDeletion: boolean("allow_data_deletion").default(true),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Seguridad Financiera y Transacciones
+export const transactionSecurity = pgTable("transaction_security", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  orderId: varchar("order_id").references(() => orders.id),
+  userId: varchar("user_id").references(() => users.id),
+  amount: decimal("amount", { precision: 10, scale: 2 }).notNull(),
+  currency: varchar("currency").default("USD"),
+  paymentMethod: varchar("payment_method"),
+  riskScore: integer("risk_score").default(0), // 0-100
+  fraudFlags: text("fraud_flags").array(),
+  ipAddress: varchar("ip_address"),
+  location: varchar("location"),
+  deviceFingerprint: varchar("device_fingerprint"),
+  status: varchar("status").default("pending"), // pending, approved, rejected, under_review
+  reviewedBy: varchar("reviewed_by"),
+  reviewedAt: timestamp("reviewed_at"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Límites de Transacciones
+export const transactionLimits = pgTable("transaction_limits", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").references(() => users.id),
+  userType: varchar("user_type").default("retail"), // retail, wholesale, vip
+  dailyLimit: decimal("daily_limit", { precision: 10, scale: 2 }).default("1000.00"),
+  monthlyLimit: decimal("monthly_limit", { precision: 10, scale: 2 }).default("10000.00"),
+  singleTransactionLimit: decimal("single_transaction_limit", { precision: 10, scale: 2 }).default("500.00"),
+  currentDailySpent: decimal("current_daily_spent", { precision: 10, scale: 2 }).default("0.00"),
+  currentMonthlySpent: decimal("current_monthly_spent", { precision: 10, scale: 2 }).default("0.00"),
+  lastResetDate: timestamp("last_reset_date").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Políticas de Privacidad y Términos (versiones)
+export const privacyPolicies = pgTable("privacy_policies", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  version: varchar("version").notNull().unique(),
+  title: varchar("title").notNull(),
+  content: text("content").notNull(),
+  isActive: boolean("is_active").default(false),
+  effectiveDate: timestamp("effective_date").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Solicitudes de datos (GDPR compliance)
+export const dataRequests = pgTable("data_requests", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").references(() => users.id),
+  requestType: varchar("request_type").notNull(), // export, delete, update
+  status: varchar("status").default("pending"), // pending, processing, completed, rejected
+  requestData: jsonb("request_data"),
+  responseData: jsonb("response_data"),
+  processedBy: varchar("processed_by"),
+  processedAt: timestamp("processed_at"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Schemas de inserción para las nuevas tablas
+export const insertUserConsentSchema = createInsertSchema(userConsents).omit({
+  id: true,
+  grantedAt: true,
+});
+
+export const insertDataBackupSchema = createInsertSchema(dataBackups).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertUserPrivacySettingsSchema = createInsertSchema(userPrivacySettings).omit({
+  id: true,
+  updatedAt: true,
+});
+
+export const insertTransactionSecuritySchema = createInsertSchema(transactionSecurity).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertTransactionLimitSchema = createInsertSchema(transactionLimits).omit({
+  id: true,
+  lastResetDate: true,
+  updatedAt: true,
+});
+
+export const insertPrivacyPolicySchema = createInsertSchema(privacyPolicies).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertDataRequestSchema = createInsertSchema(dataRequests).omit({
+  id: true,
+  createdAt: true,
+});
+
+// Tipos para las nuevas tablas
+export type UserConsent = typeof userConsents.$inferSelect;
+export type InsertUserConsent = z.infer<typeof insertUserConsentSchema>;
+
+export type DataBackup = typeof dataBackups.$inferSelect;
+export type InsertDataBackup = z.infer<typeof insertDataBackupSchema>;
+
+export type UserPrivacySettings = typeof userPrivacySettings.$inferSelect;
+export type InsertUserPrivacySettings = z.infer<typeof insertUserPrivacySettingsSchema>;
+
+export type TransactionSecurity = typeof transactionSecurity.$inferSelect;
+export type InsertTransactionSecurity = z.infer<typeof insertTransactionSecuritySchema>;
+
+export type TransactionLimit = typeof transactionLimits.$inferSelect;
+export type InsertTransactionLimit = z.infer<typeof insertTransactionLimitSchema>;
+
+export type PrivacyPolicy = typeof privacyPolicies.$inferSelect;
+export type InsertPrivacyPolicy = z.infer<typeof insertPrivacyPolicySchema>;
+
+export type DataRequest = typeof dataRequests.$inferSelect;
+export type InsertDataRequest = z.infer<typeof insertDataRequestSchema>;

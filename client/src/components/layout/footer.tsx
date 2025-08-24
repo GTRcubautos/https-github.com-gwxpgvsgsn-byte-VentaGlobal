@@ -104,10 +104,37 @@ export default function Footer() {
           </div>
         </div>
         
-        <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-300">
-          <p data-testid="footer-copyright">
-            &copy; 2024 TiendaOnline. Todos los derechos reservados.
-          </p>
+        <div className="border-t border-gray-700 mt-8 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center text-gray-300">
+            <div className="mb-4 md:mb-0">
+              <p data-testid="footer-copyright">
+                &copy; 2024 GTR CUBAUTO. Todos los derechos reservados.
+              </p>
+            </div>
+            <div className="flex flex-wrap justify-center md:justify-end gap-6 text-sm">
+              <Link 
+                href="/politica-privacidad" 
+                className="automotive-link text-gray-300"
+                data-testid="footer-link-privacy-policy"
+              >
+                Política de Privacidad
+              </Link>
+              <Link 
+                href="/terminos-condiciones" 
+                className="automotive-link text-gray-300"
+                data-testid="footer-link-terms"
+              >
+                Términos y Condiciones
+              </Link>
+              <Link 
+                href="/configuracion-privacidad" 
+                className="automotive-link text-gray-300 font-medium"
+                data-testid="footer-link-privacy-settings"
+              >
+                ⚙️ Mi Privacidad
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </footer>

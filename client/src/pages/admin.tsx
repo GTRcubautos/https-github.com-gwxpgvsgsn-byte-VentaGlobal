@@ -34,6 +34,9 @@ import type { User, Order, RewardsConfig, CampaignConfig } from '@shared/schema'
 import SiteConfigPanel from '@/components/admin/site-config';
 import WholesaleCodes from '@/components/admin/wholesale-codes';
 import InventoryManagement from '@/components/admin/inventory-management';
+import DataBackupPanel from '@/components/admin/data-backup-panel';
+import SecurityLogsPanel from '@/components/admin/security-logs-panel';
+import FinancialSecurityPanel from '@/components/security/financial-security-panel';
 
 const rewardsConfigSchema = z.object({
   pointsPerVisit: z.number().min(0).max(1000),
@@ -216,7 +219,7 @@ export default function Admin() {
 
       <div className="container mx-auto px-6 py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-6 lg:grid-cols-12 mb-8 bg-white border border-gray-200 p-1 gap-0">
+          <TabsList className="grid w-full grid-cols-6 lg:grid-cols-15 mb-8 bg-white border border-gray-200 p-1 gap-0">
             <TabsTrigger 
               value="dashboard" 
               className="group relative flex flex-col items-center gap-1 p-2 rounded-md hover:bg-gray-50 data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-all duration-200 border-0" 
@@ -346,6 +349,39 @@ export default function Admin() {
               <Settings className="h-5 w-5 text-gray-600 group-hover:text-gray-800 transition-colors duration-200" />
               <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute top-10 bg-black/90 text-white px-2 py-1 rounded text-center whitespace-nowrap z-10">
                 Configuración General
+              </span>
+            </TabsTrigger>
+            
+            <TabsTrigger 
+              value="security" 
+              className="group relative flex flex-col items-center gap-1 p-2 rounded-md hover:bg-gray-50 data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-all duration-200 border-0" 
+              data-testid="tab-security"
+            >
+              <Shield className="h-5 w-5 text-gray-600 group-hover:text-gray-800 transition-colors duration-200" />
+              <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute top-10 bg-black/90 text-white px-2 py-1 rounded text-center whitespace-nowrap z-10">
+                Logs de Seguridad
+              </span>
+            </TabsTrigger>
+            
+            <TabsTrigger 
+              value="backup" 
+              className="group relative flex flex-col items-center gap-1 p-2 rounded-md hover:bg-gray-50 data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-all duration-200 border-0" 
+              data-testid="tab-backup"
+            >
+              <Database className="h-5 w-5 text-gray-600 group-hover:text-gray-800 transition-colors duration-200" />
+              <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute top-10 bg-black/90 text-white px-2 py-1 rounded text-center whitespace-nowrap z-10">
+                Respaldos de Datos
+              </span>
+            </TabsTrigger>
+            
+            <TabsTrigger 
+              value="financial" 
+              className="group relative flex flex-col items-center gap-1 p-2 rounded-md hover:bg-gray-50 data-[state=active]:bg-gray-100 data-[state=active]:text-black transition-all duration-200 border-0" 
+              data-testid="tab-financial"
+            >
+              <CreditCard className="h-5 w-5 text-gray-600 group-hover:text-gray-800 transition-colors duration-200" />
+              <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute top-10 bg-black/90 text-white px-2 py-1 rounded text-center whitespace-nowrap z-10">
+                Seguridad Financiera
               </span>
             </TabsTrigger>
           </TabsList>
@@ -1761,6 +1797,21 @@ export default function Admin() {
           {/* Site Configuration Tab */}
           <TabsContent value="site-config" className="space-y-6">
             <SiteConfigPanel />
+          </TabsContent>
+
+          {/* Security Logs Tab */}
+          <TabsContent value="security" className="space-y-6">
+            <SecurityLogsPanel />
+          </TabsContent>
+
+          {/* Data Backup Tab */}
+          <TabsContent value="backup" className="space-y-6">
+            <DataBackupPanel />
+          </TabsContent>
+
+          {/* Financial Security Tab */}
+          <TabsContent value="financial" className="space-y-6">
+            <FinancialSecurityPanel />
           </TabsContent>
         </Tabs>
       </div>

@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertOrderSchema, insertGameResultSchema, insertRewardsConfigSchema, insertCampaignConfigSchema, insertSocialPostSchema, insertContentTemplateSchema } from "@shared/schema";
+import { insertOrderSchema, insertGameResultSchema, insertRewardsConfigSchema, insertCampaignConfigSchema, insertSocialPostSchema, insertContentTemplateSchema, insertUserConsentSchema, insertPrivacyPolicySchema, insertDataRequestSchema, insertUserPrivacySettingsSchema } from "@shared/schema";
 import Stripe from "stripe";
 
 if (!process.env.STRIPE_SECRET_KEY) {
@@ -576,6 +576,328 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
     } catch (error) {
       res.status(500).json({ error: "Failed to bulk publish inventory items" });
+    }
+  });
+
+  // Privacy and Consent Routes
+  
+  // Save user consent
+  app.post("/api/user-consents", async (req, res) => {
+    try {
+      const consentData = insertUserConsentSchema.parse(req.body);
+      const consent = await storage.createUserConsent(consentData);
+      
+      // Log security event
+      await storage.createSecurityLog({
+        userId: consentData.userId,
+        action: "consent_granted",
+        ipAddress: req.ip,
+        userAgent: req.get('User-Agent'),
+        details: { consentType: consentData.consentType, granted: consentData.granted },
+        riskLevel: "low"
+      });
+      
+      res.json(consent);
+    } catch (error) {
+      console.error("Error saving consent:", error);
+      res.status(500).json({ error: "Failed to save consent" });
+    }
+  });
+
+  // Get user consents
+  app.get("/api/user-consents/me", async (req, res) => {
+    try {
+      const userEmail = req.query.email as string;
+      if (!userEmail) {
+        return res.status(400).json({ error: "Email required" });
+      }
+      
+      const consents = await storage.getUserConsents(userEmail);
+      res.json(consents);
+    } catch (error) {
+      console.error("Error fetching consents:", error);
+      res.status(500).json({ error: "Failed to fetch consents" });
+    }
+  });
+
+  // Get current privacy policy
+  app.get("/api/privacy-policy/current", async (req, res) => {
+    try {
+      const policy = await storage.getCurrentPrivacyPolicy();
+      res.json(policy);
+    } catch (error) {
+      console.error("Error fetching privacy policy:", error);
+      res.status(500).json({ error: "Failed to fetch privacy policy" });
+    }
+  });
+
+  // User privacy settings
+  app.get("/api/privacy-settings/:userId", async (req, res) => {
+    try {
+      const settings = await storage.getUserPrivacySettings(req.params.userId);
+      res.json(settings);
+    } catch (error) {
+      console.error("Error fetching privacy settings:", error);
+      res.status(500).json({ error: "Failed to fetch privacy settings" });
+    }
+  });
+
+  app.put("/api/privacy-settings/:userId", async (req, res) => {
+    try {
+      const settingsData = insertUserPrivacySettingsSchema.parse(req.body);
+      const settings = await storage.updateUserPrivacySettings(req.params.userId, settingsData);
+      
+      // Log security event
+      await storage.createSecurityLog({
+        userId: req.params.userId,
+        action: "privacy_settings_updated",
+        ipAddress: req.ip,
+        userAgent: req.get('User-Agent'),
+        details: settingsData,
+        riskLevel: "low"
+      });
+      
+      res.json(settings);
+    } catch (error) {
+      console.error("Error updating privacy settings:", error);
+      res.status(500).json({ error: "Failed to update privacy settings" });
+    }
+  });
+
+  // Data requests (GDPR compliance)
+  app.post("/api/data-requests", async (req, res) => {
+    try {
+      const requestData = insertDataRequestSchema.parse(req.body);
+      const dataRequest = await storage.createDataRequest(requestData);
+      
+      // Log security event
+      await storage.createSecurityLog({
+        userId: requestData.userId,
+        action: "data_request_created",
+        ipAddress: req.ip,
+        userAgent: req.get('User-Agent'),
+        details: { requestType: requestData.requestType },
+        riskLevel: "medium"
+      });
+      
+      res.json(dataRequest);
+    } catch (error) {
+      console.error("Error creating data request:", error);
+      res.status(500).json({ error: "Failed to create data request" });
+    }
+  });
+
+  // Security logs (admin only)
+  app.get("/api/admin/security-logs", async (req, res) => {
+    try {
+      const logs = await storage.getSecurityLogs();
+      res.json(logs);
+    } catch (error) {
+      console.error("Error fetching security logs:", error);
+      res.status(500).json({ error: "Failed to fetch security logs" });
+    }
+  });
+
+  // Fraud detection and transaction security
+  app.post("/api/transaction-security/check", async (req, res) => {
+    try {
+      const { orderId, userId, amount, paymentMethod } = req.body;
+      
+      // Simple fraud detection logic
+      let riskScore = 0;
+      const fraudFlags: string[] = [];
+      
+      // Check amount
+      if (amount > 5000) {
+        riskScore += 30;
+        fraudFlags.push("high_amount");
+      }
+      
+      // Check user pattern
+      const userOrders = await storage.getUserOrders(userId);
+      const recentOrders = userOrders.filter(order => 
+        new Date(order.createdAt).getTime() > Date.now() - 24 * 60 * 60 * 1000
+      );
+      
+      if (recentOrders.length > 5) {
+        riskScore += 40;
+        fraudFlags.push("multiple_orders_24h");
+      }
+      
+      // Determine status
+      let status = "approved";
+      if (riskScore > 70) {
+        status = "rejected";
+      } else if (riskScore > 40) {
+        status = "under_review";
+      }
+      
+      const securityCheck = await storage.createTransactionSecurity({
+        orderId,
+        userId,
+        amount: amount.toString(),
+        paymentMethod,
+        riskScore,
+        fraudFlags,
+        ipAddress: req.ip,
+        location: req.get('CF-IPCountry') || 'Unknown',
+        deviceFingerprint: req.get('User-Agent'),
+        status
+      });
+      
+      res.json(securityCheck);
+    } catch (error) {
+      console.error("Error checking transaction security:", error);
+      res.status(500).json({ error: "Failed to check transaction security" });
+    }
+  });
+
+  // Admin Security and Backup Routes
+  app.get('/api/admin/security-logs', async (req, res) => {
+    try {
+      const logs = await storage.getSecurityLogs();
+      res.json(logs);
+    } catch (error) {
+      console.error('Error fetching security logs:', error);
+      res.status(500).json({ message: 'Error fetching security logs' });
+    }
+  });
+
+  app.post('/api/admin/backups', async (req, res) => {
+    try {
+      const { type } = req.body;
+      
+      // Create backup based on type
+      let backupData: any = {};
+      let description = '';
+      
+      switch (type) {
+        case 'full':
+          // Simulate full backup
+          const allUsers = await storage.getAllUsers();
+          const allOrders = await storage.getAllOrders();
+          const securityLogs = await storage.getSecurityLogs();
+          
+          backupData = {
+            users: allUsers,
+            orders: allOrders,
+            securityLogs: securityLogs.slice(-1000), // Last 1000 logs
+            timestamp: new Date().toISOString()
+          };
+          description = 'Respaldo Completo del Sistema';
+          break;
+          
+        case 'users':
+          backupData.users = await storage.getAllUsers();
+          description = 'Respaldo de Datos de Usuarios';
+          break;
+          
+        case 'orders':
+          backupData.orders = await storage.getAllOrders();
+          description = 'Respaldo de Órdenes y Transacciones';
+          break;
+          
+        case 'security':
+          backupData.securityLogs = await storage.getSecurityLogs();
+          description = 'Respaldo de Logs de Seguridad';
+          break;
+          
+        default:
+          return res.status(400).json({ message: 'Invalid backup type' });
+      }
+      
+      // Simulate backup creation
+      const backup = {
+        id: `backup-${Date.now()}`,
+        type,
+        description,
+        size: `${(JSON.stringify(backupData).length / 1024).toFixed(2)} KB`,
+        status: 'completed',
+        createdAt: new Date().toISOString(),
+        data: backupData
+      };
+      
+      // Log backup creation
+      await storage.createSecurityLog({
+        eventType: 'admin_action',
+        severity: 'medium',
+        userId: 'admin',
+        ipAddress: req.ip || 'unknown',
+        userAgent: req.get('User-Agent') || 'unknown',
+        details: {
+          action: 'backup_created',
+          backupType: type,
+          backupId: backup.id
+        }
+      });
+      
+      res.json(backup);
+    } catch (error) {
+      console.error('Error creating backup:', error);
+      res.status(500).json({ message: 'Error creating backup' });
+    }
+  });
+
+  app.get('/api/admin/backups', async (req, res) => {
+    try {
+      // Return simulated backup history
+      const backups = [
+        {
+          id: 'backup-1703123456789',
+          type: 'full',
+          description: 'Respaldo Completo del Sistema',
+          size: '2.5 MB',
+          status: 'completed',
+          createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
+        },
+        {
+          id: 'backup-1703012345678',
+          type: 'security',
+          description: 'Respaldo de Logs de Seguridad',
+          size: '450 KB',
+          status: 'completed',
+          createdAt: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
+        }
+      ];
+      
+      res.json(backups);
+    } catch (error) {
+      console.error('Error fetching backups:', error);
+      res.status(500).json({ message: 'Error fetching backups' });
+    }
+  });
+
+  app.get('/api/admin/backups/:id/download', async (req, res) => {
+    try {
+      const { id } = req.params;
+      
+      // Simulate backup download
+      const backupData = {
+        id,
+        exported_at: new Date().toISOString(),
+        data: 'Encrypted backup data would be here...'
+      };
+      
+      res.setHeader('Content-Type', 'application/json');
+      res.setHeader('Content-Disposition', `attachment; filename="backup-${id}.json"`);
+      res.json(backupData);
+      
+      // Log backup download
+      await storage.createSecurityLog({
+        eventType: 'admin_action',
+        severity: 'medium',
+        userId: 'admin',
+        ipAddress: req.ip || 'unknown',
+        userAgent: req.get('User-Agent') || 'unknown',
+        details: {
+          action: 'backup_downloaded',
+          backupId: id
+        }
+      });
+      
+    } catch (error) {
+      console.error('Error downloading backup:', error);
+      res.status(500).json({ message: 'Error downloading backup' });
     }
   });
 

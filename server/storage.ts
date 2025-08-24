@@ -8,7 +8,15 @@ import {
   type SocialPost, type InsertSocialPost,
   type ContentTemplate, type InsertContentTemplate,
   type WholesaleCode, type InsertWholesaleCode,
-  type InventoryItem, type InsertInventoryItem
+  type InventoryItem, type InsertInventoryItem,
+  type UserConsent, type InsertUserConsent,
+  type DataBackup, type InsertDataBackup,
+  type UserPrivacySettings, type InsertUserPrivacySettings,
+  type TransactionSecurity, type InsertTransactionSecurity,
+  type TransactionLimit, type InsertTransactionLimit,
+  type PrivacyPolicy, type InsertPrivacyPolicy,
+  type DataRequest, type InsertDataRequest,
+  type SecurityLog, type InsertSecurityLog
 } from "@shared/schema";
 import { randomUUID } from "crypto";
 
@@ -81,6 +89,18 @@ export interface IStorage {
   updateInventoryItem(id: string, updates: Partial<InventoryItem>): Promise<InventoryItem | undefined>;
   publishInventoryItem(id: string): Promise<Product | undefined>;
   bulkPublishInventoryItems(ids: string[], category?: string): Promise<Product[]>;
+
+  // Security and Privacy
+  createUserConsent(consent: InsertUserConsent): Promise<UserConsent>;
+  getUserConsents(email: string): Promise<UserConsent[]>;
+  getCurrentPrivacyPolicy(): Promise<PrivacyPolicy | undefined>;
+  getUserPrivacySettings(userId: string): Promise<UserPrivacySettings | undefined>;
+  updateUserPrivacySettings(userId: string, settings: InsertUserPrivacySettings): Promise<UserPrivacySettings>;
+  createDataRequest(request: InsertDataRequest): Promise<DataRequest>;
+  createSecurityLog(log: InsertSecurityLog): Promise<SecurityLog>;
+  getSecurityLogs(): Promise<SecurityLog[]>;
+  createTransactionSecurity(security: InsertTransactionSecurity): Promise<TransactionSecurity>;
+  getUserOrders(userId: string): Promise<Order[]>;
 }
 
 export class MemStorage implements IStorage {
@@ -95,6 +115,16 @@ export class MemStorage implements IStorage {
   private siteConfig: Map<string, any> = new Map();
   private wholesaleCodes: Map<string, WholesaleCode> = new Map();
   private inventoryItems: Map<string, InventoryItem> = new Map();
+  
+  // Security and Privacy Storage
+  private userConsents: Map<string, UserConsent> = new Map();
+  private dataBackups: Map<string, DataBackup> = new Map();
+  private privacySettings: Map<string, UserPrivacySettings> = new Map();
+  private transactionSecurity: Map<string, TransactionSecurity> = new Map();
+  private transactionLimits: Map<string, TransactionLimit> = new Map();
+  private privacyPolicies: Map<string, PrivacyPolicy> = new Map();
+  private dataRequests: Map<string, DataRequest> = new Map();
+  private securityLogs: Map<string, SecurityLog> = new Map();
 
   constructor() {
     this.initializeData();
@@ -627,6 +657,115 @@ export class MemStorage implements IStorage {
     }
     
     return publishedProducts;
+  }
+
+  // Security and Privacy Implementation
+  async createUserConsent(consent: InsertUserConsent): Promise<UserConsent> {
+    const newConsent: UserConsent = {
+      id: randomUUID(),
+      grantedAt: new Date(),
+      revokedAt: null,
+      ...consent,
+    };
+    this.userConsents.set(newConsent.id, newConsent);
+    return newConsent;
+  }
+
+  async getUserConsents(email: string): Promise<UserConsent[]> {
+    return Array.from(this.userConsents.values()).filter(consent => 
+      consent.email === email && !consent.revokedAt
+    );
+  }
+
+  async getCurrentPrivacyPolicy(): Promise<PrivacyPolicy | undefined> {
+    const policies = Array.from(this.privacyPolicies.values());
+    return policies.find(policy => policy.isActive) || {
+      id: randomUUID(),
+      version: "1.0",
+      title: "Política de Privacidad GTR CUBAUTO",
+      content: "Política de privacidad en desarrollo...",
+      isActive: true,
+      effectiveDate: new Date(),
+      createdAt: new Date()
+    };
+  }
+
+  async getUserPrivacySettings(userId: string): Promise<UserPrivacySettings | undefined> {
+    return Array.from(this.privacySettings.values()).find(settings => 
+      settings.userId === userId
+    );
+  }
+
+  async updateUserPrivacySettings(userId: string, settingsData: InsertUserPrivacySettings): Promise<UserPrivacySettings> {
+    const existing = await this.getUserPrivacySettings(userId);
+    
+    if (existing) {
+      const updated: UserPrivacySettings = {
+        ...existing,
+        ...settingsData,
+        updatedAt: new Date()
+      };
+      this.privacySettings.set(existing.id, updated);
+      return updated;
+    } else {
+      const newSettings: UserPrivacySettings = {
+        id: randomUUID(),
+        updatedAt: new Date(),
+        ...settingsData,
+      };
+      this.privacySettings.set(newSettings.id, newSettings);
+      return newSettings;
+    }
+  }
+
+  async createDataRequest(request: InsertDataRequest): Promise<DataRequest> {
+    const newRequest: DataRequest = {
+      id: randomUUID(),
+      createdAt: new Date(),
+      processedAt: null,
+      ...request,
+    };
+    this.dataRequests.set(newRequest.id, newRequest);
+    return newRequest;
+  }
+
+  async createSecurityLog(log: InsertSecurityLog): Promise<SecurityLog> {
+    const newLog: SecurityLog = {
+      id: randomUUID(),
+      createdAt: new Date(),
+      ...log,
+    };
+    this.securityLogs.set(newLog.id, newLog);
+    return newLog;
+  }
+
+  async getSecurityLogs(): Promise<SecurityLog[]> {
+    return Array.from(this.securityLogs.values()).sort((a, b) => 
+      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+  }
+
+  async createTransactionSecurity(security: InsertTransactionSecurity): Promise<TransactionSecurity> {
+    const newSecurity: TransactionSecurity = {
+      id: randomUUID(),
+      createdAt: new Date(),
+      reviewedAt: null,
+      ...security,
+    };
+    this.transactionSecurity.set(newSecurity.id, newSecurity);
+    return newSecurity;
+  }
+
+  async getUserOrders(userId: string): Promise<Order[]> {
+    return Array.from(this.orders.values()).filter(order => order.userId === userId);
+  }
+
+  async getAllUsers(): Promise<User[]> {
+    return Array.from(this.users.values());
+  }
+
+  async getAllOrders(): Promise<Order[]> {
+    return Array.from(this.orders.values());
   }
 }
 
