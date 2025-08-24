@@ -362,7 +362,7 @@ export function SocialAutomation() {
                     className="h-20 flex-col bg-black hover:bg-gray-800 text-white shadow-sm"
                   >
                     <Send className="h-6 w-6 mb-2" />
-                    Post Manual
+                    <span className="text-white">Post Manual</span>
                   </Button>
                   <Button 
                     onClick={() => setIsCreatingCampaign(true)} 
@@ -370,7 +370,7 @@ export function SocialAutomation() {
                     className="h-20 flex-col border-gray-300 text-gray-700 hover:bg-gray-50"
                   >
                     <Bot className="h-6 w-6 mb-2" />
-                    Auto-Post
+                    <span className="text-white">Auto-Post</span>
                   </Button>
                 </div>
                 

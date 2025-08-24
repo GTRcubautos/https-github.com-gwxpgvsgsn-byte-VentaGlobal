@@ -242,26 +242,26 @@ export default function Checkout() {
   return (
     <div className="min-h-screen bg-gray-50" data-testid="checkout-page">
       {/* Header */}
-      <div className="bg-black text-white py-8">
+      <div className="bg-black text-white py-4">
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-4xl font-bold mb-2">Checkout GTR CUBAUTO</h1>
-              <p className="text-gray-300 text-lg">Sistema de pago completamente automatizado</p>
+              <h1 className="text-2xl font-bold mb-1">GTR CUBAUTO</h1>
+              <p className="text-gray-300 text-sm">Pago automatizado</p>
             </div>
-            <Badge className="bg-red-600 text-white px-4 py-2">
-              <Shield className="h-4 w-4 mr-2" />
-              100% Automatizado
+            <Badge className="bg-red-600 text-white px-2 py-1 text-xs">
+              <Shield className="h-3 w-3 mr-1" />
+              Seguro
             </Badge>
           </div>
         </div>
       </div>
 
       {/* Cart Review Section */}
-      <section className="py-8 bg-white border-b">
+      <section className="py-4 bg-white border-b">
         <div className="container mx-auto px-6">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl font-bold mb-6 text-black">Resumen del pedido</h2>
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-lg font-bold mb-4 text-black">Resumen del pedido</h2>
             <div className="space-y-4">
               {cart.map((item) => (
                 <div key={item.id} className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg border">
@@ -330,39 +330,39 @@ export default function Checkout() {
       </section>
 
       {/* Payment Methods Section */}
-      <section className="py-8 bg-gray-100">
+      <section className="py-4 bg-gray-100">
         <div className="container mx-auto px-6">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl font-bold mb-6 text-black">Métodos de pago automatizados</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-lg font-bold mb-4 text-black">Métodos de pago automatizados</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {paymentMethods.map((method) => {
                 const MethodIcon = method.icon;
                 return (
                   <div
                     key={method.id}
-                    className={`cursor-pointer transition-all duration-300 border-2 rounded-lg p-6 ${
+                    className={`cursor-pointer transition-all duration-200 border-2 rounded-lg p-4 ${
                       selectedPayment === method.id
-                        ? 'border-red-600 bg-red-50 shadow-lg scale-105'
+                        ? 'border-red-600 bg-red-50 shadow-md'
                         : 'border-gray-300 hover:border-gray-500 hover:bg-white bg-white'
                     }`}
                     onClick={() => setSelectedPayment(method.id)}
                     data-testid={`payment-method-${method.id}`}
                   >
-                    <div className={`w-12 h-12 rounded-lg bg-gradient-to-r ${method.color} flex items-center justify-center mb-4`}>
-                      <MethodIcon className="h-6 w-6 text-white" />
+                    <div className={`w-8 h-8 rounded-lg bg-gradient-to-r ${method.color} flex items-center justify-center mb-3`}>
+                      <MethodIcon className="h-4 w-4 text-white" />
                     </div>
-                    <h3 className="font-bold mb-2 text-black">{method.name}</h3>
-                    <p className="text-sm text-gray-600 mb-4">{method.description}</p>
-                    <div className="flex gap-2">
+                    <h3 className="font-semibold mb-1 text-black text-sm">{method.name}</h3>
+                    <p className="text-xs text-gray-600 mb-3">{method.description}</p>
+                    <div className="flex gap-1">
                       {method.instant && (
-                        <Badge className="bg-green-100 text-green-800 text-xs">
-                          <Zap className="h-3 w-3 mr-1" />
-                          Instantáneo
+                        <Badge className="bg-green-100 text-green-800 text-xs px-2 py-1">
+                          <Zap className="h-2 w-2 mr-1" />
+                          Rápido
                         </Badge>
                       )}
-                      <Badge className="bg-red-100 text-red-800 text-xs">
-                        <Shield className="h-3 w-3 mr-1" />
-                        100% Automatizado
+                      <Badge className="bg-red-100 text-red-800 text-xs px-2 py-1">
+                        <Shield className="h-2 w-2 mr-1" />
+                        Auto
                       </Badge>
                     </div>
                   </div>

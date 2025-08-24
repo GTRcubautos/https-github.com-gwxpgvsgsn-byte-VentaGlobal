@@ -66,9 +66,10 @@ export default function CartModal() {
   });
 
   const paymentMethods = [
-    { id: 'card', name: 'Tarjeta de Crédito', icon: CreditCard, description: 'Visa, MasterCard, Amex (Stripe)' },
+    { id: 'card', name: 'Tarjeta de Crédito', icon: CreditCard, description: 'Visa, MasterCard, Amex' },
     { id: 'zelle', name: 'Zelle', icon: Smartphone, description: 'Transferencia instantánea' },
     { id: 'paypal', name: 'PayPal', icon: DollarSign, description: 'Pago seguro en línea' },
+    { id: 'cash_delivery', name: 'Pago Contra Entrega', icon: DollarSign, description: 'Paga al recibir el producto' },
   ];
 
   const handleCheckout = () => {
@@ -100,54 +101,54 @@ export default function CartModal() {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="max-w-4xl max-h-[95vh] overflow-hidden p-0 bg-gradient-to-br from-white to-gray-50" data-testid="cart-modal">
+      <DialogContent className="max-w-3xl max-h-[80vh] overflow-hidden p-0 bg-white border border-gray-300 shadow-2xl" data-testid="cart-modal">
         <div className="flex flex-col h-full">
           {/* Header */}
-          <div className="p-6 bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 text-white">
+          <div className="p-4 bg-gradient-to-r from-gray-900 to-black text-white border-b border-gray-200">
             <DialogHeader>
-              <DialogTitle className="text-3xl font-bold flex items-center gap-3">
-                <ShoppingCart className="h-8 w-8" />
-                Carrito GTR CUBAUTOS
+              <DialogTitle className="text-2xl font-bold flex items-center gap-3">
+                <ShoppingCart className="h-6 w-6" />
+                GTR CUBAUTO
                 {cart.length > 0 && (
-                  <Badge className="bg-white/20 text-white backdrop-blur-sm px-3 py-1">
-                    {cart.length} {cart.length === 1 ? 'artículo' : 'artículos'}
+                  <Badge className="bg-red-600 text-white px-2 py-1 text-sm">
+                    {cart.length} {cart.length === 1 ? 'producto' : 'productos'}
                   </Badge>
                 )}
               </DialogTitle>
             </DialogHeader>
           </div>
 
-          <div className="flex-1 overflow-y-auto p-6">
+          <div className="flex-1 overflow-y-auto p-4">
             {cart.length === 0 ? (
-              <div className="text-center py-16" data-testid="empty-cart">
-                <div className="bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full w-24 h-24 flex items-center justify-center mx-auto mb-6">
-                  <ShoppingCart className="h-12 w-12 text-blue-600" />
+              <div className="text-center py-12" data-testid="empty-cart">
+                <div className="bg-gray-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                  <ShoppingCart className="h-8 w-8 text-gray-600" />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-700 mb-4">Tu carrito está vacío</h3>
-                <p className="text-gray-500 mb-6">¡Descubre nuestros vehículos premium y tecnología de vanguardia!</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">Carrito vacío</h3>
+                <p className="text-gray-600 mb-4">Agrega productos automotrices</p>
                 <Button 
                   onClick={() => setIsOpen(false)}
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
+                  className="bg-red-600 hover:bg-red-700 text-white"
                 >
                   Continuar comprando
                 </Button>
               </div>
             ) : (
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                 {/* Cart Items */}
-                <div className="lg:col-span-2 space-y-4">
-                  <h3 className="text-xl font-bold text-gray-900 mb-4">Productos en tu carrito</h3>
+                <div className="lg:col-span-2 space-y-3">
+                  <h3 className="text-lg font-bold text-gray-900 mb-3">Productos</h3>
                   {cart.map((item) => (
                     <Card 
                       key={item.id} 
-                      className="overflow-hidden border-0 shadow-lg hover:shadow-xl transition-shadow duration-300"
+                      className="overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200"
                       data-testid={`cart-item-${item.id}`}
                     >
                       <CardContent className="p-0">
                         <div className="flex items-center">
                           {/* Product Image */}
                           {item.imageUrl && (
-                            <div className="w-24 h-24 bg-gradient-to-br from-gray-100 to-gray-200 flex-shrink-0">
+                            <div className="w-16 h-16 bg-gray-100 flex-shrink-0">
                               <img 
                                 src={item.imageUrl} 
                                 alt={item.name}
@@ -157,9 +158,9 @@ export default function CartModal() {
                           )}
                           
                           {/* Product Details */}
-                          <div className="flex-1 p-4">
+                          <div className="flex-1 p-3">
                             <div className="flex justify-between items-start mb-2">
-                              <h4 className="font-bold text-lg text-gray-900" data-testid={`item-name-${item.id}`}>
+                              <h4 className="font-semibold text-base text-black" data-testid={`item-name-${item.id}`}>
                                 {item.name}
                               </h4>
                               <Button
@@ -169,7 +170,7 @@ export default function CartModal() {
                                 className="text-red-600 hover:text-red-700 hover:bg-red-50 p-1"
                                 data-testid={`remove-item-${item.id}`}
                               >
-                                <Trash2 className="h-4 w-4" />
+                                <X className="h-4 w-4" />
                               </Button>
                             </div>
                             
@@ -181,13 +182,13 @@ export default function CartModal() {
                                   size="sm"
                                   onClick={() => updateQuantity(item.id, item.quantity - 1)}
                                   disabled={item.quantity <= 1}
-                                  className="w-8 h-8 p-0 border-gray-300"
+                                  className="w-7 h-7 p-0 border-gray-300 text-gray-600"
                                   data-testid={`decrease-quantity-${item.id}`}
                                 >
                                   <Minus className="h-3 w-3" />
                                 </Button>
                                 <span 
-                                  className="w-12 text-center font-semibold text-gray-900"
+                                  className="w-8 text-center font-semibold text-gray-900 text-sm"
                                   data-testid={`item-quantity-${item.id}`}
                                 >
                                   {item.quantity}
@@ -196,7 +197,7 @@ export default function CartModal() {
                                   variant="outline"
                                   size="sm"
                                   onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                                  className="w-8 h-8 p-0 border-gray-300"
+                                  className="w-7 h-7 p-0 border-gray-300 text-gray-600"
                                   data-testid={`increase-quantity-${item.id}`}
                                 >
                                   <Plus className="h-3 w-3" />
@@ -205,10 +206,10 @@ export default function CartModal() {
                               
                               {/* Price */}
                               <div className="text-right">
-                                <div className="text-sm text-gray-500">
+                                <div className="text-xs text-gray-500">
                                   ${item.price.toFixed(2)} c/u
                                 </div>
-                                <div className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                                <div className="text-lg font-bold text-red-600">
                                   ${(item.price * item.quantity).toFixed(2)}
                                 </div>
                               </div>
@@ -222,40 +223,34 @@ export default function CartModal() {
 
                 {/* Order Summary */}
                 <div className="lg:col-span-1">
-                  <Card className="sticky top-4 border-0 shadow-xl bg-gradient-to-br from-white to-gray-50">
-                    <CardContent className="p-6">
-                      <h3 className="text-xl font-bold text-gray-900 mb-6">Resumen del pedido</h3>
+                  <Card className="sticky top-4 border border-gray-200 shadow-sm bg-white">
+                    <CardContent className="p-4">
+                      <h3 className="text-lg font-bold text-black mb-4">Resumen</h3>
                       
                       {/* Price Breakdown */}
-                      <div className="space-y-3 mb-6">
-                        <div className="flex justify-between text-gray-600">
+                      <div className="space-y-2 mb-4">
+                        <div className="flex justify-between text-gray-600 text-sm">
                           <span>Subtotal</span>
                           <span>${total.toFixed(2)}</span>
                         </div>
-                        <div className="flex justify-between text-gray-600">
+                        <div className="flex justify-between text-gray-600 text-sm">
                           <span>Envío</span>
                           <span className={shipping === 0 ? 'text-green-600 font-semibold' : ''}>
                             {shipping === 0 ? 'GRATIS' : `$${shipping.toFixed(2)}`}
                           </span>
                         </div>
-                        {shipping === 0 && (
-                          <div className="flex items-center gap-2 text-green-600 text-sm">
-                            <Shield className="h-4 w-4" />
-                            ¡Envío gratis por compra mayor a $500!
-                          </div>
-                        )}
                         <hr className="border-gray-200" />
-                        <div className="flex justify-between text-xl font-bold text-gray-900">
+                        <div className="flex justify-between text-lg font-bold text-black">
                           <span>Total</span>
-                          <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                          <span className="text-red-600">
                             ${finalTotal.toFixed(2)}
                           </span>
                         </div>
                       </div>
 
                       {/* Payment Methods */}
-                      <div className="mb-6">
-                        <h4 className="font-semibold text-gray-900 mb-3">Método de pago</h4>
+                      <div className="mb-4">
+                        <h4 className="font-semibold text-black mb-2 text-sm">Método de pago</h4>
                         <div className="space-y-2">
                           {paymentMethods.map((method) => {
                             const IconComponent = method.icon;
@@ -263,24 +258,24 @@ export default function CartModal() {
                               <button
                                 key={method.id}
                                 onClick={() => setSelectedPayment(method.id)}
-                                className={`w-full p-3 rounded-lg border-2 transition-all duration-200 ${
+                                className={`w-full p-2 rounded border transition-all duration-200 text-left ${
                                   selectedPayment === method.id
-                                    ? 'border-blue-500 bg-blue-50'
+                                    ? 'border-red-600 bg-red-50'
                                     : 'border-gray-200 hover:border-gray-300'
                                 }`}
                                 data-testid={`payment-method-${method.id}`}
                               >
-                                <div className="flex items-center gap-3">
-                                  <IconComponent className={`h-5 w-5 ${
-                                    selectedPayment === method.id ? 'text-blue-600' : 'text-gray-600'
+                                <div className="flex items-center gap-2">
+                                  <IconComponent className={`h-4 w-4 ${
+                                    selectedPayment === method.id ? 'text-red-600' : 'text-gray-600'
                                   }`} />
-                                  <div className="text-left flex-1">
-                                    <div className={`font-medium ${
-                                      selectedPayment === method.id ? 'text-blue-900' : 'text-gray-900'
+                                  <div className="flex-1">
+                                    <div className={`font-medium text-sm ${
+                                      selectedPayment === method.id ? 'text-red-900' : 'text-gray-900'
                                     }`}>
                                       {method.name}
                                     </div>
-                                    <div className="text-sm text-gray-500">
+                                    <div className="text-xs text-gray-500">
                                       {method.description}
                                     </div>
                                   </div>
@@ -295,7 +290,7 @@ export default function CartModal() {
                       <Button
                         onClick={handleCheckout}
                         disabled={!selectedPayment || cart.length === 0 || createOrderMutation.isPending}
-                        className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white text-lg py-3 shadow-lg hover:shadow-xl transition-all duration-300"
+                        className="w-full bg-red-600 hover:bg-red-700 text-white py-2 shadow-sm hover:shadow-md transition-all duration-200"
                         data-testid="checkout-button"
                       >
                         {createOrderMutation.isPending ? (
@@ -305,16 +300,16 @@ export default function CartModal() {
                           </div>
                         ) : (
                           <div className="flex items-center gap-2">
-                            <CreditCard className="h-5 w-5" />
-                            Proceder al Pago GTR
+                            <CreditCard className="h-4 w-4" />
+                            Proceder al Pago
                           </div>
                         )}
                       </Button>
 
                       {/* Security Badge */}
-                      <div className="mt-4 flex items-center justify-center gap-2 text-sm text-gray-500">
-                        <Shield className="h-4 w-4" />
-                        Pago 100% seguro y protegido
+                      <div className="mt-3 flex items-center justify-center gap-2 text-xs text-gray-500">
+                        <Shield className="h-3 w-3" />
+                        Pago seguro
                       </div>
                     </CardContent>
                   </Card>

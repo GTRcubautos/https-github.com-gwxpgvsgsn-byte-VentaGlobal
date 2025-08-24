@@ -180,7 +180,7 @@ export default function Admin() {
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-automotive-black">GTR CUBAUTO Admin</h1>
+              <h1 className="text-3xl font-bold text-black">GTR CUBAUTO Admin</h1>
               <p className="text-automotive-gray">Ciudad Darío • Today {new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })}</p>
             </div>
             <div className="flex items-center space-x-4">
