@@ -258,13 +258,6 @@ export function SocialAutomation() {
             <Zap className="h-4 w-4 mr-2" />
             Campaña Automática
           </Button>
-          <Button 
-            onClick={() => setIsCreatingPost(true)}
-            className="bg-black hover:bg-gray-800 text-white"
-          >
-            <Plus className="h-4 w-4 mr-2" />
-            Nuevo Post
-          </Button>
         </div>
       </div>
 
@@ -367,7 +360,7 @@ export function SocialAutomation() {
                   <Button 
                     onClick={() => setIsCreatingCampaign(true)} 
                     variant="outline" 
-                    className="h-20 flex-col border-gray-300 text-gray-700 hover:bg-gray-50"
+                    className="h-20 flex-col border-gray-300 text-white hover:bg-gray-50"
                   >
                     <Bot className="h-6 w-6 mb-2" />
                     <span className="text-white">Auto-Post</span>
@@ -376,7 +369,7 @@ export function SocialAutomation() {
                 
                 {/* Platform Selection */}
                 <div>
-                  <Label className="text-sm font-medium text-gray-700">Plataformas de Destino</Label>
+                  <Label className="text-sm font-medium text-white">Plataformas de Destino</Label>
                   <div className="grid grid-cols-3 gap-2 mt-2">
                     {platforms.map((platform) => {
                       const PlatformIcon = platform.icon;
@@ -394,11 +387,11 @@ export function SocialAutomation() {
                             );
                           }}
                           className={`flex-col h-16 border-gray-300 ${
-                            isSelected ? 'bg-gray-800 text-white hover:bg-gray-700' : 'text-gray-700 hover:bg-gray-50'
+                            isSelected ? 'bg-gray-800 text-white hover:bg-gray-700' : 'text-white hover:bg-gray-800'
                           }`}
                         >
                           <PlatformIcon className="h-4 w-4 mb-1" />
-                          <span className="text-xs">{platform.name}</span>
+                          <span className="text-xs text-white">{platform.name}</span>
                         </Button>
                       );
                     })}
@@ -407,14 +400,14 @@ export function SocialAutomation() {
 
                 {/* Quick Template Actions */}
                 <div className="border-t border-gray-200 pt-4">
-                  <Label className="text-sm font-medium mb-2 block text-gray-700">Plantillas Rápidas</Label>
+                  <Label className="text-sm font-medium mb-2 block text-white">Plantillas Rápidas</Label>
                   <div className="space-y-2">
                     {templates.slice(0, 3).map((template) => (
                       <Button
                         key={template.id}
                         variant="ghost"
                         size="sm"
-                        className="w-full justify-start text-gray-700 hover:bg-gray-100"
+                        className="w-full justify-start text-white hover:bg-gray-800"
                         onClick={() => generateAutomatedContentMutation.mutate({
                           templateId: template.id,
                           platforms: selectedPlatforms.length > 0 ? selectedPlatforms : ['facebook', 'instagram']
@@ -455,9 +448,9 @@ export function SocialAutomation() {
                             );
                           })}
                         </div>
-                        <div className="flex-1">
-                          <p className="text-sm font-medium truncate">{post.content}</p>
-                          <p className="text-xs text-muted-foreground">
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium truncate overflow-hidden whitespace-nowrap">{post.content}</p>
+                          <p className="text-xs text-muted-foreground truncate overflow-hidden whitespace-nowrap">
                             {post.scheduledAt && format(new Date(post.scheduledAt), "MMM d, HH:mm", { locale: es })}
                           </p>
                         </div>
