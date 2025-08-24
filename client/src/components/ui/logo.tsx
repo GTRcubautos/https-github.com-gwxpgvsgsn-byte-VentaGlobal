@@ -1,5 +1,5 @@
 import React from 'react';
-import gtrLogo from '@assets/gtr_cubauto_logo.jpeg';
+import gtrLogo from '@assets/gtr_cubauto_logo_new.png';
 
 interface LogoProps {
   size?: 'sm' | 'md' | 'lg' | 'xl';
@@ -49,46 +49,30 @@ export function GTRLogo({ size = 'md', variant = 'full', className = '' }: LogoP
   }
 
   return (
-    <div className={`flex items-center gap-3 ${className}`}>
-      {/* New Logo Image */}
+    <div className={`flex items-center ${className}`}>
+      {/* Professional GTR CUBAUTO Logo */}
       <div className="relative">
         <img 
           src={gtrLogo}
           alt="GTR CUBAUTO"
-          width={height * 0.9}
-          height={height * 0.9}
-          className="object-contain transition-transform duration-300 hover:scale-105"
+          width={width}
+          height={height}
+          className="object-contain transition-all duration-300 hover:scale-105 hover:brightness-110"
           style={{
-            filter: 'drop-shadow(0 0 12px rgba(239, 68, 68, 0.4)) drop-shadow(0 0 8px rgba(59, 130, 246, 0.3))',
-            mixBlendMode: 'normal',
-            backgroundColor: 'transparent'
+            filter: 'drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3)) drop-shadow(0 0 16px rgba(59, 130, 246, 0.2))',
+            mixBlendMode: 'normal'
           }}
           data-testid="gtr-logo-image"
         />
         
-        {/* Subtle glow effect */}
+        {/* Professional glow effect */}
         <div 
-          className="absolute inset-0 pointer-events-none opacity-20"
+          className="absolute inset-0 pointer-events-none opacity-10"
           style={{
-            background: 'radial-gradient(circle, rgba(239, 68, 68, 0.3) 0%, transparent 70%)',
-            borderRadius: '50%'
+            background: 'radial-gradient(ellipse, rgba(59, 130, 246, 0.4) 0%, transparent 70%)',
+            borderRadius: '12px'
           }}
         />
-      </div>
-      
-      {/* Logo Text */}
-      <div className={`flex flex-col ${fontSize === 'text-lg' ? 'gap-0' : 'gap-1'}`}>
-        <div className="flex items-center">
-          <span className={`font-black ${fontSize} tracking-tight text-red-500`}>GTR</span>
-          <span className={`${fontSize === 'text-lg' ? 'text-sm' : 'text-lg'} text-gray-400 mx-1`}>|</span>
-          <span className={`font-bold ${fontSize === 'text-lg' ? 'text-base' : fontSize} tracking-wide text-blue-400`}>CUBA</span>
-          <span className={`font-bold ${fontSize === 'text-lg' ? 'text-base' : fontSize} tracking-wide text-white ml-0.5`}>AUTO</span>
-        </div>
-        {size !== 'sm' && (
-          <span className="text-xs text-gray-500 tracking-widest uppercase">
-            Automotive Excellence
-          </span>
-        )}
       </div>
     </div>
   );
