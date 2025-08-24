@@ -25,6 +25,10 @@ import {
   Download, Upload, Search, ArrowUp, ArrowDown, Package,
   Percent, Database, Bot, Bell, Home, Building, Tag
 } from 'lucide-react';
+import {
+  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
+  BarChart, Bar, PieChart as RechartsPie, Pie, Cell, Legend, AreaChart, Area
+} from 'recharts';
 import type { User, Order, RewardsConfig, CampaignConfig } from '@shared/schema';
 
 const rewardsConfigSchema = z.object({
@@ -676,55 +680,192 @@ export default function Admin() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <Card>
                 <CardHeader>
-                  <CardTitle>Ventas por Categoría</CardTitle>
+                  <CardTitle>Ventas Comparativas por Período</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                      <div className="flex justify-between text-sm">
-                        <span>Repuestos Autos</span>
-                        <span className="font-medium">$45,230</span>
-                      </div>
-                      <Progress value={65} className="h-2" />
-                    </div>
-                    <div className="space-y-2">
-                      <div className="flex justify-between text-sm">
-                        <span>Repuestos Motos</span>
-                        <span className="font-medium">$28,450</span>
-                      </div>
-                      <Progress value={41} className="h-2" />
-                    </div>
-                    <div className="space-y-2">
-                      <div className="flex justify-between text-sm">
-                        <span>Accesorios</span>
-                        <span className="font-medium">$18,920</span>
-                      </div>
-                      <Progress value={27} className="h-2" />
-                    </div>
+                  <div className="h-80">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <LineChart data={[
+                        { period: 'Ene', actual: 15000, anterior: 12000, meta: 18000 },
+                        { period: 'Feb', actual: 18000, anterior: 14000, meta: 20000 },
+                        { period: 'Mar', actual: 22000, anterior: 16000, meta: 22000 },
+                        { period: 'Abr', actual: 25000, anterior: 18000, meta: 24000 },
+                        { period: 'May', actual: 28000, anterior: 20000, meta: 26000 },
+                        { period: 'Jun', actual: 32000, anterior: 22000, meta: 28000 }
+                      ]}>
+                        <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
+                        <XAxis dataKey="period" className="text-muted-foreground" />
+                        <YAxis className="text-muted-foreground" />
+                        <Tooltip 
+                          contentStyle={{ 
+                            backgroundColor: 'var(--card)',
+                            border: '1px solid var(--border)',
+                            borderRadius: '8px',
+                            color: 'var(--foreground)'
+                          }}
+                        />
+                        <Line 
+                          type="monotone" 
+                          dataKey="actual" 
+                          stroke="hsl(var(--chart-1))" 
+                          strokeWidth={3}
+                          dot={{ fill: 'hsl(var(--chart-1))', strokeWidth: 2, r: 6 }}
+                          name="Ventas Actuales"
+                        />
+                        <Line 
+                          type="monotone" 
+                          dataKey="anterior" 
+                          stroke="hsl(var(--chart-2))" 
+                          strokeWidth={2}
+                          strokeDasharray="5 5"
+                          dot={{ fill: 'hsl(var(--chart-2))', strokeWidth: 2, r: 4 }}
+                          name="Año Anterior"
+                        />
+                        <Line 
+                          type="monotone" 
+                          dataKey="meta" 
+                          stroke="hsl(var(--chart-3))" 
+                          strokeWidth={2}
+                          strokeDasharray="2 2"
+                          dot={{ fill: 'hsl(var(--chart-3))', strokeWidth: 2, r: 4 }}
+                          name="Meta"
+                        />
+                      </LineChart>
+                    </ResponsiveContainer>
                   </div>
                 </CardContent>
               </Card>
 
               <Card>
                 <CardHeader>
-                  <CardTitle>Pedidos Recientes</CardTitle>
+                  <CardTitle>Distribución de Ventas por Categoría</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-4">
-                    {orders.slice(0, 5).map((order) => (
-                      <div key={order.id} className="flex items-center justify-between p-3 border rounded-lg">
-                        <div>
-                          <p className="font-medium text-sm">Pedido #{order.id.slice(-8)}</p>
-                          <p className="text-xs text-gray-500">{new Date(order.createdAt).toLocaleDateString()}</p>
-                        </div>
-                        <div className="text-right">
-                          <p className="font-medium">${order.total}</p>
-                          <Badge variant={order.status === 'completed' ? 'default' : 'secondary'}>
-                            {order.status}
-                          </Badge>
-                        </div>
-                      </div>
-                    ))}
+                  <div className="h-80">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <RechartsPie>
+                        <Pie
+                          data={[
+                            { name: 'Repuestos Autos', value: 45, color: 'hsl(var(--chart-1))' },
+                            { name: 'Repuestos Motos', value: 30, color: 'hsl(var(--chart-2))' },
+                            { name: 'Electrónicos', value: 20, color: 'hsl(var(--chart-3))' },
+                            { name: 'Accesorios', value: 5, color: 'hsl(var(--chart-4))' }
+                          ]}
+                          cx="50%"
+                          cy="50%"
+                          innerRadius={60}
+                          outerRadius={120}
+                          paddingAngle={5}
+                          dataKey="value"
+                        >
+                          {[
+                            { name: 'Repuestos Autos', value: 45, color: '#3b82f6' },
+                            { name: 'Repuestos Motos', value: 30, color: '#22c55e' },
+                            { name: 'Electrónicos', value: 20, color: '#ef4444' },
+                            { name: 'Accesorios', value: 5, color: '#8b5cf6' }
+                          ].map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={entry.color} />
+                          ))}
+                        </Pie>
+                        <Tooltip 
+                          contentStyle={{ 
+                            backgroundColor: 'var(--card)',
+                            border: '1px solid var(--border)',
+                            borderRadius: '8px',
+                            color: 'var(--foreground)'
+                          }}
+                        />
+                        <Legend />
+                      </RechartsPie>
+                    </ResponsiveContainer>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Productos Más Vendidos</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="h-80">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart 
+                        data={[
+                          { product: 'Filtro Aceite', ventas: 245, ingresos: 4900 },
+                          { product: 'Bujías', ventas: 189, ingresos: 3780 },
+                          { product: 'Pastillas Freno', ventas: 156, ingresos: 4680 },
+                          { product: 'Aceite Motor', ventas: 134, ingresos: 6700 },
+                          { product: 'Neumáticos', ventas: 98, ingresos: 7840 }
+                        ]}
+                        layout="vertical"
+                      >
+                        <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
+                        <XAxis type="number" className="text-muted-foreground" />
+                        <YAxis dataKey="product" type="category" width={100} className="text-muted-foreground" />
+                        <Tooltip 
+                          contentStyle={{ 
+                            backgroundColor: 'var(--card)',
+                            border: '1px solid var(--border)',
+                            borderRadius: '8px',
+                            color: 'var(--foreground)'
+                          }}
+                        />
+                        <Bar 
+                          dataKey="ventas" 
+                          fill="hsl(var(--chart-1))"
+                          radius={[0, 8, 8, 0]}
+                          name="Unidades Vendidas"
+                        />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Rendimiento Semanal vs Mensual</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="h-80">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <AreaChart data={[
+                        { period: 'Sem 1', semanal: 4000, mensual: 15000 },
+                        { period: 'Sem 2', semanal: 3000, mensual: 13000 },
+                        { period: 'Sem 3', semanal: 5000, mensual: 18000 },
+                        { period: 'Sem 4', semanal: 4500, mensual: 16000 }
+                      ]}>
+                        <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
+                        <XAxis dataKey="period" className="text-muted-foreground" />
+                        <YAxis className="text-muted-foreground" />
+                        <Tooltip 
+                          contentStyle={{ 
+                            backgroundColor: 'var(--card)',
+                            border: '1px solid var(--border)',
+                            borderRadius: '8px',
+                            color: 'var(--foreground)'
+                          }}
+                        />
+                        <Area
+                          type="monotone"
+                          dataKey="mensual"
+                          stackId="1"
+                          stroke="hsl(var(--chart-2))"
+                          fill="hsl(var(--chart-2))"
+                          fillOpacity={0.6}
+                          name="Meta Mensual"
+                        />
+                        <Area
+                          type="monotone"
+                          dataKey="semanal"
+                          stackId="2"
+                          stroke="hsl(var(--chart-1))"
+                          fill="hsl(var(--chart-1))"
+                          fillOpacity={0.8}
+                          name="Ventas Semanales"
+                        />
+                      </AreaChart>
+                    </ResponsiveContainer>
                   </div>
                 </CardContent>
               </Card>
