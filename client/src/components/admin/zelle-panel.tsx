@@ -61,10 +61,10 @@ export default function ZellePanel() {
     mutationFn: async (data: { amount: number; memo: string }) => {
       return apiRequest('POST', '/api/zelle/transfer', data);
     },
-    onSuccess: (result) => {
+    onSuccess: (result: any) => {
       toast({
         title: "Transferencia iniciada",
-        description: `Transferencia de $${result.amount} procesada exitosamente`,
+        description: `Transferencia de $${result.amount || transferAmount} procesada exitosamente`,
       });
       queryClient.invalidateQueries({ queryKey: ['/api/zelle/earnings'] });
       setTransferAmount('');
@@ -83,16 +83,16 @@ export default function ZellePanel() {
     mutationFn: async () => {
       return apiRequest('POST', '/api/zelle/auto-transfer', {});
     },
-    onSuccess: (result) => {
+    onSuccess: (result: any) => {
       if (result.transferId) {
         toast({
           title: "Transferencia automática completada",
-          description: `$${result.amount} transferido automáticamente`,
+          description: `$${result.amount || '0.00'} transferido automáticamente`,
         });
       } else {
         toast({
           title: "Transferencia automática",
-          description: result.message,
+          description: result.message || "Transferencia procesada",
         });
       }
       queryClient.invalidateQueries({ queryKey: ['/api/zelle/earnings'] });
@@ -317,6 +317,25 @@ export default function ZellePanel() {
             </div>
             <div>
               <span className="font-medium">Última actualización:</span> {earnings?.timestamp ? new Date(earnings.timestamp).toLocaleString('es-ES') : 'N/A'}
+            </div>
+          </div>
+          
+          {/* Características de Seguridad */}
+          <div className="mt-6 pt-4 border-t border-gray-200">
+            <h4 className="text-sm font-semibold text-gray-700 mb-3">Transferencias Seguras con Zelle</h4>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-xs text-gray-600">
+              <div>
+                <span className="font-medium text-xs">Encriptación:</span>
+                <p className="text-xs leading-tight">AES-256 para datos sensibles</p>
+              </div>
+              <div>
+                <span className="font-medium text-xs">Autenticación:</span>
+                <p className="text-xs leading-tight">Verificación 2FA opcional</p>
+              </div>
+              <div>
+                <span className="font-medium text-xs">Detección:</span>
+                <p className="text-xs leading-tight">Monitoreo anti-fraude activo</p>
+              </div>
             </div>
           </div>
         </CardContent>

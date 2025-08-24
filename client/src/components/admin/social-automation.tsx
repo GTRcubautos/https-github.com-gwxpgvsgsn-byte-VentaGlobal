@@ -242,12 +242,12 @@ export function SocialAutomation() {
           <h2 className="text-2xl font-bold text-gray-900">Automatización Social Avanzada</h2>
           <p className="text-gray-600">Gestiona, programa y automatiza tus campañas multicanal con inteligencia artificial</p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-col md:flex-row gap-2">
           <Button 
             onClick={() => setIsCreatingTemplate(true)} 
             variant="outline"
             size="sm"
-            className="border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400 px-3"
+            className="border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400 px-3 w-full md:w-auto"
           >
             <FileText className="h-4 w-4 mr-1" />
             <span className="text-xs">Nueva Plantilla</span>
@@ -256,7 +256,7 @@ export function SocialAutomation() {
             onClick={() => setIsCreatingCampaign(true)} 
             variant="outline"
             size="sm"
-            className="border-gray-800 text-gray-800 hover:bg-gray-50 hover:border-black px-3"
+            className="border-gray-800 text-gray-800 hover:bg-gray-50 hover:border-black px-3 w-full md:w-auto"
           >
             <Zap className="h-4 w-4 mr-1" />
             <span className="text-xs">Campaña Automática</span>
@@ -331,13 +331,13 @@ export function SocialAutomation() {
       </div>
 
       <Tabs defaultValue="dashboard" className="space-y-6 bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-        <TabsList className="grid w-full grid-cols-6 bg-gray-100 border-0 rounded-none p-1">
-          <TabsTrigger value="dashboard" className="data-[state=active]:bg-white data-[state=active]:text-gray-900 text-gray-600">Dashboard</TabsTrigger>
-          <TabsTrigger value="calendar" className="data-[state=active]:bg-white data-[state=active]:text-gray-900 text-gray-600">Calendario</TabsTrigger>
-          <TabsTrigger value="posts" className="data-[state=active]:bg-white data-[state=active]:text-gray-900 text-gray-600">Publicaciones</TabsTrigger>
-          <TabsTrigger value="campaigns" className="data-[state=active]:bg-white data-[state=active]:text-gray-900 text-gray-600">Campañas</TabsTrigger>
-          <TabsTrigger value="templates" className="data-[state=active]:bg-white data-[state=active]:text-gray-900 text-gray-600">Plantillas</TabsTrigger>
-          <TabsTrigger value="automation" className="data-[state=active]:bg-white data-[state=active]:text-gray-900 text-gray-600">Automatización</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-3 md:grid-cols-6 bg-gray-100 border-0 rounded-none p-1 gap-1">
+          <TabsTrigger value="dashboard" className="data-[state=active]:bg-white data-[state=active]:text-gray-900 text-gray-600 text-xs md:text-sm px-2 py-1">Dashboard</TabsTrigger>
+          <TabsTrigger value="calendar" className="data-[state=active]:bg-white data-[state=active]:text-gray-900 text-gray-600 text-xs md:text-sm px-2 py-1">Calendario</TabsTrigger>
+          <TabsTrigger value="posts" className="data-[state=active]:bg-white data-[state=active]:text-gray-900 text-gray-600 text-xs md:text-sm px-2 py-1">Publicaciones</TabsTrigger>
+          <TabsTrigger value="campaigns" className="data-[state=active]:bg-white data-[state=active]:text-gray-900 text-gray-600 text-xs md:text-sm px-2 py-1">Campañas</TabsTrigger>
+          <TabsTrigger value="templates" className="data-[state=active]:bg-white data-[state=active]:text-gray-900 text-gray-600 text-xs md:text-sm px-2 py-1">Plantillas</TabsTrigger>
+          <TabsTrigger value="automation" className="data-[state=active]:bg-white data-[state=active]:text-gray-900 text-gray-600 text-xs md:text-sm px-2 py-1">Automatización</TabsTrigger>
         </TabsList>
 
         {/* Dashboard Tab */}

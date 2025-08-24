@@ -1362,8 +1362,7 @@ export default function Admin() {
             <div className="flex justify-between items-center">
               <h2 className="text-2xl font-bold text-gray-700">Configuración de Descuentos</h2>
               <Button size="sm">
-                <Plus className="h-4 w-4 mr-2" />
-                Nuevo Descuento
+                nuevo descnt
               </Button>
             </div>
 
