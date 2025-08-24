@@ -341,10 +341,10 @@ export function SocialAutomation() {
         <TabsContent value="dashboard" className="space-y-6 p-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Quick Create */}
-            <Card className="border-gray-200 shadow-sm">
+            <Card className="border-gray-200 shadow-sm bg-black">
               <CardHeader className="border-b border-gray-100">
-                <CardTitle className="flex items-center gap-2 text-gray-900">
-                  <Zap className="h-5 w-5 text-gray-700" />
+                <CardTitle className="flex items-center gap-2 text-white">
+                  <Zap className="h-5 w-5 text-white" />
                   Creación Rápida
                 </CardTitle>
               </CardHeader>

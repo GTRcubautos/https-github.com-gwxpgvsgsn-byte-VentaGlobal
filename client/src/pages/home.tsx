@@ -5,7 +5,7 @@ import SearchBar from "@/components/products/search-bar";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useStore } from "@/lib/store";
-import { Car, Bike, Smartphone, Award, Zap, Shield, Star, ArrowRight, TrendingUp, Users, ShoppingBag, Crown } from "lucide-react";
+import { Car, Bike, Smartphone, Award, Zap, Shield, Star, ArrowRight, TrendingUp, Users, ShoppingBag, Crown, Play } from "lucide-react";
 import { Link } from "wouter";
 import type { Product } from "@shared/schema";
 import heroImage from "@assets/generated_images/Luxury_car_mountain_landscape_42bbaabd.png";
@@ -18,7 +18,7 @@ export default function Home() {
     queryKey: ["/api/products"],
   });
 
-  const { data: siteConfig = {}, isLoading: configLoading } = useQuery({
+  const { data: siteConfig = {}, isLoading: configLoading } = useQuery<Record<string, any>>({
     queryKey: ["/api/site-config"],
   });
 
@@ -31,13 +31,16 @@ export default function Home() {
   const featuredProducts = filteredProducts.slice(0, 6);
 
   // Productos con envío gratis (precio >= 500)
-  const freeShippingProducts = products.filter(p => p.retailPrice >= 500);
+  const freeShippingProducts = products.filter(p => Number(p.retailPrice) >= 500);
   
   // Productos con descuentos (si tienen wholesalePrice diferente)
-  const discountedProducts = products.filter(p => p.wholesalePrice && p.wholesalePrice < p.retailPrice);
+  const discountedProducts = products.filter(p => p.wholesalePrice && Number(p.wholesalePrice) < Number(p.retailPrice));
   
-  // Productos nuevos (últimos 30 días - simulado para demo)
-  const newProducts = products.slice(-10); // Últimos 10 productos como "nuevos"
+  // Productos nuevos (últimos 30 días - automatizado)
+  const newProducts = products
+    .filter(p => p.category === "electronics") // Solo accesorios
+    .sort((a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime()) // Más recientes primero
+    .slice(0, 15); // Últimos 15 productos nuevos de accesorios
 
   const categories = [
     {
@@ -73,8 +76,10 @@ export default function Home() {
       path: "/electronics",
       gradient: "from-gray-600 via-gray-700 to-gray-800",
       offer: "NUEVOS",
-      automatedCount: newProducts.filter(p => p.category === "electronics").length,
-      automatedDescription: `${newProducts.filter(p => p.category === "electronics").length} productos nuevos en inventario`
+      automatedCount: newProducts.length,
+      automatedDescription: `${newProducts.length} accesorios nuevos disponibles`,
+      isAutomated: true,
+      lastUpdate: new Date().toLocaleDateString('es-ES')
     },
   ];
 
@@ -322,9 +327,22 @@ export default function Home() {
                     <div className={`h-40 bg-gradient-to-br ${category.gradient} relative overflow-hidden`}>
                       <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
                       <div className="absolute top-4 right-4">
-                        <Badge className="bg-white/90 text-automotive-black font-bold px-3 py-1">
+                        {category.isAutomated && (
+                          <Badge className="bg-green-600 text-white text-xs flex items-center gap-1">
+                            <Zap className="h-3 w-3" />
+                            Auto
+                          </Badge>
+                        )}
+                      </div>
+                      <div className="absolute bottom-4 left-4 right-4">
+                        <Badge className="bg-white/90 text-black font-bold px-3 py-1">
                           {category.offer}
                         </Badge>
+                        {category.isAutomated && (
+                          <p className="text-white text-xs mt-1 opacity-90">
+                            Actualizado: {category.lastUpdate}
+                          </p>
+                        )}
                       </div>
                       <div className="absolute bottom-4 left-6">
                         <IconComponent className="h-10 w-10 text-white drop-shadow-lg" />
