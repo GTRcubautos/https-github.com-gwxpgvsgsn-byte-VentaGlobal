@@ -73,18 +73,18 @@ export default function Products() {
               <div key={i} className="animate-pulse">
                 <div className="bg-gray-700 aspect-square rounded-lg mb-4"></div>
                 <div className="bg-gray-700 h-4 rounded mb-2"></div>
-                <div className="bg-gray-300 h-4 rounded w-2/3 mb-4"></div>
-                <div className="bg-gray-300 h-10 rounded"></div>
+                <div className="bg-gray-700 h-4 rounded w-2/3 mb-4"></div>
+                <div className="bg-gray-700 h-10 rounded"></div>
               </div>
             ))}
           </div>
         ) : products.length === 0 ? (
           <div className="text-center py-12" data-testid="no-products">
             <i className="fas fa-search text-4xl text-gray-400 mb-4"></i>
-            <h3 className="text-xl font-semibold text-gray-600 mb-2">
+            <h3 className="text-xl font-semibold text-white mb-2">
               No se encontraron productos
             </h3>
-            <p className="text-gray-500">
+            <p className="text-gray-300">
               {currentSearch 
                 ? 'Intenta con otros términos de búsqueda'
                 : 'No hay productos disponibles en este momento'

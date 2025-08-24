@@ -18,7 +18,7 @@ export default function Home() {
     queryKey: ["/api/products"],
   });
 
-  const { data: siteConfig = {}, isLoading: configLoading } = useQuery({
+  const { data: siteConfig = {}, isLoading: configLoading } = useQuery<any>({
     queryKey: ["/api/site-config"],
   });
 
@@ -96,14 +96,14 @@ export default function Home() {
 
   if (isLoading || configLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-background" data-testid="home-loading">
-        <div className="animate-spin w-12 h-12 border-4 border-primary border-t-transparent rounded-full" />
+      <div className="min-h-screen flex items-center justify-center bg-black" data-testid="home-loading">
+        <div className="animate-spin w-12 h-12 border-4 border-red-500 border-t-transparent rounded-full" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground" data-testid="home-page">
+    <div className="min-h-screen bg-black text-white" data-testid="home-page">
       {/* Hero Section */}
       <section className="relative py-24 overflow-hidden" data-testid="hero-section">
         {/* Background Image or Video */}
@@ -161,7 +161,7 @@ export default function Home() {
       </section>
 
       {/* Promociones Banner */}
-      <section className="py-4 bg-automotive-red text-white shadow-medium" data-testid="promo-banner">
+      <section className="py-4 bg-red-600 text-white shadow-medium" data-testid="promo-banner">
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-center space-x-8 text-sm font-semibold uppercase tracking-wide">
             <span>ENVÍO GRATIS +$500</span>
@@ -176,18 +176,18 @@ export default function Home() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 bg-gray-50" data-testid="stats-section">
+      <section className="py-16 bg-gray-900" data-testid="stats-section">
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => {
               const StatIcon = stat.icon;
               return (
                 <div key={index} className="text-center group" data-testid={`stat-${index}`}>
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white mb-4 group-hover:bg-automotive-red group-hover:text-white transition-all duration-300 shadow-medium border border-gray-200">
-                    <StatIcon className="h-7 w-7 text-automotive-gray group-hover:text-white" />
+                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gray-800 mb-4 group-hover:bg-red-600 group-hover:text-white transition-all duration-300 shadow-medium border border-gray-700">
+                    <StatIcon className="h-7 w-7 text-white group-hover:text-white" />
                   </div>
-                  <div className="text-3xl md:text-4xl font-bold text-automotive-black mb-1">{stat.value}</div>
-                  <div className="text-sm text-automotive-gray uppercase tracking-wider font-semibold">{stat.label}</div>
+                  <div className="text-3xl md:text-4xl font-bold text-white mb-1">{stat.value}</div>
+                  <div className="text-sm text-gray-300 uppercase tracking-wider font-semibold">{stat.label}</div>
                 </div>
               );
             })}
@@ -271,18 +271,18 @@ export default function Home() {
       )}
 
       {/* Categories Section */}
-      <section className="py-20 bg-white" data-testid="categories-section">
+      <section className="py-20 bg-gray-800" data-testid="categories-section">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <Badge className="mb-6 bg-automotive-red text-white px-8 py-3 text-lg font-semibold">
+            <Badge className="mb-6 bg-red-600 text-white px-8 py-3 text-lg font-semibold">
               CATEGORÍAS DE REPUESTOS
             </Badge>
             <div className="flex justify-center mb-6">
-              <Button size="lg" className="text-3xl md:text-5xl font-bold px-12 py-6 h-auto bg-gradient-to-r from-green-600 to-green-800 hover:from-green-700 hover:to-green-900 shadow-green">
+              <Button size="lg" className="text-3xl md:text-5xl font-bold px-12 py-6 h-auto bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900">
                 Repuestos de Calidad
               </Button>
             </div>
-            <p className="text-xl text-automotive-gray max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
               Encuentra todo lo que necesitas para mantener tu vehículo en perfectas condiciones
             </p>
           </div>
@@ -303,14 +303,14 @@ export default function Home() {
                         <IconComponent className="h-10 w-10 text-white drop-shadow-lg" />
                       </div>
                     </div>
-                    <CardContent className="p-6 bg-white">
-                      <h3 className="text-xl font-bold mb-2 text-automotive-black group-hover:text-automotive-red transition-colors">{category.name}</h3>
-                      <p className="text-automotive-gray mb-4 text-sm leading-relaxed">{category.description}</p>
+                    <CardContent className="p-6 bg-gray-900">
+                      <h3 className="text-xl font-bold mb-2 text-white group-hover:text-red-400 transition-colors">{category.name}</h3>
+                      <p className="text-gray-300 mb-4 text-sm leading-relaxed">{category.description}</p>
                       <div className="flex items-center justify-between">
-                        <Badge className="bg-gray-100 text-automotive-gray border-0 text-xs px-3 py-1">
+                        <Badge className="bg-gray-700 text-gray-300 border-0 text-xs px-3 py-1">
                           {category.count} productos
                         </Badge>
-                        <div className="flex items-center text-automotive-red group-hover:text-automotive-red transition-colors">
+                        <div className="flex items-center text-red-400 group-hover:text-red-300 transition-colors">
                           <span className="text-sm font-semibold mr-1">Ver más</span>
                           <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-all duration-300" />
                         </div>
