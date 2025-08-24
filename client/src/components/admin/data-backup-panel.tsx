@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { 
   Download, 
   Database, 
@@ -33,7 +34,7 @@ export default function DataBackupPanel() {
   const [activeBackupType, setActiveBackupType] = useState<string | null>(null);
 
   // Fetch backup history
-  const { data: backups = [], isLoading } = useQuery({
+  const { data: backups = [], isLoading } = useQuery<BackupItem[]>({
     queryKey: ['/api/admin/backups'],
   });
 
@@ -176,19 +177,21 @@ export default function DataBackupPanel() {
           const isActive = activeBackupType === type.id;
           
           return (
-            <Card 
-              key={type.id} 
-              className={`bg-gray-800/50 border-gray-700 hover:border-gray-600 transition-all cursor-pointer ${
-                isActive ? 'ring-2 ring-blue-500' : ''
-              }`}
-              onClick={() => !isActive && createBackupMutation.mutate(type.id)}
-            >
-              <CardContent className="p-4">
-                <div className="flex items-start gap-3">
-                  <div className={`p-2 rounded-lg ${type.bgColor}`}>
-                    <Icon className={`h-5 w-5 ${type.color}`} />
-                  </div>
-                  <div className="flex-1 min-w-0">
+            <TooltipProvider key={type.id}>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Card 
+                    className={`bg-gray-800/50 border-gray-700 hover:border-gray-600 transition-all cursor-pointer ${
+                      isActive ? 'ring-2 ring-blue-500' : ''
+                    }`}
+                    onClick={() => !isActive && createBackupMutation.mutate(type.id)}
+                  >
+                    <CardContent className="p-4">
+                      <div className="flex items-start gap-3">
+                        <div className={`p-2 rounded-lg ${type.bgColor}`}>
+                          <Icon className={`h-5 w-5 ${type.color}`} />
+                        </div>
+                        <div className="flex-1 min-w-0">
                     <h3 className="font-semibold text-white text-sm">{type.name}</h3>
                     <p className="text-xs text-gray-400 mt-1">{type.description}</p>
                     <Button
@@ -210,10 +213,16 @@ export default function DataBackupPanel() {
                         </>
                       )}
                     </Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+                        </div>
+                      </div>
+                  </CardContent>
+                </Card>
+              </TooltipTrigger>
+              <TooltipContent side="top" className="bg-black text-white border-gray-600">
+                <p>Hacer clic para crear respaldo de {type.name.toLowerCase()}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
           );
         })}
       </div>
@@ -240,7 +249,7 @@ export default function DataBackupPanel() {
             </div>
           ) : (
             <div className="space-y-3">
-              {backups.map((backup: BackupItem) => (
+              {backups.map((backup) => (
                 <div 
                   key={backup.id}
                   className="flex items-center justify-between p-4 bg-gray-900/50 rounded-lg border border-gray-700"

@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { 
   Shield, 
   AlertTriangle, 
@@ -44,7 +45,7 @@ export default function SecurityLogsPanel() {
   const [selectedLog, setSelectedLog] = useState<SecurityLog | null>(null);
 
   // Fetch security logs
-  const { data: logs = [], isLoading, refetch } = useQuery({
+  const { data: logs = [], isLoading, refetch } = useQuery<SecurityLog[]>({
     queryKey: ['/api/admin/security-logs', { search: searchTerm, severity: severityFilter, eventType: eventTypeFilter }],
   });
 
@@ -115,7 +116,7 @@ export default function SecurityLogsPanel() {
     }
   };
 
-  const filteredLogs = logs.filter((log: SecurityLog) => {
+  const filteredLogs = logs.filter((log) => {
     const matchesSearch = !searchTerm || 
       log.userEmail?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       log.ipAddress.includes(searchTerm) ||
@@ -136,23 +137,41 @@ export default function SecurityLogsPanel() {
           <p className="text-gray-400">Monitoreo y auditoría de eventos de seguridad</p>
         </div>
         <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => refetch()}
-            data-testid="button-refresh-logs"
-          >
-            <RefreshCw className="h-4 w-4 mr-1" />
-            Actualizar
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            data-testid="button-export-logs"
-          >
-            <Download className="h-4 w-4 mr-1" />
-            Exportar
-          </Button>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => refetch()}
+                  data-testid="button-refresh-logs"
+                >
+                  <RefreshCw className="h-4 w-4 mr-1" />
+                  Actualizar
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent side="bottom" className="bg-black text-white border-gray-600">
+                <p>Actualizar lista de logs de seguridad</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  data-testid="button-export-logs"
+                >
+                  <Download className="h-4 w-4 mr-1" />
+                  Exportar
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent side="bottom" className="bg-black text-white border-gray-600">
+                <p>Descargar logs en formato CSV</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
       </div>
 

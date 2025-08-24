@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Switch } from "@/components/ui/switch";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -350,21 +351,39 @@ export function SocialAutomation() {
               </CardHeader>
               <CardContent className="space-y-4 p-6">
                 <div className="grid grid-cols-2 gap-3">
-                  <Button 
-                    onClick={() => setIsCreatingPost(true)} 
-                    className="h-20 flex-col bg-black hover:bg-gray-800 text-white shadow-sm"
-                  >
-                    <Send className="h-6 w-6 mb-2" />
-                    <span className="text-white">Post Manual</span>
-                  </Button>
-                  <Button 
-                    onClick={() => setIsCreatingCampaign(true)} 
-                    variant="outline" 
-                    className="h-20 flex-col border-gray-300 text-white hover:bg-gray-50"
-                  >
-                    <Bot className="h-6 w-6 mb-2" />
-                    <span className="text-white">Auto-Post</span>
-                  </Button>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button 
+                          onClick={() => setIsCreatingPost(true)} 
+                          className="h-20 flex-col bg-black hover:bg-gray-800 text-white shadow-sm"
+                        >
+                          <Send className="h-6 w-6 mb-2" />
+                          <span className="text-white">Post Manual</span>
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent side="top" className="bg-black text-white border-gray-600">
+                        <p>Crear una publicación manual personalizada</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button 
+                          onClick={() => setIsCreatingCampaign(true)} 
+                          variant="outline" 
+                          className="h-20 flex-col border-gray-300 text-white hover:bg-gray-800"
+                        >
+                          <Bot className="h-6 w-6 mb-2" />
+                          <span className="text-white">Auto-Post</span>
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent side="top" className="bg-black text-white border-gray-600">
+                        <p>Crear campaña automatizada con AI</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                 </div>
                 
                 {/* Platform Selection */}
@@ -375,24 +394,32 @@ export function SocialAutomation() {
                       const PlatformIcon = platform.icon;
                       const isSelected = selectedPlatforms.includes(platform.id);
                       return (
-                        <Button
-                          key={platform.id}
-                          variant={isSelected ? "default" : "outline"}
-                          size="sm"
-                          onClick={() => {
-                            setSelectedPlatforms(prev => 
-                              isSelected 
-                                ? prev.filter(p => p !== platform.id)
-                                : [...prev, platform.id]
-                            );
-                          }}
-                          className={`flex-col h-16 border-gray-300 ${
-                            isSelected ? 'bg-gray-800 text-white hover:bg-gray-700' : 'text-white hover:bg-gray-800'
-                          }`}
-                        >
-                          <PlatformIcon className="h-4 w-4 mb-1" />
-                          <span className="text-xs text-white">{platform.name}</span>
-                        </Button>
+                        <TooltipProvider key={platform.id}>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Button
+                                variant={isSelected ? "default" : "outline"}
+                                size="sm"
+                                onClick={() => {
+                                  setSelectedPlatforms(prev => 
+                                    isSelected 
+                                      ? prev.filter(p => p !== platform.id)
+                                      : [...prev, platform.id]
+                                  );
+                                }}
+                                className={`flex-col h-16 border-gray-300 ${
+                                  isSelected ? 'bg-gray-800 text-white hover:bg-gray-700' : 'text-white hover:bg-gray-800'
+                                }`}
+                              >
+                                <PlatformIcon className="h-4 w-4 mb-1" />
+                                <span className="text-xs text-white">{platform.name}</span>
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent side="top" className="bg-black text-white border-gray-600">
+                              <p>{isSelected ? `Remover ${platform.name}` : `Agregar ${platform.name}`}</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
                       );
                     })}
                   </div>
