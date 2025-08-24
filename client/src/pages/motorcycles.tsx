@@ -10,6 +10,7 @@ import { Bike, Search, Filter, Zap, Star, Gauge, Shield, Crown, Wind } from 'luc
 import { useStore } from '@/lib/store';
 import { useToast } from '@/hooks/use-toast';
 import type { Product } from '@shared/schema';
+import heroImage from "@assets/generated_images/Luxury_car_mountain_landscape_42bbaabd.png";
 
 export default function Motorcycles() {
   const [location, setLocation] = useLocation();
@@ -22,6 +23,10 @@ export default function Motorcycles() {
 
   const { data: motorcycles = [], isLoading } = useQuery<Product[]>({
     queryKey: ['/api/products', { category: 'motorcycles', search: currentSearch }],
+  });
+
+  const { data: siteConfig = {}, isLoading: configLoading } = useQuery({
+    queryKey: ["/api/site-config"],
   });
 
   const handleSearch = (query: string) => {
@@ -57,22 +62,46 @@ export default function Motorcycles() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-purple-50/30 to-pink-50/20" data-testid="motorcycles-page">
       {/* Hero Section */}
-      <section className="relative py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-600/10 via-pink-600/5 to-orange-600/10"></div>
+      <section className="relative py-24 overflow-hidden" data-testid="motorcycles-hero-section">
+        {/* Background Image or Video */}
+        {siteConfig.motorcycles_enable_video_hero && siteConfig.motorcycles_hero_video_url ? (
+          <video 
+            autoPlay 
+            muted 
+            loop 
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{ filter: 'brightness(0.4)' }}
+          >
+            <source src={siteConfig.motorcycles_hero_video_url} type="video/mp4" />
+          </video>
+        ) : (
+          <div 
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `url(${siteConfig.motorcycles_hero_image_url || heroImage})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              filter: 'brightness(0.4)'
+            }}
+          />
+        )}
+        
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60"></div>
+        
         <div className="relative container mx-auto px-6">
-          <div className="text-center mb-12">
-            <Badge className="mb-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white border-0 px-6 py-3 text-sm font-medium">
-              <Bike className="h-4 w-4 mr-2" />
-              GTR CUBAUTOS - MULTISERVICIO MOTOCICLETAS
-            </Badge>
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-gray-900 via-purple-700 to-pink-700 bg-clip-text text-transparent">
-              Suzuki & Yamaha + Repuestos
-            </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-8">
-              Especialistas en motocicletas Suzuki y Yamaha, piezas originales y servicios técnicos. 
-              <br className="hidden md:block" />
-              Calidad, confianza y experiencia en cada servicio.
-            </p>
+          <div className="max-w-6xl mx-auto text-center">
+            <div className="mb-12">
+              <Badge className="mb-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white border-0 px-6 py-3 text-sm font-medium">
+                <Bike className="h-4 w-4 mr-2" />
+                {siteConfig.motorcycles_hero_subtitle || "GTR CUBAUTOS - MULTISERVICIO MOTOCICLETAS"}
+              </Badge>
+              <h1 className="text-6xl md:text-8xl font-bold mb-6 tracking-tight text-white font-display" data-testid="motorcycles-hero-title">
+                {siteConfig.motorcycles_hero_title || "Suzuki & Yamaha + Repuestos"}
+              </h1>
+              <p className="text-lg md:text-xl text-gray-100 mb-12 leading-relaxed max-w-4xl mx-auto" data-testid="motorcycles-hero-description">
+                {siteConfig.motorcycles_hero_description || "Especialistas en motocicletas Suzuki y Yamaha, piezas originales y servicios técnicos. Calidad, confianza y experiencia en cada servicio."}
+              </p>
             
             {/* Featured Bikes Preview */}
             {featuredBikes.length > 0 && (
@@ -90,6 +119,7 @@ export default function Motorcycles() {
                 ))}
               </div>
             )}
+            </div>
           </div>
         </div>
       </section>

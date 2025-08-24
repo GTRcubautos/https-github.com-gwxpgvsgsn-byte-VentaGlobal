@@ -132,16 +132,18 @@ export default function SiteConfigPanel() {
       </div>
 
       <Tabs defaultValue="hero" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-3 bg-gray-800">
-          <TabsTrigger value="hero" className="data-[state=active]:bg-red-600">Sección Hero</TabsTrigger>
-          <TabsTrigger value="promotional" className="data-[state=active]:bg-red-600">Contenido Promocional</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-5 bg-gray-800">
+          <TabsTrigger value="hero" className="data-[state=active]:bg-red-600">Inicio</TabsTrigger>
+          <TabsTrigger value="cars" className="data-[state=active]:bg-red-600">Autos</TabsTrigger>
+          <TabsTrigger value="motorcycles" className="data-[state=active]:bg-red-600">Motos</TabsTrigger>
+          <TabsTrigger value="promotional" className="data-[state=active]:bg-red-600">Promocional</TabsTrigger>
           <TabsTrigger value="preview" className="data-[state=active]:bg-red-600">Vista Previa</TabsTrigger>
         </TabsList>
 
         <TabsContent value="hero" className="space-y-6">
           <Card className="bg-gray-900 border-gray-800">
             <CardHeader>
-              <CardTitle className="text-white">Configuración del Hero Principal</CardTitle>
+              <CardTitle className="text-white">Configuración de Página de Inicio</CardTitle>
               <CardDescription className="text-gray-400">
                 Personaliza el contenido principal que los usuarios ven al entrar al sitio
               </CardDescription>
@@ -222,6 +224,186 @@ export default function SiteConfigPanel() {
                 />
                 <Label htmlFor="enable_video_hero" className="text-white">
                   Usar video como fondo principal (en lugar de imagen)
+                </Label>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="cars" className="space-y-6">
+          <Card className="bg-gray-900 border-gray-800">
+            <CardHeader>
+              <CardTitle className="text-white">Configuración de Página de Autos</CardTitle>
+              <CardDescription className="text-gray-400">
+                Personaliza el contenido y fondo de la página de autos clásicos
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <div>
+                    <Label htmlFor="cars_hero_title" className="text-white">Título de Autos</Label>
+                    <Input
+                      id="cars_hero_title"
+                      value={getCurrentValue('cars_hero_title')}
+                      onChange={(e) => handleConfigChange('cars_hero_title', e.target.value)}
+                      placeholder="Autos Clásicos & Repuestos"
+                      className="bg-gray-800 border-gray-700 text-white"
+                      data-testid="cars-title-input"
+                    />
+                  </div>
+                  
+                  <div>
+                    <Label htmlFor="cars_hero_subtitle" className="text-white">Subtítulo de Autos</Label>
+                    <Input
+                      id="cars_hero_subtitle"
+                      value={getCurrentValue('cars_hero_subtitle')}
+                      onChange={(e) => handleConfigChange('cars_hero_subtitle', e.target.value)}
+                      placeholder="GTR CUBAUTOS - MULTISERVICIO AUTOMOTRIZ"
+                      className="bg-gray-800 border-gray-700 text-white"
+                      data-testid="cars-subtitle-input"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <div>
+                    <Label htmlFor="cars_hero_image_url" className="text-white">URL de Imagen de Fondo (Autos)</Label>
+                    <Input
+                      id="cars_hero_image_url"
+                      value={getCurrentValue('cars_hero_image_url')}
+                      onChange={(e) => handleConfigChange('cars_hero_image_url', e.target.value)}
+                      placeholder="https://ejemplo.com/imagen-autos.jpg"
+                      className="bg-gray-800 border-gray-700 text-white"
+                      data-testid="cars-image-input"
+                    />
+                  </div>
+                  
+                  <div>
+                    <Label htmlFor="cars_hero_video_url" className="text-white">URL de Video de Fondo (Autos - opcional)</Label>
+                    <Input
+                      id="cars_hero_video_url"
+                      value={getCurrentValue('cars_hero_video_url')}
+                      onChange={(e) => handleConfigChange('cars_hero_video_url', e.target.value)}
+                      placeholder="https://ejemplo.com/video-autos.mp4"
+                      className="bg-gray-800 border-gray-700 text-white"
+                      data-testid="cars-video-input"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <Label htmlFor="cars_hero_description" className="text-white">Descripción de Autos</Label>
+                <Textarea
+                  id="cars_hero_description"
+                  value={getCurrentValue('cars_hero_description')}
+                  onChange={(e) => handleConfigChange('cars_hero_description', e.target.value)}
+                  placeholder="Tu centro automotriz completo: autos clásicos, piezas, repuestos y servicios especializados."
+                  className="bg-gray-800 border-gray-700 text-white min-h-[100px]"
+                  data-testid="cars-description-input"
+                />
+              </div>
+
+              <div className="flex items-center space-x-2">
+                <Switch
+                  id="cars_enable_video_hero"
+                  checked={getCurrentValue('cars_enable_video_hero')}
+                  onCheckedChange={(checked) => handleConfigChange('cars_enable_video_hero', checked)}
+                  data-testid="cars-enable-video-switch"
+                />
+                <Label htmlFor="cars_enable_video_hero" className="text-white">
+                  Usar video como fondo en página de autos
+                </Label>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="motorcycles" className="space-y-6">
+          <Card className="bg-gray-900 border-gray-800">
+            <CardHeader>
+              <CardTitle className="text-white">Configuración de Página de Motos</CardTitle>
+              <CardDescription className="text-gray-400">
+                Personaliza el contenido y fondo de la página de motocicletas
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <div>
+                    <Label htmlFor="motorcycles_hero_title" className="text-white">Título de Motos</Label>
+                    <Input
+                      id="motorcycles_hero_title"
+                      value={getCurrentValue('motorcycles_hero_title')}
+                      onChange={(e) => handleConfigChange('motorcycles_hero_title', e.target.value)}
+                      placeholder="Suzuki & Yamaha + Repuestos"
+                      className="bg-gray-800 border-gray-700 text-white"
+                      data-testid="motorcycles-title-input"
+                    />
+                  </div>
+                  
+                  <div>
+                    <Label htmlFor="motorcycles_hero_subtitle" className="text-white">Subtítulo de Motos</Label>
+                    <Input
+                      id="motorcycles_hero_subtitle"
+                      value={getCurrentValue('motorcycles_hero_subtitle')}
+                      onChange={(e) => handleConfigChange('motorcycles_hero_subtitle', e.target.value)}
+                      placeholder="GTR CUBAUTOS - MULTISERVICIO MOTOCICLETAS"
+                      className="bg-gray-800 border-gray-700 text-white"
+                      data-testid="motorcycles-subtitle-input"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <div>
+                    <Label htmlFor="motorcycles_hero_image_url" className="text-white">URL de Imagen de Fondo (Motos)</Label>
+                    <Input
+                      id="motorcycles_hero_image_url"
+                      value={getCurrentValue('motorcycles_hero_image_url')}
+                      onChange={(e) => handleConfigChange('motorcycles_hero_image_url', e.target.value)}
+                      placeholder="https://ejemplo.com/imagen-motos.jpg"
+                      className="bg-gray-800 border-gray-700 text-white"
+                      data-testid="motorcycles-image-input"
+                    />
+                  </div>
+                  
+                  <div>
+                    <Label htmlFor="motorcycles_hero_video_url" className="text-white">URL de Video de Fondo (Motos - opcional)</Label>
+                    <Input
+                      id="motorcycles_hero_video_url"
+                      value={getCurrentValue('motorcycles_hero_video_url')}
+                      onChange={(e) => handleConfigChange('motorcycles_hero_video_url', e.target.value)}
+                      placeholder="https://ejemplo.com/video-motos.mp4"
+                      className="bg-gray-800 border-gray-700 text-white"
+                      data-testid="motorcycles-video-input"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <Label htmlFor="motorcycles_hero_description" className="text-white">Descripción de Motos</Label>
+                <Textarea
+                  id="motorcycles_hero_description"
+                  value={getCurrentValue('motorcycles_hero_description')}
+                  onChange={(e) => handleConfigChange('motorcycles_hero_description', e.target.value)}
+                  placeholder="Especialistas en motocicletas Suzuki y Yamaha, piezas originales y servicios técnicos."
+                  className="bg-gray-800 border-gray-700 text-white min-h-[100px]"
+                  data-testid="motorcycles-description-input"
+                />
+              </div>
+
+              <div className="flex items-center space-x-2">
+                <Switch
+                  id="motorcycles_enable_video_hero"
+                  checked={getCurrentValue('motorcycles_enable_video_hero')}
+                  onCheckedChange={(checked) => handleConfigChange('motorcycles_enable_video_hero', checked)}
+                  data-testid="motorcycles-enable-video-switch"
+                />
+                <Label htmlFor="motorcycles_enable_video_hero" className="text-white">
+                  Usar video como fondo en página de motos
                 </Label>
               </div>
             </CardContent>

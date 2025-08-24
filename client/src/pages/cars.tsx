@@ -10,6 +10,7 @@ import { Car, Search, Filter, Zap, Star, Gauge, Shield, Crown } from 'lucide-rea
 import { useStore } from '@/lib/store';
 import { useToast } from '@/hooks/use-toast';
 import type { Product } from '@shared/schema';
+import heroImage from "@assets/generated_images/Luxury_car_mountain_landscape_42bbaabd.png";
 
 export default function Cars() {
   const [location, setLocation] = useLocation();
@@ -22,6 +23,10 @@ export default function Cars() {
 
   const { data: cars = [], isLoading } = useQuery<Product[]>({
     queryKey: ['/api/products', { category: 'cars', search: currentSearch }],
+  });
+
+  const { data: siteConfig = {}, isLoading: configLoading } = useQuery({
+    queryKey: ["/api/site-config"],
   });
 
   const handleSearch = (query: string) => {
@@ -57,22 +62,46 @@ export default function Cars() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-purple-50/20" data-testid="cars-page">
       {/* Hero Section */}
-      <section className="relative py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-600/5 to-cyan-600/10"></div>
+      <section className="relative py-24 overflow-hidden" data-testid="cars-hero-section">
+        {/* Background Image or Video */}
+        {siteConfig.cars_enable_video_hero && siteConfig.cars_hero_video_url ? (
+          <video 
+            autoPlay 
+            muted 
+            loop 
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{ filter: 'brightness(0.4)' }}
+          >
+            <source src={siteConfig.cars_hero_video_url} type="video/mp4" />
+          </video>
+        ) : (
+          <div 
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `url(${siteConfig.cars_hero_image_url || heroImage})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              filter: 'brightness(0.4)'
+            }}
+          />
+        )}
+        
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60"></div>
+        
         <div className="relative container mx-auto px-6">
-          <div className="text-center mb-12">
-            <Badge className="mb-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0 px-6 py-3 text-sm font-medium">
-              <Car className="h-4 w-4 mr-2" />
-              GTR CUBAUTOS - MULTISERVICIO AUTOMOTRIZ
-            </Badge>
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-gray-900 via-blue-700 to-purple-700 bg-clip-text text-transparent">
-              Autos Clásicos & Repuestos
-            </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-8">
-              Tu centro automotriz completo: autos clásicos, piezas, repuestos y servicios especializados. 
-              <br className="hidden md:block" />
-              Calidad, experiencia y confianza en cada producto.
-            </p>
+          <div className="max-w-6xl mx-auto text-center">
+            <div className="mb-12">
+              <Badge className="mb-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0 px-6 py-3 text-sm font-medium">
+                <Car className="h-4 w-4 mr-2" />
+                {siteConfig.cars_hero_subtitle || "GTR CUBAUTOS - MULTISERVICIO AUTOMOTRIZ"}
+              </Badge>
+              <h1 className="text-6xl md:text-8xl font-bold mb-6 tracking-tight text-white font-display" data-testid="cars-hero-title">
+                {siteConfig.cars_hero_title || "Autos Clásicos & Repuestos"}
+              </h1>
+              <p className="text-lg md:text-xl text-gray-100 mb-12 leading-relaxed max-w-4xl mx-auto" data-testid="cars-hero-description">
+                {siteConfig.cars_hero_description || "Tu centro automotriz completo: autos clásicos, piezas, repuestos y servicios especializados. Calidad, experiencia y confianza en cada producto."}
+              </p>
             
             {/* Featured Cars Preview */}
             {featuredCars.length > 0 && (
@@ -90,6 +119,7 @@ export default function Cars() {
                 ))}
               </div>
             )}
+            </div>
           </div>
         </div>
       </section>
