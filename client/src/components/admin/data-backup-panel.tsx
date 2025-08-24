@@ -161,7 +161,7 @@ export default function DataBackupPanel() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-white">Respaldo de Datos</h2>
+          <h2 className="text-2xl font-bold text-gray-700">Respaldo de Datos</h2>
           <p className="text-gray-400">Gestión y creación de respaldos del sistema</p>
         </div>
         <div className="flex items-center gap-2 text-sm text-gray-400">
@@ -192,7 +192,7 @@ export default function DataBackupPanel() {
                           <Icon className={`h-5 w-5 ${type.color}`} />
                         </div>
                         <div className="flex-1 min-w-0">
-                    <h3 className="font-semibold text-white text-sm">{type.name}</h3>
+                    <h3 className="font-semibold text-gray-700 text-sm">{type.name}</h3>
                     <p className="text-xs text-gray-400 mt-1">{type.description}</p>
                     <Button
                       size="sm"
@@ -218,7 +218,7 @@ export default function DataBackupPanel() {
                   </CardContent>
                 </Card>
               </TooltipTrigger>
-              <TooltipContent side="top" className="bg-black text-white border-gray-600">
+              <TooltipContent side="top" className="bg-black text-gray-700 border-gray-600">
                 <p>Hacer clic para crear respaldo de {type.name.toLowerCase()}</p>
               </TooltipContent>
             </Tooltip>
@@ -230,7 +230,7 @@ export default function DataBackupPanel() {
       {/* Backup History */}
       <Card className="bg-gray-800/50 border-gray-700">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-white">
+          <CardTitle className="flex items-center gap-2 text-gray-700">
             <Clock className="h-5 w-5 text-blue-400" />
             Historial de Respaldos
           </CardTitle>
@@ -264,7 +264,7 @@ export default function DataBackupPanel() {
                     </div>
                     
                     <div>
-                      <h4 className="font-medium text-white">{backup.description}</h4>
+                      <h4 className="font-medium text-gray-700">{backup.description}</h4>
                       <div className="flex items-center gap-4 text-sm text-gray-400 mt-1">
                         <span>Tamaño: {backup.size}</span>
                         <span>•</span>

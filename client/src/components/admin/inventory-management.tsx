@@ -221,7 +221,7 @@ export default function InventoryManagement() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-white">Gestión de Inventario</h2>
+          <h2 className="text-2xl font-bold text-gray-700">Gestión de Inventario</h2>
           <p className="text-gray-400">Administra productos antes de publicarlos</p>
         </div>
         <div className="flex gap-2">
@@ -229,7 +229,7 @@ export default function InventoryManagement() {
             <Button
               onClick={handleBulkPublish}
               disabled={bulkPublishMutation.isPending}
-              className="bg-green-600 hover:bg-green-700 text-white"
+              className="bg-green-600 hover:bg-green-700 text-gray-700"
               data-testid="bulk-publish-button"
             >
               <Send className="h-4 w-4 mr-2" />
@@ -238,7 +238,7 @@ export default function InventoryManagement() {
           )}
           <Button
             onClick={() => setShowCreateForm(true)}
-            className="bg-red-600 hover:bg-red-700 text-white"
+            className="bg-red-600 hover:bg-red-700 text-gray-700"
             data-testid="create-inventory-item-button"
           >
             <Plus className="h-4 w-4 mr-2" />
@@ -256,12 +256,12 @@ export default function InventoryManagement() {
             placeholder="Buscar productos o SKU..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 bg-gray-700 border-gray-600 text-white"
+            className="pl-10 bg-gray-700 border-gray-600 text-gray-700"
             data-testid="search-inventory"
           />
         </div>
         <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-          <SelectTrigger className="w-48 bg-gray-700 border-gray-600 text-white">
+          <SelectTrigger className="w-48 bg-gray-700 border-gray-600 text-gray-700">
             <Filter className="h-4 w-4 mr-2" />
             <SelectValue />
           </SelectTrigger>
@@ -278,7 +278,7 @@ export default function InventoryManagement() {
       {showCreateForm && (
         <Card className="bg-gray-800 border-gray-700">
           <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
+            <CardTitle className="text-gray-700 flex items-center gap-2">
               <Package className="h-5 w-5" />
               Agregar Nuevo Producto al Inventario
             </CardTitle>
@@ -292,7 +292,7 @@ export default function InventoryManagement() {
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder="Filtro de aceite premium"
-                  className="bg-gray-700 border-gray-600 text-white"
+                  className="bg-gray-700 border-gray-600 text-gray-700"
                   data-testid="input-name"
                 />
               </div>
@@ -303,7 +303,7 @@ export default function InventoryManagement() {
                   value={formData.sku}
                   onChange={(e) => setFormData({ ...formData, sku: e.target.value.toUpperCase() })}
                   placeholder="FO-001"
-                  className="bg-gray-700 border-gray-600 text-white"
+                  className="bg-gray-700 border-gray-600 text-gray-700"
                   data-testid="input-sku"
                 />
               </div>
@@ -316,7 +316,7 @@ export default function InventoryManagement() {
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 placeholder="Descripción del producto"
-                className="bg-gray-700 border-gray-600 text-white"
+                className="bg-gray-700 border-gray-600 text-gray-700"
                 data-testid="input-description"
               />
             </div>
@@ -325,7 +325,7 @@ export default function InventoryManagement() {
               <div>
                 <Label htmlFor="category" className="text-gray-300">Categoría</Label>
                 <Select value={formData.category} onValueChange={(value: 'cars' | 'motorcycles' | 'electronics') => setFormData({ ...formData, category: value })}>
-                  <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
+                  <SelectTrigger className="bg-gray-700 border-gray-600 text-gray-700">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent className="bg-gray-700 border-gray-600">
@@ -344,7 +344,7 @@ export default function InventoryManagement() {
                   value={formData.costPrice}
                   onChange={(e) => setFormData({ ...formData, costPrice: e.target.value })}
                   placeholder="10.00"
-                  className="bg-gray-700 border-gray-600 text-white"
+                  className="bg-gray-700 border-gray-600 text-gray-700"
                   data-testid="input-cost-price"
                 />
               </div>
@@ -357,7 +357,7 @@ export default function InventoryManagement() {
                   value={formData.retailPrice}
                   onChange={(e) => setFormData({ ...formData, retailPrice: e.target.value })}
                   placeholder="25.99"
-                  className="bg-gray-700 border-gray-600 text-white"
+                  className="bg-gray-700 border-gray-600 text-gray-700"
                   data-testid="input-retail-price"
                 />
               </div>
@@ -370,7 +370,7 @@ export default function InventoryManagement() {
                   value={formData.wholesalePrice}
                   onChange={(e) => setFormData({ ...formData, wholesalePrice: e.target.value })}
                   placeholder="18.99"
-                  className="bg-gray-700 border-gray-600 text-white"
+                  className="bg-gray-700 border-gray-600 text-gray-700"
                   data-testid="input-wholesale-price"
                 />
               </div>
@@ -385,7 +385,7 @@ export default function InventoryManagement() {
                   value={formData.stock}
                   onChange={(e) => setFormData({ ...formData, stock: parseInt(e.target.value) || 0 })}
                   placeholder="100"
-                  className="bg-gray-700 border-gray-600 text-white"
+                  className="bg-gray-700 border-gray-600 text-gray-700"
                   data-testid="input-stock"
                 />
               </div>
@@ -397,7 +397,7 @@ export default function InventoryManagement() {
                   value={formData.minStock}
                   onChange={(e) => setFormData({ ...formData, minStock: parseInt(e.target.value) || 0 })}
                   placeholder="5"
-                  className="bg-gray-700 border-gray-600 text-white"
+                  className="bg-gray-700 border-gray-600 text-gray-700"
                   data-testid="input-min-stock"
                 />
               </div>
@@ -409,7 +409,7 @@ export default function InventoryManagement() {
                   value={formData.imageUrl}
                   onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
                   placeholder="https://..."
-                  className="bg-gray-700 border-gray-600 text-white"
+                  className="bg-gray-700 border-gray-600 text-gray-700"
                   data-testid="input-image-url"
                 />
               </div>
@@ -419,7 +419,7 @@ export default function InventoryManagement() {
               <Button
                 onClick={handleCreate}
                 disabled={createMutation.isPending}
-                className="bg-red-600 hover:bg-red-700 text-white"
+                className="bg-red-600 hover:bg-red-700 text-gray-700"
                 data-testid="save-inventory-item-button"
               >
                 <Save className="h-4 w-4 mr-2" />
@@ -447,7 +447,7 @@ export default function InventoryManagement() {
         <Card className="bg-gray-800 border-gray-700">
           <CardHeader>
             <div className="flex items-center justify-between">
-              <CardTitle className="text-white flex items-center gap-2">
+              <CardTitle className="text-gray-700 flex items-center gap-2">
                 <BarChart className="h-5 w-5" />
                 Inventario ({filteredInventory.length} productos)
               </CardTitle>
@@ -478,18 +478,18 @@ export default function InventoryManagement() {
                             onCheckedChange={() => handleSelectItem(item.id)}
                             data-testid={`select-item-${item.id}`}
                           />
-                          <Badge className={`${categoryColor} text-white`}>
+                          <Badge className={`${categoryColor} text-gray-700`}>
                             <CategoryIcon className="h-3 w-3 mr-1" />
                             {item.category === 'cars' ? 'Auto' : item.category === 'motorcycles' ? 'Moto' : 'Tech'}
                           </Badge>
                         </div>
-                        <Badge className={`${stockStatus.color} text-white`}>
+                        <Badge className={`${stockStatus.color} text-gray-700`}>
                           {stockStatus.text}
                         </Badge>
                       </div>
 
                       <div className="mb-3">
-                        <h3 className="text-white font-semibold mb-1">{item.name}</h3>
+                        <h3 className="text-gray-700 font-semibold mb-1">{item.name}</h3>
                         <p className="text-gray-400 text-sm line-clamp-2">{item.description}</p>
                         <p className="text-gray-500 text-xs mt-1">SKU: {item.sku || 'N/A'}</p>
                       </div>
@@ -497,11 +497,11 @@ export default function InventoryManagement() {
                       <div className="grid grid-cols-2 gap-2 mb-3 text-sm">
                         <div>
                           <span className="text-gray-400">Stock:</span>
-                          <span className="text-white ml-1">{item.stock}</span>
+                          <span className="text-gray-700 ml-1">{item.stock}</span>
                         </div>
                         <div>
                           <span className="text-gray-400">Mín:</span>
-                          <span className="text-white ml-1">{item.minStock}</span>
+                          <span className="text-gray-700 ml-1">{item.minStock}</span>
                         </div>
                         <div>
                           <span className="text-gray-400">Retail:</span>
@@ -515,7 +515,7 @@ export default function InventoryManagement() {
 
                       <div className="flex gap-2">
                         {item.isPublished ? (
-                          <Badge className="flex-1 bg-green-600 text-white justify-center">
+                          <Badge className="flex-1 bg-green-600 text-gray-700 justify-center">
                             <CheckCircle className="h-3 w-3 mr-1" />
                             Publicado
                           </Badge>
@@ -524,7 +524,7 @@ export default function InventoryManagement() {
                             onClick={() => handlePublish(item.id)}
                             disabled={publishMutation.isPending}
                             size="sm"
-                            className="flex-1 bg-red-600 hover:bg-red-700 text-white"
+                            className="flex-1 bg-red-600 hover:bg-red-700 text-gray-700"
                             data-testid={`publish-button-${item.id}`}
                           >
                             <ArrowUpCircle className="h-4 w-4 mr-1" />
@@ -545,7 +545,7 @@ export default function InventoryManagement() {
         <Card className="bg-gray-800 border-gray-700">
           <CardContent className="text-center py-12">
             <Package className="h-16 w-16 text-gray-600 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-white mb-2">
+            <h3 className="text-xl font-semibold text-gray-700 mb-2">
               {searchTerm || categoryFilter !== 'all' ? 'No se encontraron productos' : 'Inventario vacío'}
             </h3>
             <p className="text-gray-400 mb-6">
@@ -557,7 +557,7 @@ export default function InventoryManagement() {
             {!searchTerm && categoryFilter === 'all' && (
               <Button
                 onClick={() => setShowCreateForm(true)}
-                className="bg-red-600 hover:bg-red-700 text-white"
+                className="bg-red-600 hover:bg-red-700 text-gray-700"
               >
                 <Plus className="h-4 w-4 mr-2" />
                 Agregar Primer Producto

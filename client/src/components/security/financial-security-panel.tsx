@@ -201,7 +201,7 @@ export default function FinancialSecurityPanel() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-white">Seguridad Financiera</h2>
+          <h2 className="text-2xl font-bold text-gray-700">Seguridad Financiera</h2>
           <p className="text-gray-400">Monitoreo de transacciones y detección de fraude</p>
         </div>
         <div className="flex items-center gap-2">
@@ -287,7 +287,7 @@ export default function FinancialSecurityPanel() {
       {/* Financial Limits Configuration */}
       <Card className="bg-gray-800/50 border-gray-700">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-white">
+          <CardTitle className="flex items-center gap-2 text-gray-700">
             <Settings className="h-5 w-5 text-blue-400" />
             Límites Financieros
           </CardTitle>
@@ -296,7 +296,7 @@ export default function FinancialSecurityPanel() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-4">
               <div>
-                <Label htmlFor="daily-limit" className="text-white font-medium">
+                <Label htmlFor="daily-limit" className="text-gray-700 font-medium">
                   Límite Diario por Usuario
                 </Label>
                 <div className="flex items-center gap-2 mt-2">
@@ -313,7 +313,7 @@ export default function FinancialSecurityPanel() {
               </div>
 
               <div>
-                <Label htmlFor="monthly-limit" className="text-white font-medium">
+                <Label htmlFor="monthly-limit" className="text-gray-700 font-medium">
                   Límite Mensual por Usuario
                 </Label>
                 <div className="flex items-center gap-2 mt-2">
@@ -340,19 +340,19 @@ export default function FinancialSecurityPanel() {
             </div>
 
             <div className="space-y-4">
-              <h4 className="font-semibold text-white">Límites Actuales</h4>
+              <h4 className="font-semibold text-gray-700">Límites Actuales</h4>
               <div className="space-y-3">
                 <div className="flex justify-between items-center p-3 bg-gray-900/50 rounded-lg">
                   <span className="text-gray-300">Límite Diario:</span>
-                  <span className="text-white font-medium">${dailyLimit.toLocaleString()}</span>
+                  <span className="text-gray-700 font-medium">${dailyLimit.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between items-center p-3 bg-gray-900/50 rounded-lg">
                   <span className="text-gray-300">Límite Mensual:</span>
-                  <span className="text-white font-medium">${monthlyLimit.toLocaleString()}</span>
+                  <span className="text-gray-700 font-medium">${monthlyLimit.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between items-center p-3 bg-gray-900/50 rounded-lg">
                   <span className="text-gray-300">Por Transacción:</span>
-                  <span className="text-white font-medium">$10,000</span>
+                  <span className="text-gray-700 font-medium">$10,000</span>
                 </div>
               </div>
             </div>
@@ -363,7 +363,7 @@ export default function FinancialSecurityPanel() {
       {/* Fraud Alerts */}
       <Card className="bg-gray-800/50 border-gray-700">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-white">
+          <CardTitle className="flex items-center gap-2 text-gray-700">
             <Zap className="h-5 w-5 text-yellow-400" />
             Alertas de Fraude ({alerts.filter((a: FraudAlert) => !a.resolved).length})
           </CardTitle>
@@ -392,7 +392,7 @@ export default function FinancialSecurityPanel() {
                     <div className="flex items-center gap-3">
                       <AlertTriangle className="h-5 w-5 text-current" />
                       <div>
-                        <p className="font-medium text-white">{alert.description}</p>
+                        <p className="font-medium text-gray-700">{alert.description}</p>
                         <p className="text-sm text-gray-400">
                           {new Date(alert.createdAt).toLocaleDateString('es-ES', {
                             year: 'numeric',
@@ -430,7 +430,7 @@ export default function FinancialSecurityPanel() {
       {/* Recent Transactions */}
       <Card className="bg-gray-800/50 border-gray-700">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-white">
+          <CardTitle className="flex items-center gap-2 text-gray-700">
             <BarChart3 className="h-5 w-5 text-cyan-400" />
             Transacciones Recientes
           </CardTitle>
@@ -467,7 +467,7 @@ export default function FinancialSecurityPanel() {
                       
                       <div>
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="font-medium text-white">${transaction.amount}</span>
+                          <span className="font-medium text-gray-700">${transaction.amount}</span>
                           <Badge className={riskConfig.color}>
                             Riesgo: {riskConfig.level}
                           </Badge>
@@ -520,7 +520,7 @@ export default function FinancialSecurityPanel() {
         <Card className="fixed inset-4 md:inset-20 bg-gray-800 border-gray-600 z-50 overflow-auto">
           <CardHeader>
             <div className="flex items-center justify-between">
-              <CardTitle className="flex items-center gap-2 text-white">
+              <CardTitle className="flex items-center gap-2 text-gray-700">
                 <Shield className="h-5 w-5 text-cyan-400" />
                 Detalles de Transacción
               </CardTitle>
@@ -538,20 +538,20 @@ export default function FinancialSecurityPanel() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="text-sm font-medium text-gray-300">ID de Orden</label>
-                <p className="text-white">{selectedTransaction.orderId}</p>
+                <p className="text-gray-700">{selectedTransaction.orderId}</p>
               </div>
               <div>
                 <label className="text-sm font-medium text-gray-300">Monto</label>
-                <p className="text-white text-xl font-bold">${selectedTransaction.amount}</p>
+                <p className="text-gray-700 text-xl font-bold">${selectedTransaction.amount}</p>
               </div>
               <div>
                 <label className="text-sm font-medium text-gray-300">Método de Pago</label>
-                <p className="text-white">{selectedTransaction.paymentMethod}</p>
+                <p className="text-gray-700">{selectedTransaction.paymentMethod}</p>
               </div>
               <div>
                 <label className="text-sm font-medium text-gray-300">Puntuación de Riesgo</label>
                 <div className="flex items-center gap-2">
-                  <p className="text-white font-bold">{selectedTransaction.riskScore}/100</p>
+                  <p className="text-gray-700 font-bold">{selectedTransaction.riskScore}/100</p>
                   <Badge className={getRiskLevelConfig(selectedTransaction.riskScore).color}>
                     {getRiskLevelConfig(selectedTransaction.riskScore).level}
                   </Badge>
@@ -559,11 +559,11 @@ export default function FinancialSecurityPanel() {
               </div>
               <div>
                 <label className="text-sm font-medium text-gray-300">Dirección IP</label>
-                <p className="text-white">{selectedTransaction.ipAddress}</p>
+                <p className="text-gray-700">{selectedTransaction.ipAddress}</p>
               </div>
               <div>
                 <label className="text-sm font-medium text-gray-300">Ubicación</label>
-                <p className="text-white">{selectedTransaction.location}</p>
+                <p className="text-gray-700">{selectedTransaction.location}</p>
               </div>
             </div>
 

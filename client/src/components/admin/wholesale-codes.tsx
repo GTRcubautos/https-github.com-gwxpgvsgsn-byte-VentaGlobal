@@ -144,12 +144,12 @@ export default function WholesaleCodes() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-white">Códigos Mayoristas</h2>
+          <h2 className="text-2xl font-bold text-gray-700">Códigos Mayoristas</h2>
           <p className="text-gray-400">Gestiona códigos de acceso mayorista</p>
         </div>
         <Button
           onClick={() => setShowCreateForm(true)}
-          className="bg-red-600 hover:bg-red-700 text-white"
+          className="bg-red-600 hover:bg-red-700 text-gray-700"
           data-testid="create-wholesale-code-button"
         >
           <Plus className="h-4 w-4 mr-2" />
@@ -161,7 +161,7 @@ export default function WholesaleCodes() {
       {showCreateForm && (
         <Card className="bg-gray-800 border-gray-700">
           <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
+            <CardTitle className="text-gray-700 flex items-center gap-2">
               <Key className="h-5 w-5" />
               Crear Nuevo Código Mayorista
             </CardTitle>
@@ -175,7 +175,7 @@ export default function WholesaleCodes() {
                   value={formData.code}
                   onChange={(e) => setFormData({ ...formData, code: e.target.value.toUpperCase() })}
                   placeholder="MAYORISTA2024"
-                  className="bg-gray-700 border-gray-600 text-white"
+                  className="bg-gray-700 border-gray-600 text-gray-700"
                   data-testid="input-code"
                 />
               </div>
@@ -196,7 +196,7 @@ export default function WholesaleCodes() {
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 placeholder="Descripción del código mayorista"
-                className="bg-gray-700 border-gray-600 text-white"
+                className="bg-gray-700 border-gray-600 text-gray-700"
                 data-testid="input-description"
               />
             </div>
@@ -209,7 +209,7 @@ export default function WholesaleCodes() {
                   type="date"
                   value={formData.expiresAt}
                   onChange={(e) => setFormData({ ...formData, expiresAt: e.target.value })}
-                  className="bg-gray-700 border-gray-600 text-white"
+                  className="bg-gray-700 border-gray-600 text-gray-700"
                   data-testid="input-expires-at"
                 />
               </div>
@@ -221,7 +221,7 @@ export default function WholesaleCodes() {
                   value={formData.maxUses || ''}
                   onChange={(e) => setFormData({ ...formData, maxUses: e.target.value ? parseInt(e.target.value) : undefined })}
                   placeholder="100"
-                  className="bg-gray-700 border-gray-600 text-white"
+                  className="bg-gray-700 border-gray-600 text-gray-700"
                   data-testid="input-max-uses"
                 />
               </div>
@@ -235,7 +235,7 @@ export default function WholesaleCodes() {
                   value={formData.discountPercent || ''}
                   onChange={(e) => setFormData({ ...formData, discountPercent: e.target.value ? parseFloat(e.target.value) : undefined })}
                   placeholder="15"
-                  className="bg-gray-700 border-gray-600 text-white"
+                  className="bg-gray-700 border-gray-600 text-gray-700"
                   data-testid="input-discount-percent"
                 />
               </div>
@@ -245,7 +245,7 @@ export default function WholesaleCodes() {
               <Button
                 onClick={handleCreate}
                 disabled={createMutation.isPending}
-                className="bg-red-600 hover:bg-red-700 text-white"
+                className="bg-red-600 hover:bg-red-700 text-gray-700"
                 data-testid="save-wholesale-code-button"
               >
                 <Save className="h-4 w-4 mr-2" />
@@ -274,24 +274,24 @@ export default function WholesaleCodes() {
           <Card key={code.id} className="bg-gray-800 border-gray-700 hover:border-red-500 transition-colors" data-testid={`wholesale-code-card-${code.id}`}>
             <CardHeader>
               <div className="flex items-center justify-between">
-                <CardTitle className="text-white flex items-center gap-2">
+                <CardTitle className="text-gray-700 flex items-center gap-2">
                   <Key className="h-5 w-5 text-red-500" />
                   {code.code}
                 </CardTitle>
                 <div className="flex items-center gap-2">
                   {code.isActive ? (
-                    <Badge className="bg-green-600 text-white">
+                    <Badge className="bg-green-600 text-gray-700">
                       <CheckCircle className="h-3 w-3 mr-1" />
                       Activo
                     </Badge>
                   ) : (
-                    <Badge className="bg-gray-600 text-white">
+                    <Badge className="bg-gray-600 text-gray-700">
                       <XCircle className="h-3 w-3 mr-1" />
                       Inactivo
                     </Badge>
                   )}
                   {isExpired(code.expiresAt) && (
-                    <Badge className="bg-red-600 text-white">
+                    <Badge className="bg-red-600 text-gray-700">
                       Expirado
                     </Badge>
                   )}
@@ -345,7 +345,7 @@ export default function WholesaleCodes() {
                   onClick={() => setEditingId(code.id)}
                   variant="outline"
                   size="sm"
-                  className="border-red-600 text-red-400 hover:bg-red-600 hover:text-white"
+                  className="border-red-600 text-red-400 hover:bg-red-600 hover:text-gray-700"
                   data-testid={`edit-button-${code.id}`}
                 >
                   <Edit className="h-4 w-4" />
@@ -360,11 +360,11 @@ export default function WholesaleCodes() {
         <Card className="bg-gray-800 border-gray-700">
           <CardContent className="text-center py-12">
             <Key className="h-16 w-16 text-gray-600 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-white mb-2">No hay códigos mayoristas</h3>
+            <h3 className="text-xl font-semibold text-gray-700 mb-2">No hay códigos mayoristas</h3>
             <p className="text-gray-400 mb-6">Crea el primer código mayorista para comenzar</p>
             <Button
               onClick={() => setShowCreateForm(true)}
-              className="bg-red-600 hover:bg-red-700 text-white"
+              className="bg-red-600 hover:bg-red-700 text-gray-700"
             >
               <Plus className="h-4 w-4 mr-2" />
               Crear Primer Código

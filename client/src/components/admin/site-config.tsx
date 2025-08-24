@@ -108,7 +108,7 @@ export default function SiteConfigPanel() {
         <div className="flex items-center gap-3">
           <Settings className="h-6 w-6 text-red-500" />
           <div>
-            <h2 className="text-2xl font-bold text-white">Configuración de Página de Inicio</h2>
+            <h2 className="text-2xl font-bold text-gray-700">Configuración de Página de Inicio</h2>
             <p className="text-gray-400">Personaliza el contenido y apariencia de tu página principal</p>
           </div>
         </div>
@@ -143,7 +143,7 @@ export default function SiteConfigPanel() {
         <TabsContent value="hero" className="space-y-6">
           <Card className="bg-gray-900 border-gray-800">
             <CardHeader>
-              <CardTitle className="text-white">Configuración de Página de Inicio</CardTitle>
+              <CardTitle className="text-gray-700">Configuración de Página de Inicio</CardTitle>
               <CardDescription className="text-gray-400">
                 Personaliza el contenido principal que los usuarios ven al entrar al sitio
               </CardDescription>
@@ -152,25 +152,25 @@ export default function SiteConfigPanel() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div>
-                    <Label htmlFor="hero_title" className="text-white">Título Principal</Label>
+                    <Label htmlFor="hero_title" className="text-gray-700">Título Principal</Label>
                     <Input
                       id="hero_title"
                       value={getCurrentValue('hero_title')}
                       onChange={(e) => handleConfigChange('hero_title', e.target.value)}
                       placeholder="GTR CUBAUTO"
-                      className="bg-gray-800 border-gray-700 text-white"
+                      className="bg-gray-800 border-gray-700 text-gray-700"
                       data-testid="hero-title-input"
                     />
                   </div>
                   
                   <div>
-                    <Label htmlFor="hero_subtitle" className="text-white">Subtítulo</Label>
+                    <Label htmlFor="hero_subtitle" className="text-gray-700">Subtítulo</Label>
                     <Input
                       id="hero_subtitle"
                       value={getCurrentValue('hero_subtitle')}
                       onChange={(e) => handleConfigChange('hero_subtitle', e.target.value)}
                       placeholder="REPUESTOS DE CALIDAD PARA AUTOS Y MOTOS"
-                      className="bg-gray-800 border-gray-700 text-white"
+                      className="bg-gray-800 border-gray-700 text-gray-700"
                       data-testid="hero-subtitle-input"
                     />
                   </div>
@@ -178,25 +178,25 @@ export default function SiteConfigPanel() {
 
                 <div className="space-y-4">
                   <div>
-                    <Label htmlFor="hero_image_url" className="text-white">URL de Imagen de Fondo</Label>
+                    <Label htmlFor="hero_image_url" className="text-gray-700">URL de Imagen de Fondo</Label>
                     <Input
                       id="hero_image_url"
                       value={getCurrentValue('hero_image_url')}
                       onChange={(e) => handleConfigChange('hero_image_url', e.target.value)}
                       placeholder="https://ejemplo.com/imagen.jpg"
-                      className="bg-gray-800 border-gray-700 text-white"
+                      className="bg-gray-800 border-gray-700 text-gray-700"
                       data-testid="hero-image-input"
                     />
                   </div>
                   
                   <div>
-                    <Label htmlFor="hero_video_url" className="text-white">URL de Video de Fondo (opcional)</Label>
+                    <Label htmlFor="hero_video_url" className="text-gray-700">URL de Video de Fondo (opcional)</Label>
                     <Input
                       id="hero_video_url"
                       value={getCurrentValue('hero_video_url')}
                       onChange={(e) => handleConfigChange('hero_video_url', e.target.value)}
                       placeholder="https://ejemplo.com/video.mp4"
-                      className="bg-gray-800 border-gray-700 text-white"
+                      className="bg-gray-800 border-gray-700 text-gray-700"
                       data-testid="hero-video-input"
                     />
                   </div>
@@ -204,13 +204,13 @@ export default function SiteConfigPanel() {
               </div>
 
               <div>
-                <Label htmlFor="hero_description" className="text-white">Descripción</Label>
+                <Label htmlFor="hero_description" className="text-gray-700">Descripción</Label>
                 <Textarea
                   id="hero_description"
                   value={getCurrentValue('hero_description')}
                   onChange={(e) => handleConfigChange('hero_description', e.target.value)}
                   placeholder="Todo para tu vehículo en un solo lugar..."
-                  className="bg-gray-800 border-gray-700 text-white min-h-[100px]"
+                  className="bg-gray-800 border-gray-700 text-gray-700 min-h-[100px]"
                   data-testid="hero-description-input"
                 />
               </div>
@@ -222,7 +222,7 @@ export default function SiteConfigPanel() {
                   onCheckedChange={(checked) => handleConfigChange('enable_video_hero', checked)}
                   data-testid="enable-video-switch"
                 />
-                <Label htmlFor="enable_video_hero" className="text-white">
+                <Label htmlFor="enable_video_hero" className="text-gray-700">
                   Usar video como fondo principal (en lugar de imagen)
                 </Label>
               </div>
@@ -233,7 +233,7 @@ export default function SiteConfigPanel() {
         <TabsContent value="cars" className="space-y-6">
           <Card className="bg-gray-900 border-gray-800">
             <CardHeader>
-              <CardTitle className="text-white">Configuración de Página de Autos</CardTitle>
+              <CardTitle className="text-gray-700">Configuración de Página de Autos</CardTitle>
               <CardDescription className="text-gray-400">
                 Personaliza el contenido y fondo de la página de autos clásicos
               </CardDescription>
@@ -242,25 +242,25 @@ export default function SiteConfigPanel() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div>
-                    <Label htmlFor="cars_hero_title" className="text-white">Título de Autos</Label>
+                    <Label htmlFor="cars_hero_title" className="text-gray-700">Título de Autos</Label>
                     <Input
                       id="cars_hero_title"
                       value={getCurrentValue('cars_hero_title')}
                       onChange={(e) => handleConfigChange('cars_hero_title', e.target.value)}
                       placeholder="Autos Clásicos & Repuestos"
-                      className="bg-gray-800 border-gray-700 text-white"
+                      className="bg-gray-800 border-gray-700 text-gray-700"
                       data-testid="cars-title-input"
                     />
                   </div>
                   
                   <div>
-                    <Label htmlFor="cars_hero_subtitle" className="text-white">Subtítulo de Autos</Label>
+                    <Label htmlFor="cars_hero_subtitle" className="text-gray-700">Subtítulo de Autos</Label>
                     <Input
                       id="cars_hero_subtitle"
                       value={getCurrentValue('cars_hero_subtitle')}
                       onChange={(e) => handleConfigChange('cars_hero_subtitle', e.target.value)}
                       placeholder="GTR CUBAUTOS - MULTISERVICIO AUTOMOTRIZ"
-                      className="bg-gray-800 border-gray-700 text-white"
+                      className="bg-gray-800 border-gray-700 text-gray-700"
                       data-testid="cars-subtitle-input"
                     />
                   </div>
@@ -268,25 +268,25 @@ export default function SiteConfigPanel() {
 
                 <div className="space-y-4">
                   <div>
-                    <Label htmlFor="cars_hero_image_url" className="text-white">URL de Imagen de Fondo (Autos)</Label>
+                    <Label htmlFor="cars_hero_image_url" className="text-gray-700">URL de Imagen de Fondo (Autos)</Label>
                     <Input
                       id="cars_hero_image_url"
                       value={getCurrentValue('cars_hero_image_url')}
                       onChange={(e) => handleConfigChange('cars_hero_image_url', e.target.value)}
                       placeholder="https://ejemplo.com/imagen-autos.jpg"
-                      className="bg-gray-800 border-gray-700 text-white"
+                      className="bg-gray-800 border-gray-700 text-gray-700"
                       data-testid="cars-image-input"
                     />
                   </div>
                   
                   <div>
-                    <Label htmlFor="cars_hero_video_url" className="text-white">URL de Video de Fondo (Autos - opcional)</Label>
+                    <Label htmlFor="cars_hero_video_url" className="text-gray-700">URL de Video de Fondo (Autos - opcional)</Label>
                     <Input
                       id="cars_hero_video_url"
                       value={getCurrentValue('cars_hero_video_url')}
                       onChange={(e) => handleConfigChange('cars_hero_video_url', e.target.value)}
                       placeholder="https://ejemplo.com/video-autos.mp4"
-                      className="bg-gray-800 border-gray-700 text-white"
+                      className="bg-gray-800 border-gray-700 text-gray-700"
                       data-testid="cars-video-input"
                     />
                   </div>
@@ -294,13 +294,13 @@ export default function SiteConfigPanel() {
               </div>
 
               <div>
-                <Label htmlFor="cars_hero_description" className="text-white">Descripción de Autos</Label>
+                <Label htmlFor="cars_hero_description" className="text-gray-700">Descripción de Autos</Label>
                 <Textarea
                   id="cars_hero_description"
                   value={getCurrentValue('cars_hero_description')}
                   onChange={(e) => handleConfigChange('cars_hero_description', e.target.value)}
                   placeholder="Tu centro automotriz completo: autos clásicos, piezas, repuestos y servicios especializados."
-                  className="bg-gray-800 border-gray-700 text-white min-h-[100px]"
+                  className="bg-gray-800 border-gray-700 text-gray-700 min-h-[100px]"
                   data-testid="cars-description-input"
                 />
               </div>
@@ -312,7 +312,7 @@ export default function SiteConfigPanel() {
                   onCheckedChange={(checked) => handleConfigChange('cars_enable_video_hero', checked)}
                   data-testid="cars-enable-video-switch"
                 />
-                <Label htmlFor="cars_enable_video_hero" className="text-white">
+                <Label htmlFor="cars_enable_video_hero" className="text-gray-700">
                   Usar video como fondo en página de autos
                 </Label>
               </div>
@@ -323,7 +323,7 @@ export default function SiteConfigPanel() {
         <TabsContent value="motorcycles" className="space-y-6">
           <Card className="bg-gray-900 border-gray-800">
             <CardHeader>
-              <CardTitle className="text-white">Configuración de Página de Motos</CardTitle>
+              <CardTitle className="text-gray-700">Configuración de Página de Motos</CardTitle>
               <CardDescription className="text-gray-400">
                 Personaliza el contenido y fondo de la página de motocicletas
               </CardDescription>
@@ -332,25 +332,25 @@ export default function SiteConfigPanel() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div>
-                    <Label htmlFor="motorcycles_hero_title" className="text-white">Título de Motos</Label>
+                    <Label htmlFor="motorcycles_hero_title" className="text-gray-700">Título de Motos</Label>
                     <Input
                       id="motorcycles_hero_title"
                       value={getCurrentValue('motorcycles_hero_title')}
                       onChange={(e) => handleConfigChange('motorcycles_hero_title', e.target.value)}
                       placeholder="Suzuki & Yamaha + Repuestos"
-                      className="bg-gray-800 border-gray-700 text-white"
+                      className="bg-gray-800 border-gray-700 text-gray-700"
                       data-testid="motorcycles-title-input"
                     />
                   </div>
                   
                   <div>
-                    <Label htmlFor="motorcycles_hero_subtitle" className="text-white">Subtítulo de Motos</Label>
+                    <Label htmlFor="motorcycles_hero_subtitle" className="text-gray-700">Subtítulo de Motos</Label>
                     <Input
                       id="motorcycles_hero_subtitle"
                       value={getCurrentValue('motorcycles_hero_subtitle')}
                       onChange={(e) => handleConfigChange('motorcycles_hero_subtitle', e.target.value)}
                       placeholder="GTR CUBAUTOS - MULTISERVICIO MOTOCICLETAS"
-                      className="bg-gray-800 border-gray-700 text-white"
+                      className="bg-gray-800 border-gray-700 text-gray-700"
                       data-testid="motorcycles-subtitle-input"
                     />
                   </div>
@@ -358,25 +358,25 @@ export default function SiteConfigPanel() {
 
                 <div className="space-y-4">
                   <div>
-                    <Label htmlFor="motorcycles_hero_image_url" className="text-white">URL de Imagen de Fondo (Motos)</Label>
+                    <Label htmlFor="motorcycles_hero_image_url" className="text-gray-700">URL de Imagen de Fondo (Motos)</Label>
                     <Input
                       id="motorcycles_hero_image_url"
                       value={getCurrentValue('motorcycles_hero_image_url')}
                       onChange={(e) => handleConfigChange('motorcycles_hero_image_url', e.target.value)}
                       placeholder="https://ejemplo.com/imagen-motos.jpg"
-                      className="bg-gray-800 border-gray-700 text-white"
+                      className="bg-gray-800 border-gray-700 text-gray-700"
                       data-testid="motorcycles-image-input"
                     />
                   </div>
                   
                   <div>
-                    <Label htmlFor="motorcycles_hero_video_url" className="text-white">URL de Video de Fondo (Motos - opcional)</Label>
+                    <Label htmlFor="motorcycles_hero_video_url" className="text-gray-700">URL de Video de Fondo (Motos - opcional)</Label>
                     <Input
                       id="motorcycles_hero_video_url"
                       value={getCurrentValue('motorcycles_hero_video_url')}
                       onChange={(e) => handleConfigChange('motorcycles_hero_video_url', e.target.value)}
                       placeholder="https://ejemplo.com/video-motos.mp4"
-                      className="bg-gray-800 border-gray-700 text-white"
+                      className="bg-gray-800 border-gray-700 text-gray-700"
                       data-testid="motorcycles-video-input"
                     />
                   </div>
@@ -384,13 +384,13 @@ export default function SiteConfigPanel() {
               </div>
 
               <div>
-                <Label htmlFor="motorcycles_hero_description" className="text-white">Descripción de Motos</Label>
+                <Label htmlFor="motorcycles_hero_description" className="text-gray-700">Descripción de Motos</Label>
                 <Textarea
                   id="motorcycles_hero_description"
                   value={getCurrentValue('motorcycles_hero_description')}
                   onChange={(e) => handleConfigChange('motorcycles_hero_description', e.target.value)}
                   placeholder="Especialistas en motocicletas Suzuki y Yamaha, piezas originales y servicios técnicos."
-                  className="bg-gray-800 border-gray-700 text-white min-h-[100px]"
+                  className="bg-gray-800 border-gray-700 text-gray-700 min-h-[100px]"
                   data-testid="motorcycles-description-input"
                 />
               </div>
@@ -402,7 +402,7 @@ export default function SiteConfigPanel() {
                   onCheckedChange={(checked) => handleConfigChange('motorcycles_enable_video_hero', checked)}
                   data-testid="motorcycles-enable-video-switch"
                 />
-                <Label htmlFor="motorcycles_enable_video_hero" className="text-white">
+                <Label htmlFor="motorcycles_enable_video_hero" className="text-gray-700">
                   Usar video como fondo en página de motos
                 </Label>
               </div>
@@ -415,7 +415,7 @@ export default function SiteConfigPanel() {
             {/* Imágenes Promocionales */}
             <Card className="bg-gray-900 border-gray-800">
               <CardHeader>
-                <CardTitle className="text-white flex items-center gap-2">
+                <CardTitle className="text-gray-700 flex items-center gap-2">
                   <Image className="h-5 w-5 text-red-500" />
                   Imágenes Promocionales
                 </CardTitle>
@@ -430,14 +430,14 @@ export default function SiteConfigPanel() {
                       value={image}
                       onChange={(e) => updatePromotionalImage(index, e.target.value)}
                       placeholder="https://ejemplo.com/imagen-promocional.jpg"
-                      className="bg-gray-800 border-gray-700 text-white flex-1"
+                      className="bg-gray-800 border-gray-700 text-gray-700 flex-1"
                       data-testid={`promotional-image-${index}`}
                     />
                     <Button
                       variant="outline"
                       size="sm"
                       onClick={() => removePromotionalImage(index)}
-                      className="border-red-500 text-red-400 hover:bg-red-500 hover:text-white"
+                      className="border-red-500 text-red-400 hover:bg-red-500 hover:text-gray-700"
                       data-testid={`remove-image-${index}`}
                     >
                       <X className="h-4 w-4" />
@@ -447,7 +447,7 @@ export default function SiteConfigPanel() {
                 <Button
                   onClick={addPromotionalImage}
                   variant="outline"
-                  className="w-full border-green-500 text-green-400 hover:bg-green-500 hover:text-white"
+                  className="w-full border-green-500 text-green-400 hover:bg-green-500 hover:text-gray-700"
                   data-testid="add-promotional-image"
                 >
                   <Plus className="h-4 w-4 mr-2" />
@@ -459,7 +459,7 @@ export default function SiteConfigPanel() {
             {/* Videos Promocionales */}
             <Card className="bg-gray-900 border-gray-800">
               <CardHeader>
-                <CardTitle className="text-white flex items-center gap-2">
+                <CardTitle className="text-gray-700 flex items-center gap-2">
                   <Video className="h-5 w-5 text-red-500" />
                   Videos Promocionales
                 </CardTitle>
@@ -474,14 +474,14 @@ export default function SiteConfigPanel() {
                       value={video}
                       onChange={(e) => updatePromotionalVideo(index, e.target.value)}
                       placeholder="https://ejemplo.com/video-promocional.mp4"
-                      className="bg-gray-800 border-gray-700 text-white flex-1"
+                      className="bg-gray-800 border-gray-700 text-gray-700 flex-1"
                       data-testid={`promotional-video-${index}`}
                     />
                     <Button
                       variant="outline"
                       size="sm"
                       onClick={() => removePromotionalVideo(index)}
-                      className="border-red-500 text-red-400 hover:bg-red-500 hover:text-white"
+                      className="border-red-500 text-red-400 hover:bg-red-500 hover:text-gray-700"
                       data-testid={`remove-video-${index}`}
                     >
                       <X className="h-4 w-4" />
@@ -491,7 +491,7 @@ export default function SiteConfigPanel() {
                 <Button
                   onClick={addPromotionalVideo}
                   variant="outline"
-                  className="w-full border-green-500 text-green-400 hover:bg-green-500 hover:text-white"
+                  className="w-full border-green-500 text-green-400 hover:bg-green-500 hover:text-gray-700"
                   data-testid="add-promotional-video"
                 >
                   <Plus className="h-4 w-4 mr-2" />
@@ -505,7 +505,7 @@ export default function SiteConfigPanel() {
         <TabsContent value="preview" className="space-y-6">
           <Card className="bg-gray-900 border-gray-800">
             <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
+              <CardTitle className="text-gray-700 flex items-center gap-2">
                 <Eye className="h-5 w-5 text-red-500" />
                 Vista Previa del Hero
               </CardTitle>
@@ -534,7 +534,7 @@ export default function SiteConfigPanel() {
                   />
                 )}
                 <div className="relative z-10 space-y-4">
-                  <h1 className="text-4xl md:text-6xl font-bold text-white">
+                  <h1 className="text-4xl md:text-6xl font-bold text-gray-700">
                     {getCurrentValue('hero_title') || 'GTR CUBAUTO'}
                   </h1>
                   <h2 className="text-xl md:text-2xl text-red-200">
@@ -553,7 +553,7 @@ export default function SiteConfigPanel() {
             (getCurrentValue('promotional_videos') || []).length > 0) && (
             <Card className="bg-gray-900 border-gray-800">
               <CardHeader>
-                <CardTitle className="text-white">Contenido Promocional</CardTitle>
+                <CardTitle className="text-gray-700">Contenido Promocional</CardTitle>
                 <CardDescription className="text-gray-400">
                   Vista previa del contenido promocional configurado
                 </CardDescription>

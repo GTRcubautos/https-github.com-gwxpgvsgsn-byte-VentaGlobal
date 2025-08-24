@@ -133,7 +133,7 @@ export default function SecurityLogsPanel() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-white">Logs de Seguridad</h2>
+          <h2 className="text-2xl font-bold text-gray-700">Logs de Seguridad</h2>
           <p className="text-gray-400">Monitoreo y auditoría de eventos de seguridad</p>
         </div>
         <div className="flex items-center gap-2">
@@ -150,7 +150,7 @@ export default function SecurityLogsPanel() {
                   Actualizar
                 </Button>
               </TooltipTrigger>
-              <TooltipContent side="bottom" className="bg-black text-white border-gray-600">
+              <TooltipContent side="bottom" className="bg-black text-gray-700 border-gray-600">
                 <p>Actualizar lista de logs de seguridad</p>
               </TooltipContent>
             </Tooltip>
@@ -167,7 +167,7 @@ export default function SecurityLogsPanel() {
                   Exportar
                 </Button>
               </TooltipTrigger>
-              <TooltipContent side="bottom" className="bg-black text-white border-gray-600">
+              <TooltipContent side="bottom" className="bg-black text-gray-700 border-gray-600">
                 <p>Descargar logs en formato CSV</p>
               </TooltipContent>
             </Tooltip>
@@ -284,7 +284,7 @@ export default function SecurityLogsPanel() {
       {/* Logs Table */}
       <Card className="bg-gray-800/50 border-gray-700">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-white">
+          <CardTitle className="flex items-center gap-2 text-gray-700">
             <Shield className="h-5 w-5 text-cyan-400" />
             Registro de Eventos ({filteredLogs.length})
           </CardTitle>
@@ -321,7 +321,7 @@ export default function SecurityLogsPanel() {
                       
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="font-medium text-white">{eventConfig.label}</span>
+                          <span className="font-medium text-gray-700">{eventConfig.label}</span>
                           <Badge className={severityConfig.color}>
                             {severityConfig.label}
                           </Badge>
@@ -372,7 +372,7 @@ export default function SecurityLogsPanel() {
         <Card className="fixed inset-4 md:inset-20 bg-gray-800 border-gray-600 z-50 overflow-auto">
           <CardHeader>
             <div className="flex items-center justify-between">
-              <CardTitle className="flex items-center gap-2 text-white">
+              <CardTitle className="flex items-center gap-2 text-gray-700">
                 <Shield className="h-5 w-5 text-cyan-400" />
                 Detalles del Evento
               </CardTitle>
@@ -390,23 +390,23 @@ export default function SecurityLogsPanel() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="text-sm font-medium text-gray-300">Tipo de Evento</label>
-                <p className="text-white">{eventTypeConfig[selectedLog.eventType]?.label}</p>
+                <p className="text-gray-700">{eventTypeConfig[selectedLog.eventType]?.label}</p>
               </div>
               <div>
                 <label className="text-sm font-medium text-gray-300">Severidad</label>
-                <p className="text-white">{getSeverityConfig(selectedLog.severity).label}</p>
+                <p className="text-gray-700">{getSeverityConfig(selectedLog.severity).label}</p>
               </div>
               <div>
                 <label className="text-sm font-medium text-gray-300">Usuario</label>
-                <p className="text-white">{selectedLog.userEmail || 'N/A'}</p>
+                <p className="text-gray-700">{selectedLog.userEmail || 'N/A'}</p>
               </div>
               <div>
                 <label className="text-sm font-medium text-gray-300">Dirección IP</label>
-                <p className="text-white">{selectedLog.ipAddress}</p>
+                <p className="text-gray-700">{selectedLog.ipAddress}</p>
               </div>
               <div className="md:col-span-2">
                 <label className="text-sm font-medium text-gray-300">User Agent</label>
-                <p className="text-white text-sm break-all">{selectedLog.userAgent}</p>
+                <p className="text-gray-700 text-sm break-all">{selectedLog.userAgent}</p>
               </div>
             </div>
             
