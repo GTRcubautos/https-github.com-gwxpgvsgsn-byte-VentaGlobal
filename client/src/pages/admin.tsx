@@ -185,8 +185,8 @@ export default function Admin() {
             </div>
             <div className="flex items-center space-x-4">
               <div className="text-right text-sm">
-                <p className="font-medium text-automotive-black">Sistema v2.4.1</p>
-                <p className="text-automotive-gray">Última actualización: Hoy</p>
+                <p className="font-medium text-gray-600">Sistema v2.4.1</p>
+                <p className="text-gray-500">Última actualización: Hoy</p>
               </div>
               <Badge className="bg-green-100 text-green-800">
                 <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
