@@ -17,6 +17,8 @@ import Games from "@/pages/games";
 import Profile from "@/pages/profile";
 import Wholesale from "@/pages/wholesale";
 import Admin from "@/pages/admin";
+import AdminLogin from "@/pages/admin-login";
+import ProtectedAdmin from "@/components/admin/protected-admin";
 import Subscription from "@/pages/subscription";
 import NotFound from "@/pages/not-found";
 import { Terms } from "@/pages/terms";
@@ -36,7 +38,12 @@ function Router() {
       <Route path="/juegos" component={Games} />
       <Route path="/perfil" component={Profile} />
       <Route path="/mayoristas" component={Wholesale} />
-      <Route path="/admin" component={Admin} />
+      <Route path="/admin/login" component={AdminLogin} />
+      <Route path="/admin">
+        <ProtectedAdmin>
+          <Admin />
+        </ProtectedAdmin>
+      </Route>
       <Route path="/suscripcion" component={Subscription} />
       <Route path="/vip" component={Subscription} />
       <Route path="/checkout" component={Checkout} />

@@ -15,6 +15,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Progress } from '@/components/ui/progress';
 import { useToast } from '@/hooks/use-toast';
 import { apiRequest } from '@/lib/queryClient';
+import { useAdminAuth } from '@/hooks/useAdminAuth';
 import { 
   Users, DollarSign, ShoppingCart, Star, TrendingUp, TrendingDown, 
   Car, Bike, Settings, BarChart3, PieChart, Activity, Shield,
@@ -23,7 +24,7 @@ import {
   Clock, Globe, Instagram, Facebook, Twitter, Youtube,
   RefreshCw, Plus, Edit, Trash2, Eye, Send, Filter,
   Download, Upload, Search, ArrowUp, ArrowDown, Package,
-  Percent, Database, Bot, Bell, Home, Building, Tag
+  Percent, Database, Bot, Bell, Home, Building, Tag, LogOut
 } from 'lucide-react';
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
@@ -66,6 +67,7 @@ export default function Admin() {
   const [activeTab, setActiveTab] = useState('dashboard');
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const { logout } = useAdminAuth();
 
   // Data queries
   const { data: users = [], isLoading: usersLoading } = useQuery<User[]>({
@@ -189,6 +191,23 @@ export default function Admin() {
               <Button variant="outline" size="sm">
                 <Download className="h-4 w-4 mr-2" />
                 Exportar Datos
+              </Button>
+              <Button
+                onClick={() => {
+                  logout();
+                  toast({
+                    title: "🔓 Sesión cerrada",
+                    description: "Has cerrado sesión del panel de administración.",
+                  });
+                  window.location.href = '/';
+                }}
+                variant="outline"
+                size="sm"
+                className="border-red-300 text-red-600 hover:bg-red-50"
+                data-testid="admin-logout-button"
+              >
+                <LogOut className="h-4 w-4 mr-2" />
+                Salir
               </Button>
             </div>
           </div>
@@ -940,7 +959,7 @@ export default function Admin() {
                           </div>
                           <div>
                             <h4 className="font-medium">{campaign.name}</h4>
-                            <p className="text-sm text-muted-foreground">{campaign.platform} • {campaign.targetAudience}</p>
+                            <p className="text-sm text-muted-foreground">{Array.isArray(campaign.platforms) ? campaign.platforms.join(', ') : 'N/A'} • {campaign.targetAudience}</p>
                             <div className="flex items-center gap-4 mt-1">
                               <span className="text-xs text-green-600">ROI: +245%</span>
                               <span className="text-xs text-blue-600">CTR: 3.2%</span>
