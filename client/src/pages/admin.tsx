@@ -37,6 +37,9 @@ import InventoryManagement from '@/components/admin/inventory-management';
 import DataBackupPanel from '@/components/admin/data-backup-panel';
 import SecurityLogsPanel from '@/components/admin/security-logs-panel';
 import FinancialSecurityPanel from '@/components/security/financial-security-panel';
+import { CreateCampaignDialog } from '@/components/CreateCampaignDialog';
+import { CreatePostDialog } from '@/components/CreatePostDialog';
+import { CreateUserDialog } from '@/components/CreateUserDialog';
 import { SocialAutomation } from '@/components/admin/social-automation';
 
 const rewardsConfigSchema = z.object({
@@ -69,6 +72,9 @@ type DiscountForm = z.infer<typeof discountSchema>;
 
 export default function Admin() {
   const [activeTab, setActiveTab] = useState('dashboard');
+  const [showCreateCampaign, setShowCreateCampaign] = useState(false);
+  const [showCreatePost, setShowCreatePost] = useState(false);
+  const [showCreateUser, setShowCreateUser] = useState(false);
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const { logout } = useAdminAuth();
@@ -549,8 +555,12 @@ export default function Admin() {
             </div>
 
             <Card>
-              <CardHeader>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-gray-700">Lista de Clientes</CardTitle>
+                <Button size="sm" onClick={() => setShowCreateUser(true)}>
+                  <Plus className="h-4 w-4 mr-2" />
+                  Nuevo Cliente
+                </Button>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -895,7 +905,7 @@ export default function Admin() {
                   <Bot className="h-4 w-4 mr-2" />
                   Auto-Optimizar
                 </Button>
-                <Button size="sm">
+                <Button size="sm" onClick={() => setShowCreateCampaign(true)}>
                   <Plus className="h-4 w-4 mr-2" />
                   Nueva Campaña
                 </Button>
@@ -1071,6 +1081,13 @@ export default function Admin() {
 
           {/* Social Media Tab */}
           <TabsContent value="social" className="space-y-8">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold text-gray-700">Automatización Social</h2>
+              <Button size="sm" onClick={() => setShowCreatePost(true)}>
+                <Plus className="h-4 w-4 mr-2" />
+                Nueva Publicación
+              </Button>
+            </div>
             <SocialAutomation />
           </TabsContent>
 
@@ -1636,6 +1653,22 @@ export default function Admin() {
           </TabsContent>
         </Tabs>
       </div>
+
+      {/* Dialogs */}
+      <CreateCampaignDialog 
+        open={showCreateCampaign} 
+        onOpenChange={setShowCreateCampaign} 
+      />
+      
+      <CreatePostDialog 
+        open={showCreatePost} 
+        onOpenChange={setShowCreatePost} 
+      />
+      
+      <CreateUserDialog 
+        open={showCreateUser} 
+        onOpenChange={setShowCreateUser} 
+      />
     </div>
   );
 }

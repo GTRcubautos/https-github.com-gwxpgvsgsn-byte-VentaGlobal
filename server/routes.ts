@@ -44,6 +44,52 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Create new product with automated social media content generation
+  app.post("/api/products", async (req, res) => {
+    try {
+      const productData = insertProductSchema.parse(req.body);
+      const product = await storage.createProduct(productData);
+      
+      // Auto-generate social media content for new products
+      try {
+        const templates = await storage.getAllContentTemplates();
+        const productTemplate = templates.find(t => 
+          t.platforms.length > 0 && t.content.includes('{product_name}')
+        );
+        
+        if (productTemplate) {
+          // Generate automated post
+          let content = productTemplate.content;
+          content = content.replace(/\{product_name\}/g, product.name);
+          content = content.replace(/\{product_price\}/g, `$${product.retailPrice}`);
+          content = content.replace(/\{product_description\}/g, product.description);
+          content = content.replace(/\{store_name\}/g, "GTR CUBAUTO");
+
+          const postData = {
+            platforms: productTemplate.platforms,
+            content,
+            templateId: productTemplate.id,
+            productId: product.id,
+            postType: "automated" as const,
+            status: "scheduled" as const,
+            scheduledAt: new Date(Date.now() + 60000 * 5), // Schedule 5 minutes from now
+          };
+
+          await storage.createSocialPost(postData);
+          console.log(`✅ Auto-generated social post for new product: ${product.name}`);
+        }
+      } catch (autoError) {
+        console.warn("⚠️ Failed to auto-generate social content:", autoError);
+        // Don't fail the product creation if social automation fails
+      }
+      
+      res.json(product);
+    } catch (error) {
+      console.error("Failed to create product:", error);
+      res.status(500).json({ error: "Failed to create product" });
+    }
+  });
+
   // Authentication routes
   app.post("/api/auth/wholesale", async (req, res) => {
     try {
@@ -289,6 +335,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(users);
     } catch (error) {
       res.status(500).json({ error: "Failed to fetch users" });
+    }
+  });
+
+  // Admin API - Create new user
+  app.post("/api/admin/users", async (req, res) => {
+    try {
+      const userData = insertUserSchema.parse({
+        ...req.body,
+        password: "temp123", // Default password, user should change it
+        isActive: true,
+      });
+      
+      const user = await storage.createUser(userData);
+      res.json(user);
+    } catch (error) {
+      console.error("Failed to create user:", error);
+      res.status(500).json({ error: "Failed to create user" });
     }
   });
 
