@@ -44,7 +44,7 @@ export default function TermsPrivacyModal({ isOpen, onAccept, onReject }: TermsP
 
   return (
     <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4" data-testid="terms-privacy-modal">
-      <Card className="w-full max-w-md max-h-[70vh] bg-gray-900 border-gray-700 shadow-2xl">
+      <Card className="w-full max-w-md max-h-[70vh] bg-gray-900 border-gray-700 shadow-lg">
         <CardHeader className="pb-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">

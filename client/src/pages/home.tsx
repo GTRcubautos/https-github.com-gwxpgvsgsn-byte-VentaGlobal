@@ -310,7 +310,7 @@ export default function Home() {
               CATEGORÍAS DE REPUESTOS
             </Badge>
             <div className="flex justify-center mb-6">
-              <Button size="lg" className="text-3xl md:text-5xl font-bold px-12 py-6 h-auto bg-black hover:bg-gray-900 text-white shadow-xl">
+              <Button size="lg" className="text-3xl md:text-5xl font-bold px-12 py-6 h-auto bg-black hover:bg-gray-900 text-white shadow-lg">
                 Repuestos de Calidad
               </Button>
             </div>
@@ -381,7 +381,7 @@ export default function Home() {
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <div className="flex flex-col items-center gap-4">
-              <Button size="lg" className="text-2xl font-bold px-8 py-4 bg-red-600 hover:bg-red-700 text-white shadow-xl">
+              <Button size="lg" className="text-2xl font-bold px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white shadow-lg">
                 Productos Destacados
               </Button>
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -400,7 +400,7 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
               {featuredProducts.map((product) => (
                 <div key={product.id} className="group">
-                  <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                  <Card className="overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 group-hover:scale-105">
                     <div className="aspect-square overflow-hidden relative">
                       <img
                         src={product.imageUrl || 'https://via.placeholder.com/400'}
@@ -479,7 +479,7 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/cars">
-              <Button size="lg" className="min-w-[200px] bg-red-600 hover:bg-red-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300" data-testid="explore-cars-button">
+              <Button size="lg" className="min-w-[200px] bg-blue-600 hover:bg-blue-700 text-white border-0 shadow-md hover:shadow-lg transition-all duration-300" data-testid="explore-cars-button">
                 🚗 Explorar GTR Autos
               </Button>
             </Link>
