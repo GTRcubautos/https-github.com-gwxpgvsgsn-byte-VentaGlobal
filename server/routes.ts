@@ -1190,6 +1190,60 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Change admin password
+  app.post('/api/admin/change-password', async (req, res) => {
+    try {
+      const { currentPassword, newPassword } = req.body;
+
+      // Get current admin password from config
+      const adminPassword = await storage.getSiteConfig('admin_password') || 'Gerardo';
+
+      // Verify current password
+      if (currentPassword !== adminPassword) {
+        // Log failed password change attempt
+        await storage.createSecurityLog({
+          action: 'admin_action',
+          severity: 'high',
+          userId: 'admin',
+          ipAddress: req.ip || 'unknown',
+          userAgent: req.get('User-Agent') || 'unknown',
+          details: {
+            action: 'password_change_failed',
+            reason: 'incorrect_current_password'
+          }
+        });
+
+        return res.status(401).json({ error: 'Contraseña actual incorrecta' });
+      }
+
+      // Validate new password
+      if (!newPassword || newPassword.length < 6) {
+        return res.status(400).json({ error: 'La nueva contraseña debe tener al menos 6 caracteres' });
+      }
+
+      // Update password in config
+      await storage.setSiteConfig('admin_password', newPassword);
+
+      // Log successful password change
+      await storage.createSecurityLog({
+        action: 'admin_action',
+        severity: 'medium',
+        userId: 'admin',
+        ipAddress: req.ip || 'unknown',
+        userAgent: req.get('User-Agent') || 'unknown',
+        details: {
+          action: 'password_changed',
+          timestamp: new Date().toISOString()
+        }
+      });
+
+      res.json({ success: true, message: 'Contraseña actualizada exitosamente' });
+    } catch (error) {
+      console.error('Error changing password:', error);
+      res.status(500).json({ error: 'Error al cambiar la contraseña' });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
