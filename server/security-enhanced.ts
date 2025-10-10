@@ -196,10 +196,18 @@ export class SecurityService {
   // Encriptar datos sensibles
   encryptSensitiveData(data: string): string {
     try {
-      const cipher = crypto.createCipher('aes-256-cbc', this.config.encryptionKey);
+      // Generate a random IV for each encryption (16 bytes for AES)
+      const iv = crypto.randomBytes(16);
+      
+      // Derive a proper 32-byte key from the encryption key
+      const key = crypto.createHash('sha256').update(this.config.encryptionKey).digest();
+      
+      const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
       let encrypted = cipher.update(data, 'utf8', 'hex');
       encrypted += cipher.final('hex');
-      return encrypted;
+      
+      // Prepend IV to the encrypted data (IV is not secret, just needs to be unique)
+      return iv.toString('hex') + ':' + encrypted;
     } catch (error) {
       console.error('🚨 Error en encriptación:', error);
       throw new Error('Encryption failed');
@@ -209,8 +217,20 @@ export class SecurityService {
   // Desencriptar datos
   decryptSensitiveData(encryptedData: string): string {
     try {
-      const decipher = crypto.createDecipher('aes-256-cbc', this.config.encryptionKey);
-      let decrypted = decipher.update(encryptedData, 'hex', 'utf8');
+      // Extract IV from the beginning of the encrypted data
+      const parts = encryptedData.split(':');
+      if (parts.length !== 2) {
+        throw new Error('Invalid encrypted data format');
+      }
+      
+      const iv = Buffer.from(parts[0], 'hex');
+      const encrypted = parts[1];
+      
+      // Derive the same key used for encryption
+      const key = crypto.createHash('sha256').update(this.config.encryptionKey).digest();
+      
+      const decipher = crypto.createDecipheriv('aes-256-cbc', key, iv);
+      let decrypted = decipher.update(encrypted, 'hex', 'utf8');
       decrypted += decipher.final('utf8');
       return decrypted;
     } catch (error) {
