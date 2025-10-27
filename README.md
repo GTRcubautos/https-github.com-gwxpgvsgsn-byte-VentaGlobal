@@ -1,115 +1,116 @@
-# VentaGlobal
+# VentaGlobal (rest-express)
 
 Descripción
 ---
-VentaGlobal es la página web del proyecto VentaGlobal. Esta aplicación está desarrollada principalmente en TypeScript, con algunos módulos móviles en Swift y Kotlin. Este repositorio contiene el código fuente, scripts de construcción y documentación básica para ejecutar y desplegar la aplicación.
+VentaGlobal es la web del proyecto (paquete "rest-express"). Este repositorio contiene la aplicación web y el servidor, desarrollados mayoritariamente en TypeScript. El servidor principal se encuentra en server/index.ts y la configuración de build usa Vite y esbuild.
 
 Estado del proyecto
 ---
 - Lenguaje principal: TypeScript
-- Otros: Swift (módulos iOS), Kotlin (módulos Android)
-- Descripción corta: Web page
+- Licencia: MIT
+- Versión del paquete: 1.0.0
 
-Características
+Características principales
 ---
-- Interfaz de usuario moderna (TypeScript)
-- Integración con módulos móviles (Swift/Kotlin)
-- Scripts para desarrollo, build y despliegue
-- Estructura preparada para pruebas y lint
+- Servidor en TypeScript (server/index.ts)
+- Frontend moderno con Vite
+- Integración con bases de datos vía Drizzle (drizzle-kit)
+- Autenticación y sesiones (passport, express-session)
+- Integración con Stripe y PayPal (dependencias incluidas)
 
-Demo
+Tecnologías y dependencias destacadas
 ---
-- Enlace demo: <URL del demo o plataforma de hosting>
-- Capturas o descripción rápida: <Incluir imágenes o GIFs si las tienes>
-
-Tecnologías
----
-- TypeScript
-- Node.js
-- (Opcional) Framework front-end: React / Vue / Svelte / Next.js / Nuxt.js — reemplazar según corresponda
-- Swift (iOS)
-- Kotlin (Android)
-- Herramientas: eslint, prettier, jest (o las que uses)
+- Node.js + TypeScript
+- Vite (build del frontend)
+- esbuild (bundle del servidor para producción)
+- Express (servidor HTTP)
+- Drizzle ORM / drizzle-kit
+- Stripe, PayPal SDKs
+- React (dependencias incluidas)
+- TailwindCSS
 
 Requisitos
 ---
-- Node.js >= 16 (o la versión que uses)
-- npm >= 8 o yarn >= 1.22
-- Xcode para iOS (si trabajas con Swift)
-- Android Studio para Android (si trabajas con Kotlin)
+- Node.js (recomendado >= 16)
+- npm o yarn
+- Para iOS/Android solo si usas módulos móviles: Xcode / Android Studio
 
 Instalación (local)
 ---
 1. Clona el repositorio:
    git clone https://github.com/GTRcubautos/https-github.com-gwxpgvsgsn-byte-VentaGlobal.git
 2. Entra en la carpeta del proyecto:
-   cd VentaGlobal
+   cd https-github.com-gwxpgvsgsn-byte-VentaGlobal
 3. Instala dependencias:
    npm install
    (o) yarn install
-4. Crea un archivo de entorno (si aplica):
+4. Crea el archivo de entorno (si existe .env.example):
    cp .env.example .env
-   - Edita `.env` con las variables necesarias (API_URL, API_KEY, etc.)
+   - Edita `.env` con las variables necesarias (API keys, DATABASE_URL, etc.)
 
-Scripts comunes
+Scripts disponibles (según package.json)
 ---
-- npm run dev — Iniciar servidor de desarrollo (modo watch)
-- npm run build — Construir para producción
-- npm run start — Iniciar servidor en modo producción (si aplica)
-- npm run lint — Ejecutar linters
-- npm run test — Ejecutar tests
-- npm run format — Formatear código con prettier
+- npm run dev
+  - Ejecuta: NODE_ENV=development tsx server/index.ts
+  - Inicia el servidor en modo desarrollo usando tsx para ejecutar el entrypoint TypeScript directamente.
 
-(Ajusta los nombres de los scripts según tu package.json)
+- npm run build
+  - Ejecuta: vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+  - Construye el frontend con Vite y bundlea el servidor con esbuild a la carpeta dist para producción.
 
-Estructura sugerida de carpetas
+- npm run start
+  - Ejecuta: NODE_ENV=production node dist/index.js
+  - Inicia la aplicación en modo producción usando el bundle generado en dist.
+
+- npm run check
+  - Ejecuta: tsc
+  - Ejecuta el compilador TypeScript para verificar tipos.
+
+- npm run db:push
+  - Ejecuta: drizzle-kit push
+  - Aplica migraciones o sincroniza esquema con Drizzle (asegúrate de configurar DATABASE_URL).
+
+Nota: Si usas Windows, configura las variables de entorno (NODE_ENV=...) según tu shell (cross-env o sintaxis compatible).
+
+Estructura de carpetas (esperada)
 ---
-- src/ — Código fuente (TypeScript)
-- public/ — Archivos estáticos
-- mobile/ios/ — Código Swift (iOS)
-- mobile/android/ — Código Kotlin (Android)
-- tests/ — Pruebas
-- scripts/ — Scripts de utilidad
-- .env.example — Ejemplo de variables de entorno
+- server/ — Código del servidor (entrypoint: server/index.ts)
+- src/ o client/ — Código del frontend (si aplica)
+- dist/ — Salida de build para producción
 - package.json
 
 Despliegue
 ---
-- Construir la aplicación:
-  npm run build
-- Subir los artefactos a tu servicio de hosting (Netlify, Vercel, GitHub Pages, S3 + CloudFront, etc.)
-- Para mobile: compilar en Xcode para iOS y en Android Studio/Gradle para Android
+1. Construir:
+   npm run build
+2. Subir contenido de `dist/` y los archivos estáticos a tu hosting / servidor.
+3. Configurar variables de entorno en el entorno de producción (DATABASE_URL, STRIPE_KEY, etc.)
 
 Buenas prácticas
 ---
-- Mantener variables sensibles fuera del repositorio (.env ignorado)
-- Revisar y actualizar dependencias periódicamente
-- Escribir tests para nuevas funcionalidades
-- Usar PRs para features y revisiones de código
+- No subir variables sensibles al repositorio (.env debe estar en .gitignore).
+- Usar ramas y Pull Requests para cambios.
+- Ejecutar `npm run check` y tests antes de mergear.
 
-Cómo contribuir
+Contribuir
 ---
-1. Haz un fork del repositorio.
-2. Crea una rama con tu feature o fix:
-   git checkout -b feature/mi-cambio
-3. Asegúrate de que los tests y linters pasan.
-4. Abre un Pull Request describiendo los cambios y la motivación.
-5. Sigue las guías de estilo del proyecto.
+1. Haz fork del repo y crea una rama feature/mi-cambio.
+2. Asegúrate de que los scripts y el linter pasan.
+3. Abre un Pull Request con descripción y capturas si aplica.
 
 Reportar problemas
 ---
-- Usa la sección de Issues del repositorio para bugs, dudas o solicitudes de mejora.
-- Incluye: pasos para reproducir, entorno (Node, navegador, SO), logs relevantes y capturas si aplica.
+- Abre un Issue en GitHub con pasos para reproducir, entorno y logs relevantes.
 
 Licencia
 ---
-Este proyecto está bajo la licencia <LICENCIA>. (Reemplaza por MIT, Apache-2.0, etc.)
+Este proyecto está bajo la licencia MIT.
 
 Créditos y contacto
 ---
-- Autor: gwxpgvsgsn-byte
-- Contacto: <email o link a GitHub>
+- Autor / Mantenedor: gwxpgvsgsn-byte
+- Repositorio: https://github.com/GTRcubautos/https-github.com-gwxpgvsgsn-byte-VentaGlobal
 
 Notas finales
 ---
-- Personaliza los scripts y la sección de despliegue según las herramientas reales que uses (por ejemplo, framework específico, comandos de build).
+- He incluido los comandos reales que aparecen en package.json (dev, build, start, check, db:push). Si quieres que añada secciones adicionales (ej. badge de build, instrucciones de CI/CD, ejemplo de .env, o capturas) dímelo y lo agrego.
