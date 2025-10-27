@@ -1,5 +1,8 @@
 # VentaGlobal (rest-express)
 
+[![CI](https://github.com/GTRcubautos/https-github.com-gwxpgvsgsn-byte-VentaGlobal/actions/workflows/ci.yml/badge.svg)](https://github.com/GTRcubautos/https-github.com-gwxpgvsgsn-byte-VentaGlobal/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+
 Descripción
 ---
 VentaGlobal es la web del proyecto (paquete "rest-express"). Este repositorio contiene la aplicación web y el servidor, desarrollados mayoritariamente en TypeScript. El servidor principal se encuentra en server/index.ts y la configuración de build usa Vite y esbuild.
@@ -102,6 +105,39 @@ Reportar problemas
 ---
 - Abre un Issue en GitHub con pasos para reproducir, entorno y logs relevantes.
 
+Archivo .env.example
+---
+A continuación un ejemplo de variables de entorno que puedes necesitar. No subas valores reales al repositorio.
+
+# Entorno
+NODE_ENV=development
+PORT=3000
+
+# Base de datos
+DATABASE_URL=postgresql://user:password@host:5432/dbname
+NEON_DATABASE_URL=postgresql://user:password@host:5432/dbname
+
+# Stripe
+STRIPE_PUBLISHABLE_KEY=pk_test_xxx
+STRIPE_SECRET_KEY=sk_test_xxx
+
+# PayPal
+PAYPAL_CLIENT_ID=your-paypal-client-id
+PAYPAL_CLIENT_SECRET=your-paypal-secret
+
+# Sesiones
+SESSION_SECRET=change_me_to_a_strong_secret
+
+# API pública
+NEXT_PUBLIC_API_URL=http://localhost:3000/api
+
+Integración CI / GitHub Actions
+---
+Este repo incluye un workflow de CI que instala dependencias, ejecuta `npm run check` y `npm run build`. El badge de CI en la parte superior apunta al workflow `.github/workflows/ci.yml`.
+
+Archivo de workflow: .github/workflows/ci.yml
+- Ejecuta en push y pull_request hacia main.
+
 Licencia
 ---
 Este proyecto está bajo la licencia MIT.
@@ -113,4 +149,4 @@ Créditos y contacto
 
 Notas finales
 ---
-- He incluido los comandos reales que aparecen en package.json (dev, build, start, check, db:push). Si quieres que añada secciones adicionales (ej. badge de build, instrucciones de CI/CD, ejemplo de .env, o capturas) dímelo y lo agrego.
+- Si quieres que añada badges adicionales (npm, coverage) o un ejemplo de CI más sofisticado (tests, cache de dependencias), dímelo.
